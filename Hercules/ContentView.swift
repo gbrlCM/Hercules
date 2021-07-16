@@ -9,8 +9,20 @@ import SwiftUI
 
 struct ContentView: View {
     var body: some View {
-        Text("Hello, world!")
-            .padding()
+        TabView {
+            FeedView()
+                .tabItem { Label(
+                title: { Text("Feed") },
+                icon: { Image(systemName: "square.grid.2x2.fill") }
+            ) }
+            WorkoutsView()
+                .tabItem { Label(
+                    title: { Text("Workouts") },
+                    icon: { Image(systemName: "flame.fill") }
+) }
+        }
+        .accentColor(.red)
+        .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
     }
 }
 
