@@ -13,7 +13,9 @@ struct StatHighlightSection: View {
     var viewModel: StatHighlightSectionViewModel
     
     var body: some View {
-        HorizontalSection(viewModel: viewModel) {index in
+        HorizontalSection(viewModel: viewModel) {
+            
+        } content: {index in
             StatsHighlightsCard(viewModel: viewModel.cardsViewModels[index])
                 .padding(.bottom, 8)
         }

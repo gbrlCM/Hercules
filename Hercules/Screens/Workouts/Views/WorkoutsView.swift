@@ -9,39 +9,81 @@ import SwiftUI
 
 struct WorkoutsView: View {
     
-    @State var number: Int = 1
-    @State var string: String = "" { didSet {
-        number = Int(string) ?? 10
-    }}
+    @State
+    var isCreatingUser: Bool = false
+    
+    @FetchRequest(fetchRequest: Workout.allWorkouts)
+    var workouts: FetchedResults<Workout>
+
+    @ObservedObject
+    var viewModel: WorkoutsViewModel = WorkoutsViewModel()
     
     var body: some View {
+        NavigationView {
+            MainView(background: Color.backgroundColor) {
+                if workouts.isEmpty {
+                    noWorkouts
+                } else {
+                    workoutsList
+                }
+            }
+            .navigationTitle("Workouts")
+            .sheet(isPresented: $isCreatingUser, content: {
+                WorkoutCreationView(presentationBinding: $isCreatingUser)
+                    .environment(\.managedObjectContext, viewModel.storage.context)
+            })
+            .navigationBarItems(trailing: addButton)
+        }
+    }
+    
+    @ViewBuilder
+    var addButton: some View {
+        Button(action: { isCreatingUser = true }, label: {
+            Image(systemName: "plus")
+                .foregroundColor(.redGradientStart)
+        })
+    }
+    
+    @ViewBuilder
+    var noWorkouts: some View {
         VStack {
-            Button(action: {}, label: {
-                Text("Chest")
-                    .fontWeight(.bold)
-            })
-            .padding(.horizontal, 16)
+            Text("There is no workouts yet, but you can create one tapping the button bellow!")
+            Button {
+                isCreatingUser = true
+            } label: {
+                Label(
+                    title: { Text(LocalizedStringKey(.addWorkout)) },
+                    icon: { Image(systemName: "plus") }
+                )
+                .foregroundColor(.redGradientStart)
+                .font(.title3.bold())
+            }
             .padding(.vertical, 8)
-            .background(Color.blue.opacity(0.3))
-            .cornerRadius(50)
-            
-            Button(action: {}, label: {
-                Text("Back")
-                    .foregroundColor(.white)
-                    .fontWeight(.bold)
-            })
             .padding(.horizontal, 16)
-            .padding(.vertical, 8)
-            .background(Color.green.opacity(0.8))
-            .cornerRadius(50)
-            
-            
+            .background(Capsule().fill(Color.redGradientStart.opacity(0.25)))
+        }
+    }
+    
+    @ViewBuilder
+    var workoutsList: some View {
+        List(workouts) { workout in
+            VStack {
+                HStack {
+                    Text("\(workout.name ?? "nil") - \(workout.exercises?.count ?? 0) exercises")
+                    Spacer()
+                }
+            }
         }
     }
 }
 
 struct WorkoutsView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutsView()
+        Group {
+            WorkoutsView()
+                .environment(\.locale, .init(identifier: "pt_BR"))
+            WorkoutsView()
+                .preferredColorScheme(.dark)
+        }
     }
 }

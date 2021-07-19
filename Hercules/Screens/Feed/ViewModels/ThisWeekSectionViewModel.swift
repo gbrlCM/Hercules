@@ -10,21 +10,21 @@ import Foundation
 struct ThisWeekSectionViewModel: HorizontalSectionViewModel {
     
     var elementCount: Int
-    var sectionTitle: String
-    var emptySectionMessage: String
+    var sectionTitle: StringKey
+    var errorMessage: StringKey
     let cardViewModels: [ThisWeekCardViewModel]
     
     init() {
         cardViewModels = Array.init(repeating: ThisWeekCardViewModel(), count: 7)
         elementCount = cardViewModels.count
-        sectionTitle = "This Week"
-        emptySectionMessage = "No exercises echeaduled"
+        sectionTitle = .thisWeek
+        errorMessage = .thisWeekEmpty
     }
     
-    init(sectionTitle: String, emptySectionMessage: String, cardViewModels: [ThisWeekCardViewModel]) {
+    init(cardViewModels: [ThisWeekCardViewModel]) {
         self.cardViewModels = cardViewModels
         self.elementCount = cardViewModels.count
-        self.sectionTitle = sectionTitle
-        self.emptySectionMessage = emptySectionMessage
+        self.sectionTitle = .thisWeek
+        self.errorMessage = .thisWeekEmpty
     }
 }

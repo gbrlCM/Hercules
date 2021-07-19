@@ -37,6 +37,7 @@ struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
             FeedView()
+                .environment(\.locale, .init(identifier: "pt_BR"))
             FeedView()
                 .preferredColorScheme(.dark)
         }

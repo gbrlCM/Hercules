@@ -13,6 +13,12 @@ struct PreviousWorkoutsSection: View {
     var viewModel: PreviousWorkoutSectionViewModel
     
     var body: some View {
+        HStack {
+            Text(LocalizedStringKey(viewModel.sectionTitle))
+                .font(.title3.bold())
+            Spacer()
+        }.padding(.horizontal, 16)
+        .padding(.bottom, 8)
         ForEach(0..<viewModel.cardsViewModels.count) { index in
             PreviousWorkoutsCell(viewModel: viewModel.cardsViewModels[index])
         }

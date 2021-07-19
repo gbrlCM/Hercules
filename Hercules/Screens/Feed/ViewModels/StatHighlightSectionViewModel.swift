@@ -10,23 +10,20 @@ import Foundation
 struct StatHighlightSectionViewModel: HorizontalSectionViewModel {
     
     var elementCount: Int
-    var sectionTitle: String
-    var emptySectionMessage: String
+    var sectionTitle: StringKey
     
     var cardsViewModels: [StatHighlightsCardViewModel]
     
     init() {
         cardsViewModels = Array(repeating: StatHighlightsCardViewModel(), count: 4)
         elementCount = cardsViewModels.count
-        sectionTitle = "Stats Highlights"
-        emptySectionMessage = "No Status captured yet"
+        sectionTitle = .statsHighlights
     }
     
-    init(sectionTitle: String, emptySectionMessage: String, cardsViewModels: [StatHighlightsCardViewModel]) {
+    init(sectionTitle: StringKey, cardsViewModels: [StatHighlightsCardViewModel]) {
         self.cardsViewModels = cardsViewModels
         self.elementCount = cardsViewModels.count
         self.sectionTitle = sectionTitle
-        self.emptySectionMessage = emptySectionMessage
     }
     
 }

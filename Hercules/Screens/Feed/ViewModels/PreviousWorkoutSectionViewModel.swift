@@ -9,17 +9,17 @@ import Foundation
 
 struct PreviousWorkoutSectionViewModel {
     
-    var sectionTitle: String
+    var sectionTitle: StringKey
     var emptySectionMessage: String
     var cardsViewModels: [PreviousWorkoutCellViewModel]
     
     init() {
-        sectionTitle = "Previous workouts"
+        sectionTitle = .previousWorkouts
         emptySectionMessage = "There are no previous workouts"
         cardsViewModels = Array(repeating: PreviousWorkoutCellViewModel(), count: 20)
     }
     
-    init(title: String, emptyMessageDescription: String, cardsViewModels: [PreviousWorkoutCellViewModel]) {
+    init(title: StringKey, emptyMessageDescription: String, cardsViewModels: [PreviousWorkoutCellViewModel]) {
         self.sectionTitle = title
         self.emptySectionMessage = emptyMessageDescription
         self.cardsViewModels = cardsViewModels

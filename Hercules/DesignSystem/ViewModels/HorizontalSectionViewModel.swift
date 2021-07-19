@@ -9,6 +9,5 @@ import Foundation
 
 protocol HorizontalSectionViewModel {
     var elementCount: Int {get set}
-    var sectionTitle: String{get set}
-    var emptySectionMessage: String {get set}
+    var sectionTitle: StringKey {get set}
 }
