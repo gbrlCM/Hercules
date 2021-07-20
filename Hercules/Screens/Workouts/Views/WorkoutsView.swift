@@ -30,7 +30,6 @@ struct WorkoutsView: View {
             .navigationTitle("Workouts")
             .sheet(isPresented: $isCreatingUser, content: {
                 WorkoutCreationView(presentationBinding: $isCreatingUser)
-                    .environment(\.managedObjectContext, viewModel.storage.context)
             })
             .navigationBarItems(trailing: addButton)
         }

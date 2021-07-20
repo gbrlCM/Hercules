@@ -8,6 +8,7 @@
 import Foundation
 import Combine
 import CoreData
+import SwiftUI
 
 class ExercisesListViewModel: NSObject, ObservableObject {
     
@@ -91,6 +92,12 @@ class ExercisesListViewModel: NSObject, ObservableObject {
                 return setOfTags.isSuperset(of: selectedTags)
             }
         }
+    }
+    
+    func colorForTag(named tagName: String) -> Color {
+        guard let tag = tags.first(where: { $0.name == tagName })
+        else { return Color.red}
+        return tag.color
     }
     
 }

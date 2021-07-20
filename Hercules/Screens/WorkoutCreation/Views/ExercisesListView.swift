@@ -16,7 +16,8 @@ struct ExercisesListView: View {
     @EnvironmentObject
     var workoutViewModel: WorkoutCreationViewModel
     
-    let colors: [Color] = [.red, .blue, .green, .yellow, .pink, .purple, .orange]
+    @Binding
+    var isCreatingExercise: Bool
     
     var body: some View {
         NavigationView {
@@ -24,7 +25,7 @@ struct ExercisesListView: View {
                 tagsSection
                 List(viewModel.defaultExercises) { exercise in
                     NavigationLink(
-                        destination: Text("oooi"),
+                        destination: ExerciseCreationView(exercise: exercise, isCreatingExercise: $isCreatingExercise),
                         label: {
                             exerciseCell(of: exercise)
                         })
@@ -43,12 +44,11 @@ struct ExercisesListView: View {
                     }, label: {
                         Text(LocalizedStringKey(viewModel.tags[index].name))
                             .fontWeight(.semibold)
-                            .foregroundColor(colors[index%colors.count])
+                            .foregroundColor(viewModel.tags[index].color)
                     })
                     .padding(.vertical, 8)
                     .padding(.horizontal, 12)
                     .background(tagBackground(for: viewModel.tags[index], at: index))
-                    .shadow(color: .black.opacity(0.25), radius: 4, x: 2, y: 2)
                 }
             }.padding(.vertical, 12)
         }).padding(.leading, 16)
@@ -58,11 +58,13 @@ struct ExercisesListView: View {
     @ViewBuilder
     func tagBackground(for tag: ExerciseTag, at index: Int) -> some View {
         if(viewModel.selectedTags.contains(tag.name)) {
-            Capsule().fill(colors[index%colors.count].opacity(0.25))
+            Capsule().fill(tag.color.opacity(0.25))
+                .shadow(color: .black.opacity(0.25), radius: 4, x: 2, y: 2)
             
         }
         else {
             Capsule().fill(Color.white)
+                .shadow(color: .black.opacity(0.25), radius: 4, x: 2, y: 2)
         }
     }
     
@@ -71,17 +73,20 @@ struct ExercisesListView: View {
         VStack {
             HStack {
                 Text(LocalizedStringKey(exercise.name))
+                    .font(.title3)
                 Spacer()
             }.padding(.horizontal, 16)
             HStack {
                 ForEach(exercise.tags, id: \.self) { tag in
+                    let color = viewModel.colorForTag(named: tag)
                     VStack(alignment: .leading) {
                         Text(LocalizedStringKey(tag))
-                            .foregroundColor(.red)
+                            .font(.subheadline.bold())
+                            .foregroundColor(color)
                     }
                     .padding(.vertical, 6)
                     .padding(.horizontal, 10)
-                    .background(Capsule().stroke(Color.red))
+                    .background(Capsule().stroke(color))
                 }
                 Spacer()
             }.padding(.horizontal, 16)
@@ -92,6 +97,6 @@ struct ExercisesListView: View {
 
 struct ExercisesListView_Previews: PreviewProvider {
     static var previews: some View {
-        ExercisesListView()
+        ExercisesListView(isCreatingExercise: .constant(true))
     }
 }
