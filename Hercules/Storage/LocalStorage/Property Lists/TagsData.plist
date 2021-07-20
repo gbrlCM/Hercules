@@ -1,0 +1,54 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<!DOCTYPE plist PUBLIC "-//Apple//DTD PLIST 1.0//EN" "http://www.apple.com/DTDs/PropertyList-1.0.dtd">
+<plist version="1.0">
+<array>
+	<dict>
+		<key>name</key>
+		<string>leg</string>
+		<key>color</key>
+		<string>leg</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>fullBody</string>
+		<key>color</key>
+		<string>fullBody</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>abs</string>
+		<key>color</key>
+		<string>abs</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>shoulder</string>
+		<key>color</key>
+		<string>shoulder</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>glutes</string>
+		<key>color</key>
+		<string>glutes</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>chest</string>
+		<key>color</key>
+		<string>chest</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>arm</string>
+		<key>color</key>
+		<string>arm</string>
+	</dict>
+	<dict>
+		<key>name</key>
+		<string>back</string>
+		<key>color</key>
+		<string>back</string>
+	</dict>
+</array>
+</plist>

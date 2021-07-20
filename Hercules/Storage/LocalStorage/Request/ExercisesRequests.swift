@@ -10,9 +10,9 @@ import CoreData
 
 extension Exercise {
     
-    static var allExercises: NSFetchRequest<Exercise> {
-        let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Exercise.name, ascending: true)]
+    static var allExercises: NSFetchRequest<ADExercise> {
+        let request: NSFetchRequest<ADExercise> = ADExercise.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ADExercise.name, ascending: true)]
         
         return request
     }

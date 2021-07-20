@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ExerciseCreationView: View {
     
-    var exercise: Exercise
+    var exercise: ADExercise
     
     @EnvironmentObject
     var workoutViewModel: WorkoutCreationViewModel
@@ -70,7 +70,7 @@ struct ExerciseCreationView: View {
                 Section(header: Text("Intensity")) {
                     Picker("Measurement", selection: $measurementIndex) {
                         ForEach(0..<measurementStyles.count) { index in
-                            Text(measurementStyles[index].name)
+                            Text(LocalizedStringKey(measurementStyles[index].name))
                         }
                     }
                     HStack {
@@ -86,18 +86,15 @@ struct ExerciseCreationView: View {
                     }
                 }
             }
-        }.navigationBarItems(trailing: saveButton)
+        }
+        .accentColor(.redGradientStart)
+        .navigationBarItems(trailing: saveButton)
     }
     
     @ViewBuilder
     var saveButton: some View {
         Button {
-            workoutViewModel.saveExercise(series: series,
-                                          repetitions: reps,
-                                          intesityType: measurementStyles[measurementIndex].rawValue,
-                                          intesityValue: intesity,
-                                          restTime: restTime,
-                                          exerciseName: exercise)
+            //workoutViewModel.saveExercise(WorkoutExercise)
         } label: {
             Text("Save")
                 .fontWeight(.bold)
@@ -108,6 +105,6 @@ struct ExerciseCreationView: View {
 
 struct ExerciseCreation_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseCreationView(exercise: Exercise())
+        ExerciseCreationView(exercise: ADExercise())
     }
 }

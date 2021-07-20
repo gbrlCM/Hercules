@@ -19,9 +19,9 @@ class WorkoutsStorage {
         self.context = storage.persistentContainer.viewContext
     }
     
-    var allWorkouts: NSFetchRequest<Workout> = {
-        let request: NSFetchRequest<Workout> = Workout.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Workout.name, ascending: true)]
+    var allWorkouts: NSFetchRequest<ADWorkout> = {
+        let request: NSFetchRequest<ADWorkout> = ADWorkout.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ADWorkout.name, ascending: true)]
         return request
     }()
 }

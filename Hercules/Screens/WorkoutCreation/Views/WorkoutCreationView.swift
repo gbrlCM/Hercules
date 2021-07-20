@@ -54,17 +54,18 @@ struct WorkoutCreationView: View {
                     Text(area.name)
                 }
             }
+            DatePicker("End date", selection: $viewModel.endDate, displayedComponents: .date)
         }
     }
     
     @ViewBuilder
     var exercisesSection: some View {
         Section(header: Text("Exercises")) {
-            List(viewModel.createdExercises) { exercise in
+            List(viewModel.createdExercises, id: \.hashValue) { exercise in
                 NavigationLink(
                     destination: Text("Destination"),
                     label: {
-                        ExerciseCreationCell(viewModel: .init(entity: exercise))
+                        ExerciseCreationCell(viewModel: .init(data: exercise))
                     })
             }
             Button(action: {

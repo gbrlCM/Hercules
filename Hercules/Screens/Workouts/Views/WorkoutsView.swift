@@ -12,8 +12,8 @@ struct WorkoutsView: View {
     @State
     var isCreatingUser: Bool = false
     
-    @FetchRequest(fetchRequest: Workout.allWorkouts)
-    var workouts: FetchedResults<Workout>
+    @FetchRequest(fetchRequest: ADWorkout.allWorkouts)
+    var workouts: FetchedResults<ADWorkout>
 
     @ObservedObject
     var viewModel: WorkoutsViewModel = WorkoutsViewModel()

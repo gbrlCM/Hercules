@@ -15,7 +15,7 @@ class TagsMigration: Migration {
     func performMigration(to context: NSManagedObjectContext) {
         
         initialTags.forEach { tag in
-            let dbTag = ExerciseTags(context: context)
+            let dbTag = ADExerciseTags(context: context)
             
             dbTag.name = tag
             
