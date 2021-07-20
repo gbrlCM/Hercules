@@ -6,7 +6,6 @@
 //
 
 import SwiftUI
-//"ExerciseCreationView(exercise: exercise).navigationTitle(Text(LocalizedStringKey(exercise.name ?? "")))"
 
 struct ExercisesListView: View {
     
