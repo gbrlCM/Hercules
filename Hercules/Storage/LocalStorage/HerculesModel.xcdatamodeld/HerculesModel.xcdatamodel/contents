@@ -1,52 +1,55 @@
 <?xml version="1.0" encoding="UTF-8" standalone="yes"?>
 <model type="com.apple.IDECoreDataModeler.DataModel" documentVersion="1.0" lastSavedToolsVersion="18154" systemVersion="20F71" minimumToolsVersion="Automatic" sourceLanguage="Swift" userDefinedModelVersionIdentifier="">
-    <entity name="Exercise" representedClassName="Exercise" syncable="YES" codeGenerationType="class">
+    <entity name="ADExercise" representedClassName="ADExercise" syncable="YES" codeGenerationType="class">
+        <attribute name="id" attributeType="UUID" usesScalarValueType="NO"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ExerciseTags" inverseName="exercises" inverseEntity="ExerciseTags"/>
-        <relationship name="workoutExercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutExercise" inverseName="exercise" inverseEntity="WorkoutExercise"/>
+        <relationship name="tags" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ADExerciseTags" inverseName="exercises" inverseEntity="ADExerciseTags"/>
     </entity>
-    <entity name="ExerciseTags" representedClassName="ExerciseTags" syncable="YES" codeGenerationType="class">
+    <entity name="ADExerciseTags" representedClassName="ADExerciseTags" syncable="YES" codeGenerationType="class">
+        <attribute name="color" attributeType="String"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Exercise" inverseName="tags" inverseEntity="Exercise"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ADExercise" inverseName="tags" inverseEntity="ADExercise"/>
     </entity>
-    <entity name="Links" representedClassName="Links" syncable="YES" codeGenerationType="class">
+    <entity name="ADLinks" representedClassName="ADLinks" syncable="YES" codeGenerationType="class">
         <attribute name="value" attributeType="String"/>
-        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="links" inverseEntity="Note"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ADNote" inverseName="links" inverseEntity="ADNote"/>
     </entity>
-    <entity name="Note" representedClassName="Note" syncable="YES" codeGenerationType="class">
+    <entity name="ADNote" representedClassName="ADNote" syncable="YES" codeGenerationType="class">
         <attribute name="value" attributeType="String"/>
-        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="WorkoutExercise" inverseName="note" inverseEntity="WorkoutExercise"/>
-        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="Links" inverseName="note" inverseEntity="Links"/>
+        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ADWorkoutExercise" inverseName="note" inverseEntity="ADWorkoutExercise"/>
+        <relationship name="links" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ADLinks" inverseName="note" inverseEntity="ADLinks"/>
     </entity>
-    <entity name="Workout" representedClassName="Workout" syncable="YES" codeGenerationType="class">
+    <entity name="ADWorkout" representedClassName="ADWorkout" syncable="YES" codeGenerationType="class">
         <attribute name="daysOfTheWeek" attributeType="Transformable" valueTransformerName="NSSecureUnarchiveFromData" customClassName="[Int]"/>
+        <attribute name="finalDate" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="focusArea" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="name" attributeType="String"/>
-        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="WorkoutExercise" inverseName="workout" inverseEntity="WorkoutExercise"/>
-        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="WorkoutSession" inverseName="workout" inverseEntity="WorkoutSession"/>
+        <relationship name="exercises" optional="YES" toMany="YES" deletionRule="Nullify" ordered="YES" destinationEntity="ADWorkoutExercise" inverseName="workout" inverseEntity="ADWorkoutExercise"/>
+        <relationship name="sessions" optional="YES" toMany="YES" deletionRule="Nullify" destinationEntity="ADWorkoutSession" inverseName="workout" inverseEntity="ADWorkoutSession"/>
     </entity>
-    <entity name="WorkoutExercise" representedClassName="WorkoutExercise" syncable="YES" codeGenerationType="class">
+    <entity name="ADWorkoutExercise" representedClassName="ADWorkoutExercise" syncable="YES" codeGenerationType="class">
+        <attribute name="exerciseId" attributeType="UUID" usesScalarValueType="NO"/>
+        <attribute name="exerciseName" attributeType="String"/>
         <attribute name="intesityMetric" attributeType="Integer 32" usesScalarValueType="YES"/>
         <attribute name="intesityValue" attributeType="Double" usesScalarValueType="YES"/>
         <attribute name="repetitions" attributeType="Integer 32" defaultValueString="1" usesScalarValueType="YES"/>
         <attribute name="restTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <attribute name="series" attributeType="Integer 32" minValueString="1" defaultValueString="1" usesScalarValueType="YES"/>
-        <relationship name="exercise" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Exercise" inverseName="workoutExercises" inverseEntity="Exercise"/>
-        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Note" inverseName="exercise" inverseEntity="Note"/>
-        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="exercises" inverseEntity="Workout"/>
+        <relationship name="note" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ADNote" inverseName="exercise" inverseEntity="ADNote"/>
+        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ADWorkout" inverseName="exercises" inverseEntity="ADWorkout"/>
     </entity>
-    <entity name="WorkoutSession" representedClassName="WorkoutSession" syncable="YES" codeGenerationType="class">
+    <entity name="ADWorkoutSession" representedClassName="ADWorkoutSession" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="healthStoreID" optional="YES" attributeType="String"/>
-        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="Workout" inverseName="sessions" inverseEntity="Workout"/>
+        <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ADWorkout" inverseName="sessions" inverseEntity="ADWorkout"/>
     </entity>
     <elements>
-        <element name="Exercise" positionX="-331.827392578125" positionY="1.1094970703125" width="128" height="88"/>
-        <element name="ExerciseTags" positionX="-331.2737426757812" positionY="167.08349609375" width="128" height="73"/>
-        <element name="Links" positionX="-173.9906616210938" positionY="-263.359619140625" width="128" height="73"/>
-        <element name="Note" positionX="-172.289306640625" positionY="-130.0135803222656" width="128" height="88"/>
-        <element name="Workout" positionX="10.10284423828125" positionY="12.976318359375" width="128" height="104"/>
-        <element name="WorkoutExercise" positionX="-170.4444580078125" positionY="0.3941650390625" width="128" height="149"/>
-        <element name="WorkoutSession" positionX="212.394287109375" positionY="13.0830078125" width="128" height="88"/>
+        <element name="ADExercise" positionX="-331.827392578125" positionY="1.1094970703125" width="128" height="74"/>
+        <element name="ADExerciseTags" positionX="-331.2737426757812" positionY="167.08349609375" width="128" height="74"/>
+        <element name="ADLinks" positionX="-173.9906616210938" positionY="-263.359619140625" width="128" height="59"/>
+        <element name="ADNote" positionX="-172.289306640625" positionY="-130.0135803222656" width="128" height="74"/>
+        <element name="ADWorkout" positionX="10.10284423828125" positionY="12.976318359375" width="128" height="133"/>
+        <element name="ADWorkoutExercise" positionX="-170.4444580078125" positionY="0.3941650390625" width="128" height="164"/>
+        <element name="ADWorkoutSession" positionX="212.394287109375" positionY="13.0830078125" width="128" height="74"/>
     </elements>
 </model>

@@ -8,126 +8,96 @@
 import Foundation
 import Combine
 import CoreData
+import SwiftUI
 
 class ExercisesListViewModel: NSObject, ObservableObject {
     
     @Published
-    var tags: [ExerciseTags] = []
+    var tags: [ExerciseTag] = []
     
     @Published
-    var exercises: [Exercise] = []
+    var defaultExercises: [Exercise] = []
     
     @Published
-    private var fetchedExercises: [Exercise] = []
+    var userExercises: [Exercise] = []
+    
+    @Published
+    private var fetchedDefaultExercises: [Exercise] = []
     
     @Published
     var shouldNavigateToNextSecion: Bool = true
     
     @Published
-    var selectedTags: [NSManagedObjectID] = []
+    var selectedTags: [String] = []
     
-    var cancellables = Set<AnyCancellable>()
+    private var cancellables = Set<AnyCancellable>()
     
-    private var storage = DataStorage.shared
-    private var tagsController: NSFetchedResultsController<ExerciseTags>
-    private var exercisesController: NSFetchedResultsController<Exercise>
+    private var storage = ExerciseStorage()
     
     override init() {
-        tagsController = NSFetchedResultsController(fetchRequest: ExerciseTags.allTags,
-                                                    managedObjectContext: storage.persistentContainer.viewContext,
-                                                    sectionNameKeyPath: nil,
-                                                    cacheName: nil)
-        
-        exercisesController = NSFetchedResultsController(fetchRequest: Exercise.allExercises,
-                                                         managedObjectContext: storage.persistentContainer.viewContext,
-                                                         sectionNameKeyPath: nil,
-                                                         cacheName: nil)
         super.init()
-        
-        tagsController.delegate = self
-        exercisesController.delegate = self
-    
-        do {
-            try tagsController.performFetch()
-            tags = tagsController.fetchedObjects ?? []
-            try exercisesController.performFetch()
-            fetchedExercises = exercisesController.fetchedObjects ?? []
-            updateExercisesWithTags()
-        } catch {
-            print("failed to fetch items!")
-        }
-        
+        initiateBindings()
+        storage.emitAllExercises()
+        tags = PropertyListDecoder.decode("TagsData", to: [ExerciseTag].self) ?? []
     }
     
-    func toggleTag(of tag: ExerciseTags) {
-        let index = selectedTags.firstIndex(of: tag.objectID)
+    private func initiateBindings() {
+        storage
+            .defaultExercisesSubject
+            .map { exercises -> [Exercise] in
+                var sortedExercises = exercises
+                sortedExercises.sort { $0.name < $1.name}
+                print("ooi")
+                return sortedExercises
+            }
+            .assign(to: \.fetchedDefaultExercises, on: self)
+            .store(in: &cancellables)
+        
+        storage
+            .userExercisesSubject
+            .map { exercises -> [Exercise] in
+                var sortedExercises = exercises
+                sortedExercises.sort { $0.name < $1.name}
+                return sortedExercises
+            }
+            .assign(to: \.userExercises, on: self)
+            .store(in: &cancellables)
+        
+        $fetchedDefaultExercises
+            .sink {[weak self] exercises in
+                self?.defaultExercises = self?.updateExercisesWithTags(for: exercises) ?? []
+            }
+            .store(in: &cancellables)
+    }
+    
+    func toggleTag(of tag: ExerciseTag) {
+        let name = tag.name
+        let index = selectedTags.firstIndex(of: name)
         if index == nil {
-            selectedTags.append(tag.objectID)
+            selectedTags.append(name)
         } else {
             selectedTags.remove(at: index!)
         }
-        updateExercisesWithTags()
+        userExercises = updateExercisesWithTags(for: userExercises)
+        defaultExercises = updateExercisesWithTags(for: fetchedDefaultExercises)
+        print(selectedTags)
     }
     
-    func updateExercisesWithTags() {
+    private func updateExercisesWithTags(for exerciseList: [Exercise]) -> [Exercise] {
         if selectedTags == [] {
-            exercises = fetchedExercises
+            return exerciseList
         } else {
-            exercises = fetchedExercises.filter { exercise in
-                guard let tags = exercise.tags?.allObjects as? [ExerciseTags] else {
-                    return false
-                }
-                
-                let exerciseSet = Set(tags.map(\.objectID))
-                
-                return exerciseSet.isSuperset(of: selectedTags)
+            return exerciseList.filter { exercise in
+                let setOfTags = Set(exercise.tags)
+                return setOfTags.isSuperset(of: selectedTags)
             }
         }
     }
     
-}
-
-extension ExercisesListViewModel: NSFetchedResultsControllerDelegate {
-    func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
-        if let exercises = controller.fetchedObjects as? [Exercise] {
-            self.fetchedExercises = exercises
-            updateExercisesWithTags()
-            
-        } else if let tags = controller.fetchedObjects as? [ExerciseTags] {
-            self.tags = tags
-        }
+    func colorForTag(named tagName: String) -> Color {
+        guard let tag = tags.first(where: { $0.name == tagName })
+        else { return Color.red}
+        return tag.color
     }
+    
 }
-
-/*
- class TodoItemStorage: NSObject, ObservableObject {
- @Published var dueSoon: [TodoItem] = []
- private let dueSoonController: NSFetchedResultsController<TodoItem>
- 
- init(managedObjectContext: NSManagedObjectContext) {
- dueSoonController = NSFetchedResultsController(fetchRequest: TodoItem.dueSoonFetchRequest,
- managedObjectContext: managedObjectContext,
- sectionNameKeyPath: nil, cacheName: nil)
- 
- super.init()
- 
- dueSoonController.delegate = self
- 
- do {
- try dueSoonController.performFetch()
- dueSoon = dueSoonController.fetchedObjects ?? []
- } catch {
- print("failed to fetch items!")
- }
- }
- }
- 
- extension TodoItemStorage: NSFetchedResultsControllerDelegate {
- func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
- guard let todoItems = controller.fetchedObjects as? [TodoItem]
- else { return }
- 
- dueSoon = todoItems
- }
- }
- */

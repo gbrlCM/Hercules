@@ -12,8 +12,8 @@ struct WorkoutsView: View {
     @State
     var isCreatingUser: Bool = false
     
-    @FetchRequest(fetchRequest: Workout.allWorkouts)
-    var workouts: FetchedResults<Workout>
+    @FetchRequest(fetchRequest: ADWorkout.allWorkouts)
+    var workouts: FetchedResults<ADWorkout>
 
     @ObservedObject
     var viewModel: WorkoutsViewModel = WorkoutsViewModel()
@@ -30,7 +30,6 @@ struct WorkoutsView: View {
             .navigationTitle("Workouts")
             .sheet(isPresented: $isCreatingUser, content: {
                 WorkoutCreationView(presentationBinding: $isCreatingUser)
-                    .environment(\.managedObjectContext, viewModel.storage.context)
             })
             .navigationBarItems(trailing: addButton)
         }

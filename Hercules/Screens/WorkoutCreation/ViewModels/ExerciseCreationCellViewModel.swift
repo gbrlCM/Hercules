@@ -36,13 +36,13 @@ struct ExerciseCreationCellViewModel {
         
     }
     
-    init(entity: WorkoutExercise) {
-        self.name = entity.exercise?.name ?? ""
-        self.series = Int(entity.series)
-        self.repetitons = Int(entity.repetitions)
-        self.intesity = entity.intesityValue
-        self.intesityType = IntensityType(rawValue: Int(entity.intesityMetric)) ?? .weight
-        self.restTime = entity.restTime
+    init(data: WorkoutExercise) {
+        self.name = data.exerciseName
+        self.series = data.series
+        self.repetitons = data.repetitions
+        self.intesity = data.intesityValue
+        self.intesityType = data.intesityMetric
+        self.restTime = data.restTime
         intesityFormatted = generateIntesity()
         restTimeFormatted = generateRestTime()
     }

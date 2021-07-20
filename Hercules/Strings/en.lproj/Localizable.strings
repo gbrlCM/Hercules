@@ -1,7 +1,17 @@
+//MARK: General
 "This week" = "This week";
 "Stats highlights" = "Stats highlights";
 "Add workout" = "Add workout";
 "This week empty" = "There is no training scheaduled for this week, tap the button bellow to scheadule";
+"Workouts"= "Workouts";
+"Workout" = "Workout";
+"Previous Workouts" = "Previous Workouts";
+"Days of the week" = "Days of the week";
+"Name" = "Nome";
+"Area of focus" = "Area of focus";
+"Create Workout" = "Create Workout";
+
+//MARK: Days
 "Today" = "Today";
 "Monday" = "Monday";
 "Tuesday" = "Tuesday";
@@ -17,13 +27,9 @@
 "Friday_letter" = "F";
 "Saturday_letter" = "S";
 "Sunday_letter" = "S";
-"Workouts"= "Workouts";
-"Workout" = "Workout";
-"Previous Workouts" = "Previous Workouts";
-"Days of the week" = "Days of the week";
-"Name" = "Nome";
-"Area of focus" = "Area of focus";
-"Create Workout" = "Create Workout";
+
+
+//MARK: Area of Focus
 "arm" = "Arm";
 "back" = "Back";
 "chest" = "Chest";
@@ -37,5 +43,95 @@
 "General" = "General";
 "Exercises" = "Exercises";
 "bodyWeight" = "Body weight";
+
+//MARK: Strings with interpolation
+// String resuming details of an exercise
 "%d x %d at %@ - %@ of rest" = "%d x %d at %@ - %@ of rest";
+// String resuming details of an body weight exercise
 "%d x %d at body weight - %@ of rest" = "%d x %d at body weight - %@ of rest";
+
+//MARK: Exercises
+"ankleFlexion" = "Ankle Flexion";
+"pushUp" = "Push-up";
+"benchPress" = "Bench Press";
+"crunch" = "Crunch";
+"calfRaise" = "Calf Raise";
+"squat" = "Squat";
+"bearCrawl" = "Bear Crawl";
+"fowardLunge" = "Forward Lunge";
+"plank" = "Plank";
+"frontRaise" = "Front raise";
+"lateralRaise" = "Lateral raise";
+"gluteBridge" = "Glute Bridge";
+"inclineBenchPress" = "Incline Bench Press";
+"declineBenchPress" = "Decline Bench Press";
+"seatedBicepsCurl" = "Seated Biceps Curl";
+"seatedCablePress" = "Seated Cable Press";
+"seatedCrunch" = "Seated Crunch";
+"seatedHighBackRow" = "Seated High Back Row";
+"seatedLatPulldown" = "Seated Lat Pulldown";
+"seatedLegExtension" = "Seated Leg extension";
+"seatedLegAbdution" = "Seated Leg abdution";
+"seatedLegPress" = "Seated Leg Press";
+"seatedShoulderPress" = "Seated Shoulder Press";
+"seatedRow" = "Seated Row";
+"sidePlank" = "Side Plank";
+"singleArmLateralRaise" = "Single-arm Lateral Raise";
+"squatJumps" = "Squat Jumps";
+"standingBicepsCurl" = "Standing Biceps Curl";
+"supermans" = "Supermans";
+"tricepsExtension" = "Tricep extension";
+"tricepsPushdowns" = "Triceps pushdowns";
+"vRaise" = "V-raise";
+"extensionWristCurl" = "Wrist curl - extension";
+"flexionWristCurl" = "Wrist curl - flexion";
+"chinUps" = "Chin-ups";
+"farmerCarry" = "Farmer's Carry";
+"halfTurkishGetUp" = "Half Turkish Get-up";
+"hammerCurl" = "Hammer Curl";
+"lateralCrawls" = "Lateral crawls";
+"lyingBarbellTricepsExtension" = "Lying Barbell Triceps Extensions";
+"lyingChestFly" = "Lying chest fly";
+"pullUps" = "Pull-ups";
+"reverseBicepsCurl" = "Reverse Bicep Curl";
+"reverseLunge" = "Reverse lunge";
+"romanianDeadlift" = "Romanian Deadlift";
+"Asynchronous Waves" = "Asynchronous Waves";
+"backSquat" = "Back Squat";
+"singleArmRow" = "Single-arm Row";
+"singleArmShoulderPress" = "Single-arm shoulder press";
+"seatedSingleArmShoulderPress" = "Seated single-arm shoulder press";
+"standingChestFly" = "Standing Chest Fly";
+"tricepsExtension" = "Tricep extension";
+"horseRow" = "Horse row";
+"deadlift" = "Deadlift";
+"bentOverRow" = "Bent-over row";
+"burpee" = "Burpee";
+"powerClean" = "Power Clean";
+"standingShoulderPress" = "Standing Shoulder Press";
+"turkishGetUp" = "Turkish Get-up";
+"swing" = "Swing";
+
+//MARK: Tags
+"chest" = "Chest";
+"arm" = "Arm";
+"shoulder" = "Shoulder";
+"leg" = "Leg";
+"abs" = "Abdomen";
+"fullBody" = "Full Body";
+"glutes" = "Glutes";
+
+//MARK: Criação de workout
+"Quantity" = "Quantity";
+"Series" = "Series";
+"Repetitions" = "Repetitions";
+"Intesity" = "Intesity";
+"Measurement" = "Measurement";
+"1RM" = "1RM";
+"Area of RM" = "Area of RM";
+"Weight(lbs)" = "Weight(lbs)";
+"Body weight" = "Body weight";
+"Seconds" = "Seconds";
+"Value" = "Value";
+"Rest time(segs)" = "Rest time(segs)";
+"End date" = "End date";

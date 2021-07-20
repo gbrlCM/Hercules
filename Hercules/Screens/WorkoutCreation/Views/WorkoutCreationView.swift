@@ -6,14 +6,13 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct WorkoutCreationView: View {
     
-    @Environment(\.managedObjectContext)
-    var viewContext
-    
     @Binding
     var presentationBinding: Bool
+    
     
     @ObservedObject
     var viewModel = WorkoutCreationViewModel()
@@ -27,19 +26,28 @@ struct WorkoutCreationView: View {
                         generalSection
                         exercisesSection
                     }.sheet(isPresented: $viewModel.creatingNewItem, content: {
-                        ExercisesListView()
-                            .environmentObject(viewModel)
-                            .environment(\.managedObjectContext, viewContext)
+                        ExercisesListView(isCreatingExercise: $viewModel.creatingNewItem)
+                            .environmentObject(viewModel.exerciseCreationController)
                     })
                 }
             }
             .accentColor(.redGradientStart)
-            .navigationBarItems(leading: cancelButton,trailing: saveButton)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    cancelButton
+                        .accentColor(.redGradientStart)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                        .accentColor(.redGradientStart)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    saveButton
+                }
+            }
             .navigationTitle("Create Workout")
-        }
+        }.accentColor(.redGradientStart)
     }
-    
-    
     
     @ViewBuilder
     var generalSection: some View {
@@ -54,18 +62,29 @@ struct WorkoutCreationView: View {
                     Text(area.name)
                 }
             }
+            DatePicker("End date", selection: $viewModel.endDate, displayedComponents: .date)
         }
     }
     
     @ViewBuilder
     var exercisesSection: some View {
         Section(header: Text("Exercises")) {
-            List(viewModel.createdExercises) { exercise in
-                NavigationLink(
-                    destination: Text("Destination"),
-                    label: {
-                        ExerciseCreationCell(viewModel: .init(entity: exercise))
-                    })
+            List {
+                ForEach(viewModel.createdExercises, id: \.hashValue) { exercise in
+                    NavigationLink(
+                        destination: Text("Destination"),
+                        label: {
+                            ExerciseCreationCell(viewModel: .init(data: exercise))
+                        })
+                }
+                .onDelete(perform: { indexSet in
+                    viewModel.createdExercises.remove(atOffsets: indexSet)
+                    print(viewModel.createdExercises)
+                })
+                .onMove(perform: { indices, newOffset in
+                    viewModel.createdExercises.move(fromOffsets: indices, toOffset: newOffset)
+                    print(viewModel.createdExercises)
+                })
             }
             Button(action: {
                 viewModel.creatingNewItem = true
@@ -92,9 +111,10 @@ struct WorkoutCreationView: View {
             presentationBinding = false
         } label: {
             Text("Save")
-                .fontWeight(.bold)
+                .fontWeight(viewModel.isStillCreating ? .regular : .bold)
         }
-        .foregroundColor(.redGradientStart)
+        .disabled(viewModel.isStillCreating)
+        .foregroundColor(viewModel.isStillCreating ? .gray : .redGradientStart)
     }
 }
 
