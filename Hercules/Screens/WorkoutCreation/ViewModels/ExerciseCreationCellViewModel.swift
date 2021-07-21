@@ -58,7 +58,7 @@ struct ExerciseCreationCellViewModel {
     
     private func generateIntesity() -> String {
         let formatter = MeasurementFormatter()
-        formatter.locale = Locale.current
+        formatter.locale = Locale.autoupdatingCurrent
         
         switch intesityType {
         case .areaOfRm: return "\(intesity)RM"
@@ -76,7 +76,7 @@ struct ExerciseCreationCellViewModel {
     
     private func generateRestTime() -> String {
         let formatter = MeasurementFormatter()
-        formatter.locale = Locale.current
+        formatter.locale = Locale.autoupdatingCurrent
         
         let time = formatter.string(from: Measurement(value: restTime, unit: UnitDuration.seconds))
         

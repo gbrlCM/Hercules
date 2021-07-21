@@ -66,19 +66,23 @@ struct WorkoutsView: View {
     @ViewBuilder
     var workoutsList: some View {
         List(viewModel.workouts, id: \.hashValue) { workout in
-            VStack {
-                HStack {
-                    Text("\(workout.name) - \(workout.exercises.count) exercises")
-                        .font(.headline)
-                    Spacer()
-                }
-                HStack {
-                    Text(viewModel.dateString(for: workout))
-                        .font(.subheadline)
-                        .foregroundColor(.secondary)
-                    Spacer()
-                }
-            }
+            NavigationLink(
+                destination: WorkoutView(viewModel: WorkoutViewModel(workout: workout)),
+                label: {
+                    VStack {
+                        HStack {
+                            Text("\(workout.name) - \(workout.exercises.count) exercises")
+                                .font(.headline)
+                            Spacer()
+                        }
+                        HStack {
+                            Text(viewModel.dateString(for: workout))
+                                .font(.subheadline)
+                                .foregroundColor(.secondary)
+                            Spacer()
+                        }
+                    }
+                })
         }
     }
 }
