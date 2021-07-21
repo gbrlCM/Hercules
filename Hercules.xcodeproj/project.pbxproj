@@ -64,6 +64,8 @@
 		5BB65FFD26A222E6004DF873 /* ExercisesData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BB65FFC26A222E6004DF873 /* ExercisesData.plist */; };
 		5BB6601526A23CDE004DF873 /* PropertyListDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6601426A23CDE004DF873 /* PropertyListDecoder.swift */; };
 		5BB6601D26A24FAB004DF873 /* ExercisesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6601C26A24FAB004DF873 /* ExercisesListView.swift */; };
+		5BDB151C26A780B000A0B709 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDB151B26A780B000A0B709 /* WorkoutView.swift */; };
+		5BDB151F26A79B9200A0B709 /* WorkoutDaysSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDB151E26A79B9200A0B709 /* WorkoutDaysSection.swift */; };
 		5BE0778A26A3521400591DA1 /* DayButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0778926A3521400591DA1 /* DayButton.swift */; };
 		5BE0778C26A3569700591DA1 /* DaysSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0778B26A3569700591DA1 /* DaysSection.swift */; };
 		5BE0778F26A3573400591DA1 /* DaysSectionViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0778E26A3573400591DA1 /* DaysSectionViewModel.swift */; };
@@ -134,6 +136,8 @@
 		5BB65FFC26A222E6004DF873 /* ExercisesData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExercisesData.plist; sourceTree = "<group>"; };
 		5BB6601426A23CDE004DF873 /* PropertyListDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListDecoder.swift; sourceTree = "<group>"; };
 		5BB6601C26A24FAB004DF873 /* ExercisesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListView.swift; sourceTree = "<group>"; };
+		5BDB151B26A780B000A0B709 /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
+		5BDB151E26A79B9200A0B709 /* WorkoutDaysSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDaysSection.swift; sourceTree = "<group>"; };
 		5BE0778926A3521400591DA1 /* DayButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DayButton.swift; sourceTree = "<group>"; };
 		5BE0778B26A3569700591DA1 /* DaysSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysSection.swift; sourceTree = "<group>"; };
 		5BE0778E26A3573400591DA1 /* DaysSectionViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DaysSectionViewModel.swift; sourceTree = "<group>"; };
@@ -261,7 +265,9 @@
 		5B292A4726A1E51D0026ED5C /* Views */ = {
 			isa = PBXGroup;
 			children = (
+				5BDB151D26A7814E00A0B709 /* Components */,
 				5B292A4826A1E5450026ED5C /* WorkoutsView.swift */,
+				5BDB151B26A780B000A0B709 /* WorkoutView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -476,6 +482,14 @@
 			path = Views;
 			sourceTree = "<group>";
 		};
+		5BDB151D26A7814E00A0B709 /* Components */ = {
+			isa = PBXGroup;
+			children = (
+				5BDB151E26A79B9200A0B709 /* WorkoutDaysSection.swift */,
+			);
+			path = Components;
+			sourceTree = "<group>";
+		};
 		5BE0778826A3520400591DA1 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -574,6 +588,7 @@
 				5B01AEB626A65FC60031A744 /* ExerciseTag.swift in Sources */,
 				5BE0778A26A3521400591DA1 /* DayButton.swift in Sources */,
 				5B01AECE26A720C40031A744 /* ExerciseCreationViewModel.swift in Sources */,
+				5BDB151F26A79B9200A0B709 /* WorkoutDaysSection.swift in Sources */,
 				5B292A4E26A1E5880026ED5C /* FeedView.swift in Sources */,
 				5BE0779526A3867B00591DA1 /* ExerciseCreationCell.swift in Sources */,
 				5B292A6226A1E70D0026ED5C /* StatHighlightsCardViewModel.swift in Sources */,
@@ -605,6 +620,7 @@
 				5B292A3926A1E49F0026ED5C /* ContentView.swift in Sources */,
 				5B292A6826A1E7640026ED5C /* PreviousWorkoutSectionViewModel.swift in Sources */,
 				5B01AE8426A466760031A744 /* WorkoutCreationViewModel.swift in Sources */,
+				5BDB151C26A780B000A0B709 /* WorkoutView.swift in Sources */,
 				5B292A7926A1E85F0026ED5C /* UIApplication.swift in Sources */,
 				5BE0779926A3880700591DA1 /* ExerciseCreationCellViewModel.swift in Sources */,
 				5B01AE8726A468230031A744 /* WorkoutsStorage.swift in Sources */,

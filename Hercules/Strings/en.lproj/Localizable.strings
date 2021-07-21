@@ -10,6 +10,7 @@
 "Name" = "Nome";
 "Area of focus" = "Area of focus";
 "Create Workout" = "Create Workout";
+"There is no workouts yet, but you can create one tapping the button bellow!" = "There is no workouts yet, but you can create one tapping the button bellow!";
 
 //MARK: Days
 "Today" = "Today";

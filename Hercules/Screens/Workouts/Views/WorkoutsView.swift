@@ -11,9 +11,6 @@ struct WorkoutsView: View {
     
     @State
     var isCreatingUser: Bool = false
-    
-    @FetchRequest(fetchRequest: ADWorkout.allWorkouts)
-    var workouts: FetchedResults<ADWorkout>
 
     @ObservedObject
     var viewModel: WorkoutsViewModel = WorkoutsViewModel()
@@ -21,7 +18,7 @@ struct WorkoutsView: View {
     var body: some View {
         NavigationView {
             MainView(background: Color.backgroundColor) {
-                if workouts.isEmpty {
+                if viewModel.workouts.isEmpty {
                     noWorkouts
                 } else {
                     workoutsList
@@ -47,6 +44,9 @@ struct WorkoutsView: View {
     var noWorkouts: some View {
         VStack {
             Text("There is no workouts yet, but you can create one tapping the button bellow!")
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
             Button {
                 isCreatingUser = true
             } label: {
@@ -65,10 +65,17 @@ struct WorkoutsView: View {
     
     @ViewBuilder
     var workoutsList: some View {
-        List(workouts) { workout in
+        List(viewModel.workouts, id: \.hashValue) { workout in
             VStack {
                 HStack {
-                    Text("\(workout.name ?? "nil") - \(workout.exercises?.count ?? 0) exercises")
+                    Text("\(workout.name) - \(workout.exercises.count) exercises")
+                        .font(.headline)
+                    Spacer()
+                }
+                HStack {
+                    Text(viewModel.dateString(for: workout))
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                     Spacer()
                 }
             }
