@@ -10,19 +10,28 @@ import SwiftUI
 
 struct ThisWeekSection: View {
     
+    @ObservedObject
     var viewModel: ThisWeekSectionViewModel
+    @Binding
+    var isCreatingWorkout: Bool
     
     var body: some View {
-        HorizontalSection(viewModel: viewModel) {
+        HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: viewModel.$cardViewModels)) {
             VStack {
                 Text(LocalizedStringKey(viewModel.errorMessage))
+                    .scaledToFit()
                     .padding(.all, 10)
                 EmptySectionButton(title: .addWorkout, symbolName: "plus") {
-                
+                    isCreatingWorkout = true
+                    print("apertei aqui")
                 }
             }
         } content: { index in
-            ThisWeekCard(viewModel: viewModel.cardViewModels[index])
+            NavigationLink(
+                destination: WorkoutView(viewModel: WorkoutViewModel(workout: $viewModel.cardViewModels[index].workout)),
+                label: {
+                    ThisWeekCard(viewModel: viewModel.cardViewModels[index])
+                })
         }
     }
     
@@ -30,7 +39,7 @@ struct ThisWeekSection: View {
 
 struct ThisWeekSection_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = ThisWeekSectionViewModel(cardViewModels: [])
-        ThisWeekSection( viewModel: viewModel)
+        let viewModel = ThisWeekSectionViewModel()
+        ThisWeekSection( viewModel: viewModel, isCreatingWorkout: .constant(true))
     }
 }

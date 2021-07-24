@@ -5,21 +5,24 @@
 //  Created by Gabriel Ferreira de Carvalho on 16/07/21.
 //
 
-import Foundation
+import SwiftUI
 
-struct ThisWeekCardViewModel {
+class ThisWeekCardViewModel: ObservableObject {
     
     let exerciseName: String
     let exerciseDate: String
+    var workout: Workout
     
     init() {
         exerciseName = "Leg - 8 exercises"
         exerciseDate = "Today"
+        workout = Workout()
     }
     
-    init(name: String, dateString: String) {
+    init(name: String, dateString: String, workout: Workout) {
         exerciseName = name
         exerciseDate = dateString
+        self.workout = workout
     }
     
 }

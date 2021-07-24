@@ -11,15 +11,13 @@ import Combine
 
 class ExerciseStorage {
     
-    private let storage: DataStorage
     private let context: NSManagedObjectContext
     
     var userExercisesSubject = PassthroughSubject<[Exercise], Never>()
     var defaultExercisesSubject = PassthroughSubject<[Exercise], Never>()
     
     init() {
-        self.storage = DataStorage.shared
-        self.context = storage.persistentContainer.viewContext
+        self.context = DataStorage.shared.context
     }
     
     func emitAllExercises() {

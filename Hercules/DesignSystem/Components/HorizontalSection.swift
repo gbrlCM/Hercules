@@ -7,12 +7,14 @@
 
 import SwiftUI
 
-struct HorizontalSection<Content: View, EmptyContent: View>: View {
-    let viewModel: HorizontalSectionViewModel
+struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
+    
+    @ObservedObject
+    var viewModel: HorizontalSectionViewModel<T>
     @ViewBuilder let content: ((Int) -> Content)
     @ViewBuilder let emptyContent: (() -> EmptyContent)
     
-    init(viewModel: HorizontalSectionViewModel,@ViewBuilder emptyContent: @escaping (() -> EmptyContent), @ViewBuilder content: @escaping ((Int) -> Content)) {
+    init(viewModel: HorizontalSectionViewModel<T>, @ViewBuilder emptyContent: @escaping (() -> EmptyContent), @ViewBuilder content: @escaping ((Int) -> Content)) {
         self.viewModel = viewModel
         self.content = content
         self.emptyContent = emptyContent
@@ -27,7 +29,7 @@ struct HorizontalSection<Content: View, EmptyContent: View>: View {
                 Spacer()
             }
             
-            if viewModel.elementCount > 0 {
+            if viewModel.cards.count > 0 {
                 grid
             } else {
                 emptyContent()
@@ -40,7 +42,7 @@ struct HorizontalSection<Content: View, EmptyContent: View>: View {
     var grid: some View {
         ScrollView(.horizontal, showsIndicators: false, content: {
             HStack(alignment: .top, spacing: 16) {
-                ForEach(0..<viewModel.elementCount) {index in
+                ForEach(viewModel.cards.indices, id: \.self) {index in
                     content(index)
                 }
             }
@@ -51,15 +53,15 @@ struct HorizontalSection<Content: View, EmptyContent: View>: View {
 
 struct HorizontalSection_Previews: PreviewProvider {
     static var previews: some View {
-        let viewModel = ThisWeekSectionViewModel(cardViewModels: [
-                .init(name: "Leg - 8 exercises", dateString: "Today"),
-                .init(name: "Leg - 8 exercises", dateString: "Today"),
-                .init(name: "Leg - 8 exercises", dateString: "Today"),
-                .init(name: "Leg - 8 exercises", dateString: "Today")
-            ])
+        let viewModel = HorizontalSectionViewModel(sectionTitle: .thisWeek, cards: .constant([
+            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()),
+            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()),
+            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()),
+            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout())
+        ]))
         
         HorizontalSection(viewModel: viewModel, emptyContent: {}) { index in
-            ThisWeekCard(viewModel: viewModel.cardViewModels[index])
+            ThisWeekCard(viewModel: viewModel.cards[index])
         }.environment(\.locale, .init(identifier: "pt_BR"))
     }
 }

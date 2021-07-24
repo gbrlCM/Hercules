@@ -26,7 +26,7 @@ struct ThisWeekCard: View {
     
     @ViewBuilder
     func cardText(_ text: String, font: Font) -> some View {
-        Text(text)
+        Text(LocalizedStringKey(text))
             .frame(minWidth: 0, maxWidth: .infinity, minHeight: 20, idealHeight: 20, maxHeight: 40, alignment: .leading)
             .font(font)
             .foregroundColor(.white)
@@ -37,9 +37,9 @@ struct ThisWeekCard: View {
 struct ThisWeekCard_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            ThisWeekCard(viewModel: .init(name: "Leg - 8 exercises", dateString: "Today"))
+            ThisWeekCard(viewModel: .init(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()))
                 .previewDevice("iPhone 12")
-            ThisWeekCard(viewModel: .init(name: "Leg - 8 exercises", dateString: "Today"))
+            ThisWeekCard(viewModel: .init(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()))
                 .preferredColorScheme(.dark)
                 .previewDevice("iPhone 12")
         }

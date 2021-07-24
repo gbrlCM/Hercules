@@ -13,9 +13,8 @@ struct WorkoutCreationView: View {
     @Binding
     var presentationBinding: Bool
     
-    
     @ObservedObject
-    var viewModel = WorkoutCreationViewModel()
+    var viewModel: WorkoutCreationViewModel
     
     var body: some View {
         NavigationView {
@@ -25,10 +24,11 @@ struct WorkoutCreationView: View {
                     Form {
                         generalSection
                         exercisesSection
-                    }.sheet(isPresented: $viewModel.creatingNewItem, content: {
-                        ExercisesListView(isCreatingExercise: $viewModel.creatingNewItem)
-                            .environmentObject(viewModel.exerciseCreationController)
-                    })
+                    }.sheet(isPresented: $viewModel.creatingNewItem,
+                            content: {
+                                ExercisesListView(isCreatingExercise: $viewModel.creatingNewItem)
+                                    .environmentObject(viewModel.exerciseCreationController)
+                            })
                 }
             }
             .accentColor(.redGradientStart)
@@ -71,11 +71,7 @@ struct WorkoutCreationView: View {
         Section(header: Text("Exercises")) {
             List {
                 ForEach(viewModel.createdExercises, id: \.hashValue) { exercise in
-                    NavigationLink(
-                        destination: Text("Destination"),
-                        label: {
-                            ExerciseCreationCell(viewModel: .init(data: exercise))
-                        })
+                    ExerciseCreationCell(viewModel: .init(data: exercise))
                 }
                 .onDelete(perform: { indexSet in
                     viewModel.createdExercises.remove(atOffsets: indexSet)
@@ -121,9 +117,9 @@ struct WorkoutCreationView: View {
 struct WorkoutsCreation_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutCreationView(presentationBinding: .constant(true))
+            WorkoutCreationView(presentationBinding: .constant(true), viewModel: .init())
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutCreationView(presentationBinding: .constant(true))
+            WorkoutCreationView(presentationBinding: .constant(true), viewModel: .init())
                 .preferredColorScheme(.dark)
         }
     }

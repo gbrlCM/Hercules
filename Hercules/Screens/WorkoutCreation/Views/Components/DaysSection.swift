@@ -14,7 +14,7 @@ struct DaysSection: View {
     var viewModel = DaysSectionViewModel()
     
     var body: some View {
-        HorizontalSection(viewModel: viewModel, emptyContent: {}) { index in
+        HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: .constant(viewModel.days)), emptyContent: {}) { index in
             DayButton(day: viewModel.days[index], isSelected: $isSelected[index])
                 .padding(.top, 4)
                 .padding(.bottom, 12)

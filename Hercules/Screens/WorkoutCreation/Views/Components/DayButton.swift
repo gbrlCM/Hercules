@@ -12,7 +12,7 @@ struct DayButton: View {
     var day: Day
     @Binding var isSelected: Bool
     
-    let unselectedBackground = Color.white
+    let unselectedBackground = Color.cardBackgroundBasic
     let selectedBackground = GradientBackground(start: .redGradientStart, finish: .redGradientFinish)
     
     var body: some View {
@@ -20,7 +20,7 @@ struct DayButton: View {
             Text(day.letter)
                 .font(.system(size: 26))
                 .fontWeight(.heavy)
-                .foregroundColor(isSelected ? .white : .black)
+                .foregroundColor(isSelected ? .white : .primary)
         }
         .frame(width: 44, height: 44, alignment: .center)
         .background(background)

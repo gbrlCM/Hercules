@@ -6,6 +6,7 @@
 //
 
 import Foundation
+import SwiftUI
 import Combine
 
 class WorkoutsViewModel: ObservableObject {
@@ -16,8 +17,8 @@ class WorkoutsViewModel: ObservableObject {
     @Published
     var workouts: [Workout] = []
     
-    init() {
-        storage = WorkoutsStorage()
+    init(dataStorage: WorkoutsStorage) {
+        storage = dataStorage
         cancellables = Set<AnyCancellable>()
         initiateBindings()
         storage.emitAllWorkoutSubjects()
@@ -26,8 +27,7 @@ class WorkoutsViewModel: ObservableObject {
     private func initiateBindings() {
         storage
             .allWorkoutSubjects
-            .assign(to: \.workouts, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$workouts)
     }
     
     func dateString(for workout: Workout) -> String {
