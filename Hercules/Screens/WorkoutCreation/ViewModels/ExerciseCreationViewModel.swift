@@ -24,6 +24,8 @@ class ExerciseCreationViewModel: ObservableObject {
     var didFinishRegistering: Bool = false
     @Published
     var isButtonDisabled: Bool = true
+    @Published
+    var exercise: Exercise
     
     var measurementStyles = IntensityType.allCases
     
@@ -44,7 +46,6 @@ class ExerciseCreationViewModel: ObservableObject {
             }
             .eraseToAnyPublisher()
     }
-    private var exercise: Exercise
     //    var workoutExercise: WorkoutExercise {
     //
     //    }
@@ -83,7 +84,7 @@ class ExerciseCreationViewModel: ObservableObject {
     }
     
     private var intesity: Double {
-        guard let number = NumberFormatter().number(from: repsString)?.doubleValue else {
+        guard let number = NumberFormatter().number(from: intesityString)?.doubleValue else {
             return -1
         }
         

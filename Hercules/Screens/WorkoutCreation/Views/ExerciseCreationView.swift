@@ -17,15 +17,26 @@ struct ExerciseCreationView: View {
     
     @Binding
     var isCreatingExercise: Bool
+    @State
+    var isEditingExercise: Bool
     
     init(exercise: Exercise, isCreatingExercise: Binding<Bool>) {
         self.viewModel = ExerciseCreationViewModel(exercise: exercise)
         self._isCreatingExercise = isCreatingExercise
+        self.isEditingExercise = false
     }
     
     var body: some View {
         MainView(background: Color.backgroundColor) {
             Form {
+                Section(header: Text("Exercise")) {
+                    NavigationLink(
+                        destination: ExercisesEditView(isEditingExercise: $isEditingExercise, exercise: $viewModel.exercise),
+                        isActive: $isEditingExercise,
+                        label: {
+                            Text("Select Exercise")
+                        })
+                }
                 Section(header: Text("Quantity")) {
                     Stepper("Series \(viewModel.series)", value: $viewModel.series, in: 1...100)
                     HStack {
@@ -56,7 +67,10 @@ struct ExerciseCreationView: View {
             }
         }
         .accentColor(.redGradientStart)
+        .navigationBarBackButtonHidden(true)
         .navigationBarItems(trailing: saveButton)
+        .navigationBarTitleDisplayMode(.inline)
+        .navigationTitle(LocalizedStringKey(viewModel.exercise.name))
     }
     
     @ViewBuilder

@@ -13,7 +13,7 @@ struct StatHighlightSection: View {
     var viewModel: StatHighlightSectionViewModel
     
     var body: some View {
-        HorizontalSection(viewModel: viewModel) {
+        HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: viewModel.$cardsViewModels)) {
             
         } content: {index in
             StatsHighlightsCard(viewModel: viewModel.cardsViewModels[index])

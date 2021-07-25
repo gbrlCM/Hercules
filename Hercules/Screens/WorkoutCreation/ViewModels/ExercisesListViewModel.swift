@@ -10,7 +10,7 @@ import Combine
 import CoreData
 import SwiftUI
 
-class ExercisesListViewModel: NSObject, ObservableObject {
+class ExercisesListViewModel:ObservableObject {
     
     @Published
     var tags: [ExerciseTag] = []
@@ -28,14 +28,13 @@ class ExercisesListViewModel: NSObject, ObservableObject {
     var shouldNavigateToNextSecion: Bool = true
     
     @Published
-    var selectedTags: [String] = []
+    var selectedTags: [ExerciseTag] = []
     
     private var cancellables = Set<AnyCancellable>()
     
     private var storage = ExerciseStorage()
     
-    override init() {
-        super.init()
+    init() {
         initiateBindings()
         storage.emitAllExercises()
         tags = PropertyListDecoder.decode("TagsData", to: [ExerciseTag].self) ?? []
@@ -47,7 +46,6 @@ class ExercisesListViewModel: NSObject, ObservableObject {
             .map { exercises -> [Exercise] in
                 var sortedExercises = exercises
                 sortedExercises.sort { $0.name < $1.name}
-                print("ooi")
                 return sortedExercises
             }
             .assign(to: \.fetchedDefaultExercises, on: self)
@@ -71,16 +69,14 @@ class ExercisesListViewModel: NSObject, ObservableObject {
     }
     
     func toggleTag(of tag: ExerciseTag) {
-        let name = tag.name
-        let index = selectedTags.firstIndex(of: name)
+        let index = selectedTags.firstIndex(of: tag)
         if index == nil {
-            selectedTags.append(name)
+            selectedTags.append(tag)
         } else {
             selectedTags.remove(at: index!)
         }
         userExercises = updateExercisesWithTags(for: userExercises)
         defaultExercises = updateExercisesWithTags(for: fetchedDefaultExercises)
-        print(selectedTags)
     }
     
     private func updateExercisesWithTags(for exerciseList: [Exercise]) -> [Exercise] {
@@ -88,8 +84,8 @@ class ExercisesListViewModel: NSObject, ObservableObject {
             return exerciseList
         } else {
             return exerciseList.filter { exercise in
-                let setOfTags = Set(exercise.tags)
-                return setOfTags.isSuperset(of: selectedTags)
+                let setOfTags = Set(exercise.tags.map(\.name))
+                return setOfTags.isSuperset(of: selectedTags.map(\.name))
             }
         }
     }

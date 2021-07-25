@@ -11,15 +11,15 @@ import CoreData
 
 class WorkoutsStorage: NSObject {
     
-    private let storage: DataStorage
+    private let dataStorage: DataStorage
     private let requestController: NSFetchedResultsController<ADWorkout>
     private let context: NSManagedObjectContext
     
     var allWorkoutSubjects = PassthroughSubject<[Workout], Never>()
     
-    override init() {
-        self.storage = DataStorage.shared
-        self.context = storage.persistentContainer.viewContext
+    init(dataStorage: DataStorage = DataStorage.shared) {
+        self.dataStorage = dataStorage
+        self.context = dataStorage.context
         self.requestController = NSFetchedResultsController(fetchRequest: allWorkouts,
                                                             managedObjectContext: context,
                                                             sectionNameKeyPath: nil,
@@ -32,7 +32,7 @@ class WorkoutsStorage: NSObject {
         do {
             try requestController.performFetch()
             guard let objects = requestController.fetchedObjects else { return }
-            allWorkoutSubjects.send(objects.map { Workout(entity: $0) })
+            allWorkoutSubjects.send(objects.compactMap { Workout(entity: $0) })
         } catch {
             print("Error Fetching results")
         }
@@ -41,16 +41,34 @@ class WorkoutsStorage: NSObject {
     func saveWorkout(_ workout: Workout) {
         let entityWorkout = ADWorkout(context: context)
         entityWorkout.fill(withData: workout, context: context)
-        do {
-            try context.save()
-            print("workout saved")
-        } catch(let error) {
-            context.rollback()
-            print("error saving \(error)")
-        }
+        context.safeSave()
     }
     
-    var allWorkouts: NSFetchRequest<ADWorkout> = {
+    func editWorkout(withID url: URL, _ workout: Workout) {
+        guard
+            let id = dataStorage.convertURLToObjectID(url),
+            let entity = context.object(with: id) as? ADWorkout,
+            let entityExercises = entity.exercises?.array as? [ADWorkoutExercise]
+        else {
+            return
+        }
+        let exercises = entityExercises.map { WorkoutExercise(entity: $0) }
+        
+        if !exercises.elementsEqual(workout.exercises) {
+            entityExercises.forEach { exercise in
+                context.delete(exercise)
+            }
+            entity.fill(withData: workout, context: context)
+        } else {
+            entity.daysOfTheWeek = workout.daysOfTheWeek
+            entity.focusArea = Int32(workout.focusArea.rawValue)
+            entity.name = workout.name
+            entity.finalDate = workout.finalDate
+        }
+        context.safeSave()
+    }
+    
+    private var allWorkouts: NSFetchRequest<ADWorkout> = {
         let request: NSFetchRequest<ADWorkout> = ADWorkout.fetchRequest()
         request.sortDescriptors = [NSSortDescriptor(keyPath: \ADWorkout.name, ascending: true)]
         return request
@@ -61,6 +79,13 @@ extension WorkoutsStorage: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let data = controller.fetchedObjects as? [ADWorkout] else { return }
         
-        allWorkoutSubjects.send(data.map { Workout(entity: $0) })
+        do {
+            try context.obtainPermanentIDs(for: data)
+        } catch(let error) {
+            print(error)
+        }
+        
+        allWorkoutSubjects.send(data.compactMap { Workout(entity: $0) })
     }
+    
 }

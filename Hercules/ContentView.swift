@@ -9,23 +9,25 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let dataStorage = DataStorage.shared
+    let workoutStorage: WorkoutsStorage = WorkoutsStorage()
+    let healthStorage: HealthStorage = HealthStorage()
     
     var body: some View {
         TabView {
-            FeedView()
+            FeedView(viewModel: .init(dataStorage: workoutStorage, healthStorage: healthStorage))
                 .tabItem { Label(
                     title: { Text("Feed") },
                     icon: { Image(systemName: "square.grid.2x2.fill") }
                 ) }
-            WorkoutsView()
+            WorkoutsView(viewModel: .init(dataStorage: workoutStorage))
                 .tabItem { Label(
                     title: { Text("Workouts") },
                     icon: { Image(systemName: "flame.fill") }
                 ) }
+        }.onAppear {
+            healthStorage.requestAuthorization()
+            UITableView.appearance().backgroundColor = UIColor.clear
         }
-        
-        .environment(\.managedObjectContext, dataStorage.persistentContainer.viewContext)
         .accentColor(.red)
         .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
     }

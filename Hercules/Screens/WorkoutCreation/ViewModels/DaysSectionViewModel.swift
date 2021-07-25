@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct DaysSectionViewModel: HorizontalSectionViewModel {
+struct DaysSectionViewModel {
     
     var elementCount: Int
     var sectionTitle: StringKey

@@ -13,8 +13,10 @@ struct Workout: Hashable {
     var name: String
     var daysOfTheWeek: [Int]
     var finalDate: Date
+    var objectID: URL?
     
-    init(entity: ADWorkout) {
+    
+    init?(entity: ADWorkout) {
         
         guard
             let name = entity.name,
@@ -23,14 +25,14 @@ struct Workout: Hashable {
             let exercises = entity.exercises?.array as? [ADWorkoutExercise],
             let finalDate = entity.finalDate
         else {
-            preconditionFailure("Database misconfigured or error during registration")
+            return nil
         }
-        
         self.name = name
         self.focusArea = focusArea
         self.daysOfTheWeek = daysOfTheWeek
         self.exercises = exercises.map { WorkoutExercise(entity: $0)}
         self.finalDate = finalDate
+        self.objectID = entity.objectID.uriRepresentation()
     }
     
     init(name: String, focusArea: ExerciseFocusArea, daysOfTheWeek: [Int], exercises: [WorkoutExercise], finalDate: Date) {
@@ -39,6 +41,7 @@ struct Workout: Hashable {
         self.daysOfTheWeek = daysOfTheWeek
         self.exercises = exercises
         self.finalDate = finalDate
+        self.objectID = nil
     }
     
     init() {
@@ -47,5 +50,6 @@ struct Workout: Hashable {
         self.daysOfTheWeek = [1, 3, 5]
         self.exercises = Array(repeating: WorkoutExercise(), count: 6)
         self.finalDate = Date()
+        self.objectID = nil
     }
 }

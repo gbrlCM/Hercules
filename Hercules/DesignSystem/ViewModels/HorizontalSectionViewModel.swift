@@ -5,9 +5,17 @@
 //  Created by Gabriel Ferreira de Carvalho on 16/07/21.
 //
 
-import Foundation
+import SwiftUI
 
-protocol HorizontalSectionViewModel {
-    var elementCount: Int {get set}
-    var sectionTitle: StringKey {get set}
+class HorizontalSectionViewModel<T>: ObservableObject {
+    var sectionTitle: StringKey
+    @Binding
+    var cards: [T]
+    
+    init(sectionTitle: StringKey, cards: Binding<[T]>) {
+        self.sectionTitle = sectionTitle
+        self._cards = cards
+    }
+    
 }
+

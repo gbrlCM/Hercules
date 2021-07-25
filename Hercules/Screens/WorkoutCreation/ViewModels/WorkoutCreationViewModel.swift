@@ -12,19 +12,22 @@ class WorkoutCreationViewModel: ObservableObject {
     
     private let dataStorage = WorkoutsStorage()
     private var cancellables = Set<AnyCancellable>()
+    private let savedObjectID: URL?
     
     @Published
-    var daysSelected: [Bool] = Day.allCases.map {_ in false }
+    var daysSelected: [Bool]
     @Published
-    var nameField: String = ""
+    var nameField: String
     @Published
-    var areaOfFocus: Int = 0
+    var areaOfFocus: Int
     @Published
-    var createdExercises: [WorkoutExercise] = []
+    var createdExercises: [WorkoutExercise]
+    @Published
+    var endDate: Date
+    
     @Published
     var creatingNewItem: Bool = false
-    @Published
-    var endDate: Date = Date()
+    
     var exerciseCreationController = WorkoutExerciseCreationController()
     let areasOfFocus = ExerciseFocusArea.allCases
     
@@ -38,16 +41,30 @@ class WorkoutCreationViewModel: ObservableObject {
                     !nameField.isEmpty,
                     !createdExercises.isEmpty
                 else {
-                    print("true")
                     return true
                 }
-                print("false")
                 return false
             }
             .eraseToAnyPublisher()
     }
     
+    init(workout: Workout) {
+        self.nameField = workout.name
+        self.areaOfFocus = workout.focusArea.rawValue
+        self.createdExercises = workout.exercises
+        self.endDate = workout.finalDate
+        self.savedObjectID = workout.objectID
+        self.daysSelected = Day.allCases.map { day in workout.daysOfTheWeek.contains(day.rawValue) ? true : false }
+        initiateBindings()
+    }
+    
     init() {
+        self.nameField = ""
+        self.areaOfFocus = 1
+        self.createdExercises = []
+        self.endDate = Date()
+        self.savedObjectID = nil
+        self.daysSelected = Day.allCases.map {_ in false }
         initiateBindings()
     }
     
@@ -82,6 +99,11 @@ class WorkoutCreationViewModel: ObservableObject {
                               exercises: createdExercises,
                               finalDate: endDate)
         
-        dataStorage.saveWorkout(workout)
+        
+        if let id = self.savedObjectID {
+            dataStorage.editWorkout(withID: id, workout)
+        } else {
+            dataStorage.saveWorkout(workout)
+        }
     }
 }

@@ -6,11 +6,12 @@
 //
 
 import Foundation
+import SwiftUI
 
 struct Exercise: Decodable, Identifiable {
     let name: String
     let id: String
-    let tags: [String]
+    let tags: [ExerciseTag]
     
     enum CodingKeys: String, CodingKey {
         case name
@@ -27,14 +28,14 @@ struct Exercise: Decodable, Identifiable {
             preconditionFailure("Database misconfigured or error during registration")
         }
         
-        let structTags = tags.compactMap(\.name)
+        let structTags = tags.compactMap{ ExerciseTag(entity: $0) }
         
         self.name = name
         self.id = id.uuidString
         self.tags = structTags
     }
     
-    init(name: String, id: String, tags: [String]) {
+    init(name: String, id: String, tags: [ExerciseTag]) {
         self.name = name
         self.id = id
         self.tags = tags
@@ -43,7 +44,7 @@ struct Exercise: Decodable, Identifiable {
     init() {
         self.name = "swing"
         self.id = "someId"
-        self.tags = ["chest", "back"]
+        self.tags = [ExerciseTag(), ExerciseTag()]
     }
     
     init(from decoder: Decoder) throws {
@@ -55,7 +56,7 @@ struct Exercise: Decodable, Identifiable {
         
         self.name = decodedName
         self.id = id
-        self.tags = tags
+        self.tags = tags.map { ExerciseTag(name: $0, color: Color($0))}
     }
 }
 

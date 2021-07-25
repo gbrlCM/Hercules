@@ -6,11 +6,17 @@
 //
 
 import Foundation
+import SwiftUI
 
 class WorkoutViewModel: ObservableObject {
     
-    @Published
+    @Binding
     var workout: Workout
+    
+    @Published
+    var isEditing: Bool = false
+    
+    private var storage = WorkoutsStorage()
     
     var days:[String] = {
         var calendar = Calendar.current
@@ -28,11 +34,11 @@ class WorkoutViewModel: ObservableObject {
         return formatter.string(from: date)
     }
     
-    init(workout: Workout) {
-        self.workout = workout
+    init(workout: Binding<Workout>) {
+        self._workout = workout
     }
     
     init() {
-        self.workout = Workout()
+        self._workout = .constant(Workout())
     }
 }

@@ -12,8 +12,16 @@ class DataStorage {
     
     static var shared: DataStorage = DataStorage()
     
-    let persistentContainer: NSPersistentContainer
+    private let persistentContainer: NSPersistentContainer
     private let containerName: String
+    
+    var context: NSManagedObjectContext {
+        persistentContainer.viewContext
+    }
+    
+    func convertURLToObjectID(_ url: URL) -> NSManagedObjectID? {
+        persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: url)
+    }
     
     private init() {
         containerName = "HerculesModel"

@@ -5,24 +5,22 @@
 //  Created by Gabriel Ferreira de Carvalho on 16/07/21.
 //
 
-import Foundation
+import SwiftUI
 
-struct StatHighlightSectionViewModel: HorizontalSectionViewModel {
+struct StatHighlightSectionViewModel {
     
-    var elementCount: Int
     var sectionTitle: StringKey
     
+    @Binding
     var cardsViewModels: [StatHighlightsCardViewModel]
     
     init() {
-        cardsViewModels = Array(repeating: StatHighlightsCardViewModel(), count: 4)
-        elementCount = cardsViewModels.count
+        _cardsViewModels = .constant(Array(repeating: StatHighlightsCardViewModel(), count: 4))
         sectionTitle = .statsHighlights
     }
     
-    init(sectionTitle: StringKey, cardsViewModels: [StatHighlightsCardViewModel]) {
-        self.cardsViewModels = cardsViewModels
-        self.elementCount = cardsViewModels.count
+    init(sectionTitle: StringKey, cardsViewModels: Binding<[StatHighlightsCardViewModel]>) {
+        self._cardsViewModels = cardsViewModels
         self.sectionTitle = sectionTitle
     }
     
