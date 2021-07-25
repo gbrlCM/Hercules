@@ -26,7 +26,7 @@ final class FeedViewModel: ObservableObject {
         setupDataStorageBindings()
         setupHealthStorageBindings()
         dataStorage.emitAllWorkoutSubjects()
-        healthStorage.requestActivityRingData()
+        //healthStorage.requestActivityRingData()
         
     }
     

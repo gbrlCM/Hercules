@@ -12,6 +12,9 @@ struct WorkoutView: View {
     @ObservedObject
     var viewModel: WorkoutViewModel
     
+    @State
+    var isPlayingWorkout = false
+    
     var body: some View {
         MainView(background: Color.backgroundColor) {
             VStack {
@@ -25,6 +28,9 @@ struct WorkoutView: View {
         .sheet(isPresented: $viewModel.isEditing) {
             WorkoutCreationView(presentationBinding: $viewModel.isEditing, viewModel: WorkoutCreationViewModel(workout: viewModel.workout))
         }
+        .fullScreenCover(isPresented: $isPlayingWorkout, content: {
+            WorkoutExecutionView()
+        })
     }
     
     @ViewBuilder
@@ -67,7 +73,7 @@ struct WorkoutView: View {
                 title: { Text("Edit") },
                 icon: { Image(systemName: "pencil") }
             ))
-            WorkoutActionButton(action: {}, color: .redGradientStart, label: Label(
+            WorkoutActionButton(action: {isPlayingWorkout = true}, color: .redGradientStart, label: Label(
                 title: { Text("Start") },
                 icon: { Image(systemName: "play.fill") }
             ))
