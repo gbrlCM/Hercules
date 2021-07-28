@@ -210,6 +210,8 @@ class WorkoutExecutionViewModel: ObservableObject {
         let totalRestTime = totalRestTime
         let totalExerciseTime = totalExerciseTime
         let workoutName = workout.name
+        let exerciseCount = workout.exercises.count
+        let seriesCount = workout.exercises.map{$0.series}.reduce(0, +)
         
         healthStorage.saveWorkout(startDate: startDate, duration: generalTime) {[weak self] id in
             
@@ -218,7 +220,9 @@ class WorkoutExecutionViewModel: ObservableObject {
                                          totalTime: generalTime,
                                          restTime: totalRestTime,
                                          exerciseTime: totalExerciseTime,
-                                         workoutName: workoutName)
+                                         workoutName: workoutName,
+                                         exerciseCount: exerciseCount,
+                                         seriesCount: seriesCount)
             print(session)
             self?.storage.saveSession(session, workoutID: workoutId)
         }

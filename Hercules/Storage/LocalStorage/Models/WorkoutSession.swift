@@ -15,12 +15,15 @@ struct WorkoutSession: Hashable {
     let totalTime: TimeInterval
     let restTime: TimeInterval
     let exerciseTime: TimeInterval
+    let exerciseCount: Int
+    let seriesCount: Int
     
     init(entity: ADWorkoutSession) {
         
         guard
             let date = entity.date,
-            let workoutName = entity.workout?.name
+            let workoutName = entity.workout?.name,
+            let exercises = entity.workout?.exercises?.array as? [ADWorkoutExercise]
         
         else {
             preconditionFailure("Database misconfigured or error during registration")
@@ -32,15 +35,19 @@ struct WorkoutSession: Hashable {
         self.exerciseTime = entity.totalExerciseTime
         self.healthStoreID = entity.healthStoreID
         self.workoutName = workoutName
+        self.exerciseCount = exercises.count
+        self.seriesCount = exercises.compactMap { Int($0.series) }.reduce(0, +)
     }
     
-    init(healthStoreID: String?, date: Date, totalTime: TimeInterval, restTime: TimeInterval, exerciseTime: TimeInterval, workoutName: String) {
+    init(healthStoreID: String?, date: Date, totalTime: TimeInterval, restTime: TimeInterval, exerciseTime: TimeInterval, workoutName: String, exerciseCount: Int, seriesCount: Int) {
         self.healthStoreID = healthStoreID
         self.date = date
         self.totalTime = totalTime
         self.restTime = restTime
         self.exerciseTime = exerciseTime
         self.workoutName = workoutName
+        self.exerciseCount = exerciseCount
+        self.seriesCount = seriesCount
     }
     
     init() {
@@ -50,5 +57,7 @@ struct WorkoutSession: Hashable {
         self.exerciseTime = 2500
         self.restTime = 500
         self.workoutName = "Leg Day"
+        self.exerciseCount = 4
+        self.seriesCount = 36
     }
 }

@@ -16,11 +16,11 @@ struct WorkoutSummaryView: View {
     var exerciseTime: TimeInterval
     var exerciseCount: Int
     var seriesCount: Int
-    var saveButtonAction: () -> Void
+    var saveButtonAction: (() -> Void)?
     
-    private let formatter: ElapsedTimeFormatter = {
-       let formatter = ElapsedTimeFormatter()
-        formatter.showSubseconds = false
+    private let formatter: DateComponentsFormatter = {
+       let formatter = DateComponentsFormatter()
+        formatter.allowedUnits = [.hour, .minute, .second]
         return formatter
     }()
     
@@ -36,7 +36,7 @@ struct WorkoutSummaryView: View {
                         .font(.title3)
                         .bold()
                         .padding(.bottom, 2)
-                    Text(NSNumber(value: totalTime), formatter: formatter)
+                    Text(formatter.string(from: totalTime) ?? "")
                         .font(.title.bold())
                         .foregroundColor(.red)
                 }
@@ -51,7 +51,7 @@ struct WorkoutSummaryView: View {
                                 .font(.title3)
                                 .bold()
                                 .padding(.bottom, 2)
-                            Text(NSNumber(value: restTime), formatter: formatter)
+                            Text(formatter.string(from: restTime) ?? "")
                                 .font(.title2.bold())
                                 .foregroundColor(.pink)
                         }
@@ -67,7 +67,7 @@ struct WorkoutSummaryView: View {
                                 .font(.title3)
                                 .bold()
                                 .padding(.bottom, 2)
-                            Text(NSNumber(value: exerciseTime), formatter: formatter)
+                            Text(formatter.string(from: exerciseTime) ?? "")
                                 .font(.title2.bold())
                                 .foregroundColor(.pink)
                         }
@@ -112,17 +112,19 @@ struct WorkoutSummaryView: View {
                     .cornerRadius(12)
                 }
                 Spacer()
-                Button {saveButtonAction()} label: {
-                    HStack {
-                        Spacer()
-                        Text("Save")
-                            .font(.title3)
-                            .bold()
-                        Spacer()
+                if let action = saveButtonAction {
+                    Button {action()} label: {
+                        HStack {
+                            Spacer()
+                            Text("Save")
+                                .font(.title3)
+                                .bold()
+                            Spacer()
+                        }
                     }
+                    .padding()
+                    .background(Capsule().fill(Color.red.opacity(0.25)))
                 }
-                .padding()
-                .background(Capsule().fill(Color.red.opacity(0.25)))
             }
             .padding(.horizontal, 32)
             .padding(.bottom, 8)

@@ -44,9 +44,11 @@ struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
             HStack(alignment: .top, spacing: 16) {
                 ForEach(viewModel.cards.indices, id: \.self) {index in
                     content(index)
+                        .padding(.vertical, 12)
                 }
             }
-        }).padding(.leading, 16)
+        })
+        .padding(.leading, 16)
     }
 
 }

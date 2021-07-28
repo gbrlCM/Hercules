@@ -87,6 +87,7 @@
 		5BC8D76326AB31E400662A6C /* HealthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8D76226AB31E400662A6C /* HealthStorage.swift */; };
 		5BC8D76626AB6A5F00662A6C /* ActivityRingData.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8D76526AB6A5F00662A6C /* ActivityRingData.swift */; };
 		5BC8D76826ABA88B00662A6C /* ActivityRingCard.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8D76726ABA88B00662A6C /* ActivityRingCard.swift */; };
+		5BD20C4026B1E42500BD81B8 /* PreviousWorkoutsCellViewModelFactory.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BD20C3F26B1E42500BD81B8 /* PreviousWorkoutsCellViewModelFactory.swift */; };
 		5BDB151C26A780B000A0B709 /* WorkoutView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDB151B26A780B000A0B709 /* WorkoutView.swift */; };
 		5BDB151F26A79B9200A0B709 /* WorkoutDaysSection.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDB151E26A79B9200A0B709 /* WorkoutDaysSection.swift */; };
 		5BDB152126A88DA000A0B709 /* WorkoutViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BDB152026A88D9F00A0B709 /* WorkoutViewModel.swift */; };
@@ -185,6 +186,7 @@
 		5BC8D76226AB31E400662A6C /* HealthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStorage.swift; sourceTree = "<group>"; };
 		5BC8D76526AB6A5F00662A6C /* ActivityRingData.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRingData.swift; sourceTree = "<group>"; };
 		5BC8D76726ABA88B00662A6C /* ActivityRingCard.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ActivityRingCard.swift; sourceTree = "<group>"; };
+		5BD20C3F26B1E42500BD81B8 /* PreviousWorkoutsCellViewModelFactory.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PreviousWorkoutsCellViewModelFactory.swift; sourceTree = "<group>"; };
 		5BDB151B26A780B000A0B709 /* WorkoutView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutView.swift; sourceTree = "<group>"; };
 		5BDB151E26A79B9200A0B709 /* WorkoutDaysSection.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDaysSection.swift; sourceTree = "<group>"; };
 		5BDB152026A88D9F00A0B709 /* WorkoutViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModel.swift; sourceTree = "<group>"; };
@@ -333,6 +335,7 @@
 		5B292A4A26A1E5560026ED5C /* Feed */ = {
 			isa = PBXGroup;
 			children = (
+				5BD20C3E26B1E3D100BD81B8 /* Factories */,
 				5B292A4F26A1E59F0026ED5C /* ViewModels */,
 				5B292A4B26A1E55B0026ED5C /* Views */,
 			);
@@ -611,6 +614,14 @@
 			path = Models;
 			sourceTree = "<group>";
 		};
+		5BD20C3E26B1E3D100BD81B8 /* Factories */ = {
+			isa = PBXGroup;
+			children = (
+				5BD20C3F26B1E42500BD81B8 /* PreviousWorkoutsCellViewModelFactory.swift */,
+			);
+			path = Factories;
+			sourceTree = "<group>";
+		};
 		5BDB151D26A7814E00A0B709 /* Components */ = {
 			isa = PBXGroup;
 			children = (
@@ -741,6 +752,7 @@
 				5B01AECA26A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift in Sources */,
 				5BB65F9326A20147004DF873 /* StringKeys.swift in Sources */,
 				5B01AEB426A659970031A744 /* Exercise.swift in Sources */,
+				5BD20C4026B1E42500BD81B8 /* PreviousWorkoutsCellViewModelFactory.swift in Sources */,
 				5BC8D74F26A90A2500662A6C /* TagButton.swift in Sources */,
 				5B37B42D26AF6F9E00B9A940 /* NotificationManager.swift in Sources */,
 				5B01AECC26A717860031A744 /* ADExercise+Exercise.swift in Sources */,
@@ -954,7 +966,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Hercules;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Arnold;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
@@ -977,7 +989,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Hercules;
+				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Arnold;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
 				TARGETED_DEVICE_FAMILY = 1;
