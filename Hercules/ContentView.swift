@@ -26,6 +26,7 @@ struct ContentView: View {
                 ) }
         }.onAppear {
             healthStorage.requestAuthorization()
+            UserNotificationManager.shared.requestAuthorization()
             UITableView.appearance().backgroundColor = UIColor.clear
         }
         .accentColor(.red)

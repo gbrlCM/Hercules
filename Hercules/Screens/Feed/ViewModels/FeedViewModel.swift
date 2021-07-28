@@ -16,6 +16,9 @@ final class FeedViewModel: ObservableObject {
     
     @Published
     var thisWeekCardViewModel: [ThisWeekCardViewModel] = []
+    
+    @Published
+    var sessions: [WorkoutSession] = []
 
     @Published
     var activityRing: [ActivityRingData] = []
@@ -33,11 +36,13 @@ final class FeedViewModel: ObservableObject {
     func setupDataStorageBindings() {
         dataStorage
             .allWorkoutSubjects
-            .map { workouts -> [ThisWeekCardViewModel] in
+            .map {[weak self] workouts -> [ThisWeekCardViewModel] in
                 var calendar = Calendar.current
                 calendar.locale = Locale.autoupdatingCurrent
                 let days = calendar.weekdaySymbols
                 let today = calendar.component(.weekday, from: Date())
+                
+                self?.sessions = workouts.flatMap { $0.sessions }
                 
                 var workoutGroupedByDay = workouts
                     .filter { workout in workout.finalDate >= Date() }
@@ -62,7 +67,6 @@ final class FeedViewModel: ObservableObject {
             }
             .assign(to: \.thisWeekCardViewModel, on: self)
             .store(in: &cancellables)
-
     }
     
     func setupHealthStorageBindings() {

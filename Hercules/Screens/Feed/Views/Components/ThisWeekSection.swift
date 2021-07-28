@@ -23,7 +23,6 @@ struct ThisWeekSection: View {
                     .padding(.all, 10)
                 EmptySectionButton(title: .addWorkout, symbolName: "plus") {
                     isCreatingWorkout = true
-                    print("apertei aqui")
                 }
             }
         } content: { index in

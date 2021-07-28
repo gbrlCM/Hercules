@@ -75,11 +75,9 @@ struct WorkoutCreationView: View {
                 }
                 .onDelete(perform: { indexSet in
                     viewModel.createdExercises.remove(atOffsets: indexSet)
-                    print(viewModel.createdExercises)
                 })
                 .onMove(perform: { indices, newOffset in
                     viewModel.createdExercises.move(fromOffsets: indices, toOffset: newOffset)
-                    print(viewModel.createdExercises)
                 })
             }
             Button(action: {

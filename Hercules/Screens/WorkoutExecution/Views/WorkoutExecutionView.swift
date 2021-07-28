@@ -8,18 +8,16 @@
 import SwiftUI
 
 struct WorkoutExecutionView: View {
-    @State
-    var limit: TimeInterval = 10
-    @State
-    var timer: TimeInterval = 4.0
     
-    var timerPublisher = Timer.publish(every: 1/60, on: .main, in: .common).autoconnect()
+    @Environment(\.presentationMode) var presentationMode
     
     var strokeStyle = StrokeStyle(lineWidth: 20, lineCap: .round, lineJoin: .round)
     
-    var progress: Double {
-        timer/limit
-    }
+    @ObservedObject
+    var viewModel: WorkoutExecutionViewModel
+    
+    
+    let timeFormatter = ElapsedTimeFormatter()
     
     var body: some View {
         MainView(background: Color.backgroundColor) {
@@ -28,53 +26,57 @@ struct WorkoutExecutionView: View {
                 clock
                 exercisesList
                 buttonsStack
-            }.onReceive(timerPublisher, perform: { _ in
-                if limit > timer {
-                    timer += (1/60)
-                }
+            }.onReceive(viewModel.timer, perform: { _ in
+                viewModel.updateTimer()
             })
+            .sheet(isPresented: $viewModel.isPresentingExerciseList) {
+                
+            } content: {
+                WorkoutListView(workout: $viewModel.workout, isPresenting: $viewModel.isPresentingExerciseList)
+            }
+            .sheet(isPresented: $viewModel.isPresentingSummary) {
+                presentationMode.wrappedValue.dismiss()
+                viewModel.saveWorkoutSession()
+            } content: {
+                WorkoutSummaryView(workoutName: viewModel.workout.name,
+                                   totalTime: viewModel.generalTime,
+                                   restTime: viewModel.totalRestTime,
+                                   exerciseTime: viewModel.totalExerciseTime,
+                                   exerciseCount: viewModel.workout.exercises.count,
+                                   seriesCount: viewModel.workout.exercises.map(\.series).reduce(0, +))
+                    { viewModel.isPresentingSummary = false }
+            }
             
         }
     }
     @ViewBuilder
     var header: some View {
-        Text("Weight Squats")
-            .font(.title.bold())
-        Text("4 x 12 - 80% 1RM")
+        WorkoutExecutionHeader(viewModel: .init(data: viewModel.currentExercise))
     }
     
     @ViewBuilder
     var clock: some View {
-        ZStack {
-            Circle()
-                .stroke(style: strokeStyle)
-                .padding(24)
-                .foregroundColor(.timerBackground)
-            Circle()
-                .trim(from: 0, to: CGFloat(progress))
-                .stroke(style: strokeStyle)
-                .foregroundColor(.red)
-                .animation(.easeInOut)
-                .padding(24)
-            Text(NSNumber(value: timer), formatter: ElapsedTimeFormatter())
-                .fontWeight(.heavy)
-                .font(.largeTitle)
-            
-        }
+        WorkoutClock(progress: viewModel.restTimeProgress,
+                     primaryTimer: viewModel.generalTime,
+                     secondaryTimer: viewModel.viewState == .exercise ?
+                        viewModel.exerciseTime : viewModel.restTime,
+                     isPrimaryTimerInHighlight: {viewModel.viewState == .exercise})
     }
     
     @ViewBuilder
     var exercisesList: some View {
         List {
-            Section(header: Text("2 out of 4")) {
-                ForEach(0..<10) { _ in
+            Section(header: Text("\(viewModel.currentSerie, specifier: "%d") out of \(viewModel.currentExercise.series, specifier: "%d")")) {
+                ForEach(viewModel.doneSeriesTimer.indices, id: \.self) { index in
                     VStack(alignment: .leading) {
-                        Text("1st Serie")
-                        Text("01:24")
+                        Text("Serie - \(index+1)")
+                        Text(NSNumber(value: viewModel.doneSeriesTimer[index]), formatter: timeFormatter)
                     }
                 }
+                .listRowBackground(Color.backgroundColor)
             }
-        }.frame(height: 200)
+        }
+        .frame(height: 200)
     }
     
     @ViewBuilder
@@ -94,11 +96,12 @@ struct WorkoutExecutionView: View {
     
     @ViewBuilder
     var quitButton: some View {
-        Button(action: {}, label: {
+        Button(action: {viewModel.finishWorkout()}, label: {
             Image(systemName: "xmark")
                 .font(.title2.bold())
                 .foregroundColor(.white)
                 .padding(.all, 12)
+                .frame(width: 50, height: 50, alignment: .center)
                 .background(Capsule().fill(Color.red))
         })
     }
@@ -107,7 +110,7 @@ struct WorkoutExecutionView: View {
     var middleButtonsStack: some View {
         ZStack {
             HStack {
-                Button(action: {}, label: {
+                Button(action: {viewModel.skip()}, label: {
                     Text("Skip")
                         .bold()
                         .foregroundColor(.redGradientFinish)
@@ -116,18 +119,20 @@ struct WorkoutExecutionView: View {
                         .padding(.vertical, 10)
                         .background(Capsule().fill(Color.redGradientFinish.opacity(0.25)))
                 })
-                Button(action: {}, label: {
-                    Text("Next")
+                Button(action: {viewModel.next()}, label: {
+                    Text(viewModel.viewState == .exercise ? "Next" : "Start" )
                         .bold()
-                        .foregroundColor(.redGradientFinish)
+                        .foregroundColor(.redGradientFinish.opacity(viewModel.isPaused ? 0.1 : 1))
                         .padding(.leading, 42)
                         .padding(.trailing, 16)
                         .padding(.vertical, 10)
-                        .background(Capsule().fill(Color.redGradientFinish.opacity(0.25)))
-                })
+                        .background(Capsule().fill(Color.redGradientFinish.opacity(
+                            viewModel.isPaused ? 0.1 : 0.25
+                        )))
+                }).disabled(viewModel.isPaused)
             }
-            Button(action: {}, label: {
-                Image(systemName: "play.fill")
+            Button(action: {viewModel.tooglePause()}, label: {
+                Image(systemName: viewModel.isPaused ? "play.fill" : "pause.fill")
                     .font(.title2.bold())
                     .foregroundColor(.white)
                     .padding(.all, 18)
@@ -138,11 +143,12 @@ struct WorkoutExecutionView: View {
     
     @ViewBuilder
     var moreInfoButtonStack: some View {
-        Button(action: {}, label: {
-            Image(systemName: "xmark")
+        Button(action: {viewModel.isPresentingExerciseList = true}, label: {
+            Image(systemName: "note.text")
                 .font(.title2.bold())
                 .foregroundColor(.white)
                 .padding(.all, 12)
+                .frame(width: 50, height: 50, alignment: .center)
                 .background(Capsule().fill(Color.red))
         })
     }
@@ -151,41 +157,12 @@ struct WorkoutExecutionView: View {
 struct WorkoutExecutionView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutExecutionView()
-                .preferredColorScheme(.light)
-            WorkoutExecutionView()
+            WorkoutExecutionView(viewModel: .init(workout: Workout()))
+                .preferredColorScheme(.dark)
+                .environment(\.locale, .init(identifier: "pt_BR"))
+            WorkoutExecutionView(viewModel: .init(workout: Workout()))
                 .previewDevice("iPhone SE (2nd generation)")
                 .preferredColorScheme(.light)
         }
-    }
-}
-
-class ElapsedTimeFormatter: Formatter {
-    
-    let componentsFormatter: DateComponentsFormatter = {
-        let formatter = DateComponentsFormatter()
-        formatter.allowedUnits = [.minute, .second]
-        formatter.zeroFormattingBehavior = .pad
-        return formatter
-    }()
-    
-    var showSubseconds = true
-    
-    override func string(for obj: Any?) -> String? {
-        guard
-            let time = obj as? TimeInterval,
-            let formattedStrings = componentsFormatter.string(from: time)
-        
-        else {
-            return nil
-        }
-        
-        if self.showSubseconds {
-            let hundredths = Int((time.truncatingRemainder(dividingBy: 1)) * 100)
-            let decimalSeparator = Locale.current.decimalSeparator ?? "."
-            return String(format: "%@%@%0.2d", formattedStrings, decimalSeparator, hundredths)
-        }
-        
-        return formattedStrings
     }
 }

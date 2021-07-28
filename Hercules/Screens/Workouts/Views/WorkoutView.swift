@@ -29,7 +29,7 @@ struct WorkoutView: View {
             WorkoutCreationView(presentationBinding: $viewModel.isEditing, viewModel: WorkoutCreationViewModel(workout: viewModel.workout))
         }
         .fullScreenCover(isPresented: $isPlayingWorkout, content: {
-            WorkoutExecutionView()
+            WorkoutExecutionView(viewModel: WorkoutExecutionViewModel(workout: viewModel.workout))
         })
     }
     

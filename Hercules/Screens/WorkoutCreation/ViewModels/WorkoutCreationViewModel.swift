@@ -97,7 +97,8 @@ class WorkoutCreationViewModel: ObservableObject {
                               focusArea: focusArea,
                               daysOfTheWeek: days,
                               exercises: createdExercises,
-                              finalDate: endDate)
+                              finalDate: endDate,
+                              sessions: [])
         
         
         if let id = self.savedObjectID {
