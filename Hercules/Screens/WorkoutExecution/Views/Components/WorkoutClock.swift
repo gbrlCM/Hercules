@@ -51,7 +51,7 @@ struct WorkoutClock: View {
                 .animation(.easeInOut)
                 .padding(.bottom, 4)
             
-            Text(isPrimaryTimerInHighlight() ? "Exercise" : "Rest")
+            Text(isPrimaryTimerInHighlight() ? "Exercise" : "restTime")
             Text(NSNumber(value: secondaryTimer), formatter: secondaryTimeFormatter)
                 .font(.monospacedDigit(isPrimaryTimerInHighlight() ? .title3 : .largeTitle)())
                 .fontWeight(.heavy)

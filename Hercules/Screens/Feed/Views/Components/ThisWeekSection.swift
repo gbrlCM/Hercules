@@ -16,8 +16,12 @@ struct ThisWeekSection: View {
     var isCreatingWorkout: Bool
     
     var body: some View {
+        
         HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: viewModel.$cardViewModels)) {
             VStack {
+                NavigationLink(destination: EmptyView()) {
+                    EmptyView()
+                }
                 Text(LocalizedStringKey(viewModel.errorMessage))
                     .font(.system(size: 14))
                     .lineLimit(10)

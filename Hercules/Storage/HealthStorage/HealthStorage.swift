@@ -54,6 +54,7 @@ class HealthStorage {
             }
             self?.storage.execute(query)
         }
+        .receive(on: RunLoop.main)
         .map { summary  in
             let energyUnit = HKUnit.kilocalorie()
             let standUnit = HKUnit.count()

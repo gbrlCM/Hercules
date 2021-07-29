@@ -47,7 +47,7 @@ struct WorkoutSummaryView: View {
                     HStack {
                         Spacer()
                         VStack {
-                            Text("Rest")
+                            Text("restTime")
                                 .font(.title3)
                                 .bold()
                                 .padding(.bottom, 2)

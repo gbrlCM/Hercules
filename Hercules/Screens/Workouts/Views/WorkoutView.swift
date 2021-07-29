@@ -18,6 +18,9 @@ struct WorkoutView: View {
     var body: some View {
         MainView(background: Color.backgroundColor) {
             VStack {
+                NavigationLink(destination: EmptyView()) {
+                    EmptyView()
+                }
                 infoSection
                 exerciseSection
                 actionSection

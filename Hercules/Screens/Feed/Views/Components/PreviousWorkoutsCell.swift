@@ -13,6 +13,9 @@ struct PreviousWorkoutsCell: View {
     var viewModel: PreviousWorkoutCellViewModel
     
     var body: some View {
+        NavigationLink(destination: EmptyView()) {
+            EmptyView()
+        }
         NavigationLink(
             destination: WorkoutSummaryView(workoutName: viewModel.session.workoutName,
                                             totalTime: viewModel.session.totalTime,

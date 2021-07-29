@@ -151,3 +151,11 @@
 //MARK: Notifications
 "Your rest time is over!" = "Acabou seu tempo de descanso!";
 "Let's get back to work!" = "De volta ao trabalho!";
+
+//MARK: Execução de Exercicio
+"Skip" = "Pular";
+"Next" = "Prox.";
+"Start" = "Iniciar";
+"restTime" = "Descanso";
+"Exercise" = "Exercício";
+"Total time" = "Tempo total";
