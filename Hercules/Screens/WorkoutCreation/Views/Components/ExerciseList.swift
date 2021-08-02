@@ -50,7 +50,7 @@ struct ExerciseList_Previews: PreviewProvider {
     static var previews: some View {
         ExerciseList( viewModel: .init()) { exercise in
             NavigationLink(
-                destination: ExerciseCreationView(exercise: exercise, isCreatingExercise: .constant(false)).navigationTitle(LocalizedStringKey(exercise.name)),
+                destination: ExerciseCreationView(viewModel: .init(exercise: .init()), isCreatingExercise: .constant(false)).navigationTitle(LocalizedStringKey(exercise.name)),
                 label: {
                     ExerciseCell(exercise: exercise)
                 })

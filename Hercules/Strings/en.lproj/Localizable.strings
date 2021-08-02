@@ -147,6 +147,8 @@
 "Value" = "Value";
 "Rest time(segs)" = "Rest time(segs)";
 "End date" = "End date";
+"Workout name..." = "Workout name...";
+"Add Exercise" = "Add Exercise";
 
 //MARK: Notifications
 "Your rest time is over!" = "Your rest time is over!";

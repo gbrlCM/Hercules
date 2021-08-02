@@ -183,6 +183,7 @@ class WorkoutExecutionViewModel: ObservableObject {
     }
     
     private func nextExercise() {
+        notificationManager.cancelRestingNotifications()
         if currentExerciseIndex < workout.exercises.count-1 {
             updateExercise()
         } else {

@@ -12,16 +12,11 @@ struct ExercisesListView: View {
     @Binding
     var isCreatingExercise: Bool
     
-    init(isCreatingExercise: Binding<Bool>) {
-        self._isCreatingExercise = isCreatingExercise
-    }
-    
     var body: some View {
         NavigationView {
             ExerciseList(viewModel: ExercisesListViewModel()) { exercise in
                 NavigationLink(
-                    destination: ExerciseCreationView(exercise: exercise,
-                                                      isCreatingExercise: $isCreatingExercise),
+                    destination: ExerciseCreationView(viewModel: .init(exercise: exercise), isCreatingExercise: $isCreatingExercise),
                     label: {
                         ExerciseCell(exercise: exercise)
                     })

@@ -147,6 +147,8 @@
 "Value" = "Valor";
 "Rest time(segs)" = "Tempo de descanso (segs)";
 "End date" = "Data final";
+"Workout name..." = "Nome do treino...";
+"Add Exercise" = "Adicionar exercício";
 
 //MARK: Notifications
 "Your rest time is over!" = "Acabou seu tempo de descanso!";
