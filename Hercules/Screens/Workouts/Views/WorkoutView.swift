@@ -18,6 +18,9 @@ struct WorkoutView: View {
     var body: some View {
         MainView(background: Color.backgroundColor) {
             VStack {
+                NavigationLink(destination: EmptyView()) {
+                    EmptyView()
+                }
                 infoSection
                 exerciseSection
                 actionSection
@@ -29,7 +32,7 @@ struct WorkoutView: View {
             WorkoutCreationView(presentationBinding: $viewModel.isEditing, viewModel: WorkoutCreationViewModel(workout: viewModel.workout))
         }
         .fullScreenCover(isPresented: $isPlayingWorkout, content: {
-            WorkoutExecutionView()
+            WorkoutExecutionView(viewModel: WorkoutExecutionViewModel(workout: viewModel.workout))
         })
     }
     

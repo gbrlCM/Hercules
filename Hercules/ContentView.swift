@@ -25,7 +25,7 @@ struct ContentView: View {
                     icon: { Image(systemName: "flame.fill") }
                 ) }
         }.onAppear {
-            healthStorage.requestAuthorization()
+            UserNotificationManager.shared.requestAuthorization()
             UITableView.appearance().backgroundColor = UIColor.clear
         }
         .accentColor(.red)

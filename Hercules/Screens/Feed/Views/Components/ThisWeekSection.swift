@@ -16,14 +16,18 @@ struct ThisWeekSection: View {
     var isCreatingWorkout: Bool
     
     var body: some View {
+        
         HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: viewModel.$cardViewModels)) {
             VStack {
+                NavigationLink(destination: EmptyView()) {
+                    EmptyView()
+                }
                 Text(LocalizedStringKey(viewModel.errorMessage))
-                    .scaledToFit()
-                    .padding(.all, 10)
+                    .font(.system(size: 14))
+                    .lineLimit(10)
+                    .padding()
                 EmptySectionButton(title: .addWorkout, symbolName: "plus") {
                     isCreatingWorkout = true
-                    print("apertei aqui")
                 }
             }
         } content: { index in

@@ -14,6 +14,19 @@ class HealthStorage {
     private let storage: HKHealthStore
     var isAvailable: Bool { HKHealthStore.isHealthDataAvailable() }
     
+    let writeTypes: Set = [
+        HKQuantityType.workoutType(),
+        HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+        HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
+    ]
+    
+    let readTypes: Set = [
+        HKQuantityType.workoutType(),
+        HKQuantityType.quantityType(forIdentifier: .heartRate)!,
+        HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
+        HKObjectType.activitySummaryType()
+    ]
+    
     init() {
         storage = HKHealthStore()
     }
@@ -41,6 +54,7 @@ class HealthStorage {
             }
             self?.storage.execute(query)
         }
+        .receive(on: RunLoop.main)
         .map { summary  in
             let energyUnit = HKUnit.kilocalorie()
             let standUnit = HKUnit.count()
@@ -64,27 +78,42 @@ class HealthStorage {
         .eraseToAnyPublisher()
     }
     
-    func requestAuthorization() {
-        
-        let writeTypes: Set = [
-            HKQuantityType.workoutType(),
-            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!
-        ]
-        
-        let readTypes: Set = [
-            HKQuantityType.workoutType(),
-            HKQuantityType.quantityType(forIdentifier: .heartRate)!,
-            HKQuantityType.quantityType(forIdentifier: .activeEnergyBurned)!,
-            HKObjectType.activitySummaryType()
-        ]
-        
+    func requestAuthorization(completionHandler: ((Bool) -> Void)? = nil) {
         storage.requestAuthorization(toShare: writeTypes, read: readTypes ) { success, error in
             if success {
-                print(success)
+                if let handler = completionHandler {
+                    handler(success)
+                }
             } else if let error = error {
                 print(error)
+                return
             }
         }
+    }
+    
+    func saveWorkout(startDate: Date, duration: TimeInterval, completionHandler: @escaping (UUID?) -> Void) {
+        guard isAvailable else { return }
+        
+        requestAuthorization {[weak self] success in
+            if success {
+                let workout = HKWorkout(activityType: .traditionalStrengthTraining,
+                                        start: startDate,
+                                        end: Date(),
+                                        duration: duration,
+                                        totalEnergyBurned: nil,
+                                        totalDistance: nil,
+                                        device: nil,
+                                        metadata: nil)
+                
+                self?.storage.save(workout) { success, error in
+                    if success {
+                        completionHandler(workout.uuid)
+                    } else {
+                        completionHandler(nil)
+                    }
+                }
+            }
+        }
+        
     }
 }

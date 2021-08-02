@@ -15,7 +15,16 @@ final class FeedViewModel: ObservableObject {
     private var cancellables = Set<AnyCancellable>()
     
     @Published
+    var isOnForeground = true
+    
+    @Published
     var thisWeekCardViewModel: [ThisWeekCardViewModel] = []
+    
+    @Published
+    private var fetchedThisWeekCardViewModel: [ThisWeekCardViewModel] = []
+    
+    @Published
+    var sessions: [WorkoutSession] = []
 
     @Published
     var activityRing: [ActivityRingData] = []
@@ -24,7 +33,7 @@ final class FeedViewModel: ObservableObject {
         self.dataStorage = dataStorage
         self.healthStorage = healthStorage
         setupDataStorageBindings()
-        setupHealthStorageBindings()
+        requestHealthStoreData()
         dataStorage.emitAllWorkoutSubjects()
         //healthStorage.requestActivityRingData()
         
@@ -33,11 +42,13 @@ final class FeedViewModel: ObservableObject {
     func setupDataStorageBindings() {
         dataStorage
             .allWorkoutSubjects
-            .map { workouts -> [ThisWeekCardViewModel] in
+            .map {[weak self] workouts -> [ThisWeekCardViewModel] in
                 var calendar = Calendar.current
                 calendar.locale = Locale.autoupdatingCurrent
                 let days = calendar.weekdaySymbols
                 let today = calendar.component(.weekday, from: Date())
+                
+                self?.sessions = workouts.flatMap { $0.sessions }
                 
                 var workoutGroupedByDay = workouts
                     .filter { workout in workout.finalDate >= Date() }
@@ -57,15 +68,32 @@ final class FeedViewModel: ObservableObject {
                     }
                 }
                 workoutGroupedByDay.sort { $0.1 < $1.1 }
-                
+                print(workoutGroupedByDay)
                 return workoutGroupedByDay.map { $0.0 }
             }
-            .assign(to: \.thisWeekCardViewModel, on: self)
-            .store(in: &cancellables)
-
+            .assign(to: &$fetchedThisWeekCardViewModel)
+        
+        Publishers.CombineLatest($isOnForeground, $fetchedThisWeekCardViewModel)
+            .filter { (isOnForeground, fetchedThisWeekCardViewModel) in
+                isOnForeground
+            }
+            .map { (isOnForeground, fetchedThisWeekCardViewModel) in
+                return fetchedThisWeekCardViewModel
+            }
+            .assign(to: &$thisWeekCardViewModel)
     }
     
-    func setupHealthStorageBindings() {
+    func requestHealthStoreData() {
+        
+        healthStorage.requestAuthorization {[weak self] sucess in
+            if sucess {
+                self?.bindingActivityRing()
+            }
+        }
+        
+    }
+    
+    func bindingActivityRing() {
         healthStorage
             .activityRingPublisher
             .assign(to: &$activityRing)

@@ -10,6 +10,7 @@ import Foundation
 struct Workout: Hashable {
     var focusArea: ExerciseFocusArea
     var exercises: [WorkoutExercise]
+    var sessions: [WorkoutSession]
     var name: String
     var daysOfTheWeek: [Int]
     var finalDate: Date
@@ -23,6 +24,7 @@ struct Workout: Hashable {
             let daysOfTheWeek = entity.daysOfTheWeek,
             let focusArea = ExerciseFocusArea(rawValue: Int(entity.focusArea)),
             let exercises = entity.exercises?.array as? [ADWorkoutExercise],
+            let sessions = entity.sessions?.allObjects as? [ADWorkoutSession],
             let finalDate = entity.finalDate
         else {
             return nil
@@ -30,18 +32,20 @@ struct Workout: Hashable {
         self.name = name
         self.focusArea = focusArea
         self.daysOfTheWeek = daysOfTheWeek
-        self.exercises = exercises.map { WorkoutExercise(entity: $0)}
+        self.exercises = exercises.map { WorkoutExercise(entity: $0) }
+        self.sessions = sessions.map { WorkoutSession(entity: $0) }
         self.finalDate = finalDate
         self.objectID = entity.objectID.uriRepresentation()
     }
     
-    init(name: String, focusArea: ExerciseFocusArea, daysOfTheWeek: [Int], exercises: [WorkoutExercise], finalDate: Date) {
+    init(name: String, focusArea: ExerciseFocusArea, daysOfTheWeek: [Int], exercises: [WorkoutExercise], finalDate: Date, sessions: [WorkoutSession]) {
         self.name = name
         self.focusArea = focusArea
         self.daysOfTheWeek = daysOfTheWeek
         self.exercises = exercises
         self.finalDate = finalDate
         self.objectID = nil
+        self.sessions = sessions
     }
     
     init() {
@@ -51,5 +55,6 @@ struct Workout: Hashable {
         self.exercises = Array(repeating: WorkoutExercise(), count: 6)
         self.finalDate = Date()
         self.objectID = nil
+        self.sessions = Array(repeating: WorkoutSession(), count: 4)
     }
 }

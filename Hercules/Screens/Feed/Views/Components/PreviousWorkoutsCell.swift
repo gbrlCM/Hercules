@@ -13,13 +13,26 @@ struct PreviousWorkoutsCell: View {
     var viewModel: PreviousWorkoutCellViewModel
     
     var body: some View {
-        VStack {
-            text(viewModel.dateOfWorkout, font: .title3.bold())
-                .padding(.vertical, 4)
-            text(viewModel.workoutInfo, font: .subheadline)
-                .foregroundColor(.secondary)
-                .padding(.bottom, 4)
-        }.padding(.horizontal, 16)
+        NavigationLink(destination: EmptyView()) {
+            EmptyView()
+        }
+        NavigationLink(
+            destination: WorkoutSummaryView(workoutName: viewModel.session.workoutName,
+                                            totalTime: viewModel.session.totalTime,
+                                            restTime: viewModel.session.restTime,
+                                            exerciseTime: viewModel.session.exerciseTime,
+                                            exerciseCount: viewModel.session.exerciseCount,
+                                            seriesCount: viewModel.session.seriesCount,
+                                            saveButtonAction: nil),
+            label: {
+                VStack {
+                    text(viewModel.dateOfWorkout, font: .title3.bold())
+                        .padding(.vertical, 4)
+                    text(viewModel.workoutInfo, font: .subheadline)
+                        .foregroundColor(.secondary)
+                        .padding(.bottom, 4)
+                }.padding(.horizontal, 16)
+            })
     }
     
     @ViewBuilder

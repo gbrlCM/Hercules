@@ -16,6 +16,10 @@
 "move" = "move";
 "calories" = "calories";
 "stand" = "stand";
+"Save" = "Save";
+"Cancel" = "Cancel";
+"Edit exercises" = "Edit exercises";
+"Done" = "Done";
 
 //MARK: Days
 "Today" = "Today";
@@ -55,6 +59,8 @@
 "%d x %d at %@ - %@ of rest" = "%d x %d at %@ - %@ of rest";
 // String resuming details of an body weight exercise
 "%d x %d at body weight - %@ of rest" = "%d x %d at body weight - %@ of rest";
+// String for number of serires
+"%d out of %d" = "%d out of %d";
 
 //MARK: Exercises
 "ankleFlexion" = "Ankle Flexion";
@@ -141,3 +147,17 @@
 "Value" = "Value";
 "Rest time(segs)" = "Rest time(segs)";
 "End date" = "End date";
+"Workout name..." = "Workout name...";
+"Add Exercise" = "Add Exercise";
+
+//MARK: Notifications
+"Your rest time is over!" = "Your rest time is over!";
+"Let's get back to work!" = "Let's get back to work!";
+
+//MARK: Execução de Exercicio
+"Skip" = "Skip";
+"Next" = "Next";
+"Start" = "Start";
+"restTime" = "Rest";
+"Exercise" = "Exercise";
+"Total time" = "Total time";

@@ -16,7 +16,7 @@ class ThisWeekSectionViewModel: ObservableObject {
     var cardViewModels: [ThisWeekCardViewModel]
     
     init() {
-        _cardViewModels = .constant(Array.init(repeating: ThisWeekCardViewModel(), count: 7))
+        _cardViewModels = .constant([])
         sectionTitle = .thisWeek
         errorMessage = .thisWeekEmpty
     }

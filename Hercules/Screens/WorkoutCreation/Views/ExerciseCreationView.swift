@@ -18,13 +18,7 @@ struct ExerciseCreationView: View {
     @Binding
     var isCreatingExercise: Bool
     @State
-    var isEditingExercise: Bool
-    
-    init(exercise: Exercise, isCreatingExercise: Binding<Bool>) {
-        self.viewModel = ExerciseCreationViewModel(exercise: exercise)
-        self._isCreatingExercise = isCreatingExercise
-        self.isEditingExercise = false
-    }
+    var isEditingExercise: Bool = false
     
     var body: some View {
         MainView(background: Color.backgroundColor) {
@@ -90,6 +84,6 @@ struct ExerciseCreationView: View {
 
 struct ExerciseCreation_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseCreationView(exercise: Exercise(), isCreatingExercise: .constant(false))
+        ExerciseCreationView(viewModel: .init(exercise: .init()), isCreatingExercise: .constant(false))
     }
 }

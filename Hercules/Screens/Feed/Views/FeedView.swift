@@ -17,10 +17,14 @@ struct FeedView: View {
     
     var body: some View {
         NavigationView {
-            ZStack {
-                Color.backgroundColor
-                    .ignoresSafeArea()
+            MainView(background: Color.backgroundColor) {
                 feed
+            }
+            .onAppear {
+                viewModel.isOnForeground = true
+            }
+            .onDisappear {
+                viewModel.isOnForeground = false
             }
             .sheet(isPresented: $isCreatingWorkout, content: {
                 WorkoutCreationView(presentationBinding: $isCreatingWorkout, viewModel: WorkoutCreationViewModel())
@@ -38,7 +42,7 @@ struct FeedView: View {
             } content: { index in
                 ActivityRingCard(actityRingData: $viewModel.activityRing[index])
             }
-            PreviousWorkoutsSection(viewModel: .init())
+            PreviousWorkoutsSection(viewModel: .init(cardsViewModels: viewModel.sessions.map { PreviousWorkoutsCellViewModelFactory.build(workoutSession: $0)}))
         }
         .listStyle(PlainListStyle())
         .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 0, idealHeight: .infinity, maxHeight: .infinity, alignment: .top)

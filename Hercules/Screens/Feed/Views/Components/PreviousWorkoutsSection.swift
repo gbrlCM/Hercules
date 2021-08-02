@@ -19,8 +19,17 @@ struct PreviousWorkoutsSection: View {
             Spacer()
         }.padding(.horizontal, 16)
         .padding(.bottom, 8)
-        ForEach(0..<viewModel.cardsViewModels.count) { index in
-            PreviousWorkoutsCell(viewModel: viewModel.cardsViewModels[index])
+        
+        if viewModel.cardsViewModels.isEmpty {
+            Text("There is no workout finished yet!")
+                .font(.system(size: 14))
+            
+        } else {
+            LazyVStack {
+                ForEach(0..<viewModel.cardsViewModels.count) { index in
+                    PreviousWorkoutsCell(viewModel: viewModel.cardsViewModels[index])
+                }
+            }
         }
     }
 }

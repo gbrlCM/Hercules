@@ -17,6 +17,12 @@ class WorkoutsViewModel: ObservableObject {
     @Published
     var workouts: [Workout] = []
     
+    @Published
+    private var fetchedWorkouts: [Workout] = []
+    
+    @Published
+    var isOnForeground = true
+    
     init(dataStorage: WorkoutsStorage) {
         storage = dataStorage
         cancellables = Set<AnyCancellable>()
@@ -27,6 +33,15 @@ class WorkoutsViewModel: ObservableObject {
     private func initiateBindings() {
         storage
             .allWorkoutSubjects
+            .assign(to: &$fetchedWorkouts)
+        
+        Publishers.CombineLatest($isOnForeground, $fetchedWorkouts)
+            .filter { (isOnForeground, fetchedWorkouts) in
+                isOnForeground
+            }
+            .map { (isOnForeground, fetchedWorkouts) in
+                fetchedWorkouts
+            }
             .assign(to: &$workouts)
     }
     

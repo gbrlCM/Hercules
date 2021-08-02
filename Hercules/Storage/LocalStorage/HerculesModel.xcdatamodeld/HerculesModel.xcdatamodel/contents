@@ -41,6 +41,9 @@
     <entity name="ADWorkoutSession" representedClassName="ADWorkoutSession" syncable="YES" codeGenerationType="class">
         <attribute name="date" attributeType="Date" usesScalarValueType="NO"/>
         <attribute name="healthStoreID" optional="YES" attributeType="String"/>
+        <attribute name="totalExerciseTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalRestTime" optional="YES" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
+        <attribute name="totalTime" attributeType="Double" defaultValueString="0.0" usesScalarValueType="YES"/>
         <relationship name="workout" optional="YES" maxCount="1" deletionRule="Nullify" destinationEntity="ADWorkout" inverseName="sessions" inverseEntity="ADWorkout"/>
     </entity>
     <elements>
@@ -50,6 +53,6 @@
         <element name="ADNote" positionX="-172.289306640625" positionY="-130.0135803222656" width="128" height="74"/>
         <element name="ADWorkout" positionX="10.75726318359375" positionY="16.21820068359375" width="128" height="133"/>
         <element name="ADWorkoutExercise" positionX="-170.4444580078125" positionY="0.3941650390625" width="128" height="164"/>
-        <element name="ADWorkoutSession" positionX="212.394287109375" positionY="13.0830078125" width="128" height="74"/>
+        <element name="ADWorkoutSession" positionX="212.394287109375" positionY="13.0830078125" width="128" height="119"/>
     </elements>
 </model>

@@ -16,6 +16,10 @@
 "move" = "Movimento";
 "calories" = "Exercício";
 "stand" = "Em pé";
+"Save" = "Salvar";
+"Cancel" = "Cancelar";
+"Edit exercises" = "Editar exercícios";
+"Done" = "Pronto";
 
 //MARK: Days
 "Today" = "Hoje";
@@ -55,7 +59,8 @@
 "%d x %d at %@ - %@ of rest" = "%d x %d com %@ - %@ de descanso";
 // String resuming details of an body weight exercise
 "%d x %d at body weight - %@ of rest" = "%d x %d com peso do corpo - %@ of rest";
-
+// String for number of serires
+"%d out of %d" = "%d de %d";
 
 //MARK: Exercises
 "ankleFlexion" = "Flexão de tornozelo";
@@ -142,3 +147,17 @@
 "Value" = "Valor";
 "Rest time(segs)" = "Tempo de descanso (segs)";
 "End date" = "Data final";
+"Workout name..." = "Nome do treino...";
+"Add Exercise" = "Adicionar exercício";
+
+//MARK: Notifications
+"Your rest time is over!" = "Acabou seu tempo de descanso!";
+"Let's get back to work!" = "De volta ao trabalho!";
+
+//MARK: Execução de Exercicio
+"Skip" = "Pular";
+"Next" = "Prox.";
+"Start" = "Iniciar";
+"restTime" = "Descanso";
+"Exercise" = "Exercício";
+"Total time" = "Tempo total";
