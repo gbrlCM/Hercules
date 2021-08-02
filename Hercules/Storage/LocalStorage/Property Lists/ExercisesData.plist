@@ -3,6 +3,8 @@
 <plist version="1.0">
 <array>
 	<dict>
+		<key>id</key>
+		<string>25d970c1-87bf-42bd-9772-313afbf71df2</string>
 		<key>name</key>
 		<string>ankleFlexion</string>
 		<key>tags</key>
@@ -11,6 +13,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>7804808c-ba9a-4dd0-8134-39dc1d16722a</string>
 		<key>name</key>
 		<string>pushUp</string>
 		<key>tags</key>
@@ -21,6 +25,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>df7ef862-50b2-4a19-94ee-6cc1f52e9dd9</string>
 		<key>name</key>
 		<string>benchPress</string>
 		<key>tags</key>
@@ -31,6 +37,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>86f05d8e-c2be-41f3-a332-eab7aede96a4</string>
 		<key>name</key>
 		<string>crunch</string>
 		<key>tags</key>
@@ -39,6 +47,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>9992abcb-944e-4d16-a606-18934e50e082</string>
 		<key>name</key>
 		<string>calfRaise</string>
 		<key>tags</key>
@@ -47,6 +57,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>4d67b5a5-d2c8-4c9b-99f6-cb75b5bca114</string>
 		<key>name</key>
 		<string>squat</string>
 		<key>tags</key>
@@ -55,6 +67,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>bb7545c2-e031-412d-9c06-3c69a516cca6</string>
 		<key>name</key>
 		<string>bearCrawl</string>
 		<key>tags</key>
@@ -63,6 +77,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>32c523a4-38a1-4fef-a281-ff089ca62709</string>
 		<key>name</key>
 		<string>fowardLunge</string>
 		<key>tags</key>
@@ -71,6 +87,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>e8844a2a-e7ba-4328-971d-d6695abd9b4b</string>
 		<key>name</key>
 		<string>plank</string>
 		<key>tags</key>
@@ -79,6 +97,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>08e09d85-1483-4b7b-a0af-381f31f16cae</string>
 		<key>name</key>
 		<string>frontRaise</string>
 		<key>tags</key>
@@ -87,6 +107,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>297466b2-24a4-4c11-9987-2cbcfe5a6655</string>
 		<key>name</key>
 		<string>lateralRaise</string>
 		<key>tags</key>
@@ -95,6 +117,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>47c65e5b-51a6-47cf-8725-8d46063fcc6e</string>
 		<key>name</key>
 		<string>gluteBridge</string>
 		<key>tags</key>
@@ -103,6 +127,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>a4e6f43d-936a-4f2a-b999-97439388de7b</string>
 		<key>name</key>
 		<string>inclineBenchPress</string>
 		<key>tags</key>
@@ -113,6 +139,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>526335c2-55d5-4cc6-ab82-93ae88280c48</string>
 		<key>name</key>
 		<string>declineBenchPress</string>
 		<key>tags</key>
@@ -123,6 +151,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>4b4bb505-a79b-477d-9c6f-717c552d40f7</string>
 		<key>name</key>
 		<string>seatedBicepsCurl</string>
 		<key>tags</key>
@@ -131,6 +161,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>cd3b10b0-c051-4d43-ad73-06e9ce586029</string>
 		<key>name</key>
 		<string>seatedCablePress</string>
 		<key>tags</key>
@@ -139,6 +171,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>a2d9e0f0-bebd-4f40-a68b-d708aef17345</string>
 		<key>name</key>
 		<string>seatedCrunch</string>
 		<key>tags</key>
@@ -147,6 +181,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>4b566af7-459f-41a4-ae98-05b3d7f47dbe</string>
 		<key>name</key>
 		<string>seatedHighBackRow</string>
 		<key>tags</key>
@@ -157,6 +193,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>a88aba0e-d8b7-45d6-ab38-85199b388e27</string>
 		<key>name</key>
 		<string>seatedLatPulldown</string>
 		<key>tags</key>
@@ -165,6 +203,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>ec051625-7581-428e-9aea-26d3f9f48e0e</string>
 		<key>name</key>
 		<string>seatedLegExtension</string>
 		<key>tags</key>
@@ -173,6 +213,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>82c40831-56a5-47ec-8694-6ed32822b487</string>
 		<key>name</key>
 		<string>seatedLegAbdution</string>
 		<key>tags</key>
@@ -181,6 +223,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>4e14c018-d287-476a-ae21-dd4e1431dc4d</string>
 		<key>name</key>
 		<string>seatedLegPress</string>
 		<key>tags</key>
@@ -190,6 +234,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>fa69e9b5-0a80-4c0b-b46c-b4b5c2a18beb</string>
 		<key>name</key>
 		<string>seatedShoulderPress</string>
 		<key>tags</key>
@@ -199,6 +245,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>b2f64e76-d85d-4cec-aefa-8ec6141a9128</string>
 		<key>name</key>
 		<string>seatedRow</string>
 		<key>tags</key>
@@ -208,6 +256,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>81a062d8-2ebc-4895-9c9e-0f34dbcac45e</string>
 		<key>name</key>
 		<string>sidePlank</string>
 		<key>tags</key>
@@ -217,6 +267,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>a81ab76e-f4fa-4353-bb56-9e2758cb4fe4</string>
 		<key>name</key>
 		<string>singleArmLateralRaise</string>
 		<key>tags</key>
@@ -225,6 +277,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>c67a6fac-73d6-4fe2-8e27-715cf8bf6b90</string>
 		<key>name</key>
 		<string>squatJumps</string>
 		<key>tags</key>
@@ -234,6 +288,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>d6e934b7-a23f-4af2-9c76-ef50b8fa5028</string>
 		<key>name</key>
 		<string>standingBicepsCurl</string>
 		<key>tags</key>
@@ -242,6 +298,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>819f0804-1fe2-4ca6-a4c0-0d6244f3cda3</string>
 		<key>name</key>
 		<string>supermans</string>
 		<key>tags</key>
@@ -250,6 +308,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>5a81d12f-36d3-4e47-8f68-746525a3ea1c</string>
 		<key>name</key>
 		<string>tricepsExtension</string>
 		<key>tags</key>
@@ -258,6 +318,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>e7dd15c2-2916-45f4-b543-ca5e72634f93</string>
 		<key>name</key>
 		<string>tricepsPushdowns</string>
 		<key>tags</key>
@@ -266,6 +328,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>927ceff3-b37b-4be7-8668-dd767aee22d2</string>
 		<key>name</key>
 		<string>vRaise</string>
 		<key>tags</key>
@@ -274,6 +338,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>126c4ca2-f6f1-4b6b-8c8d-2193032f62a5</string>
 		<key>name</key>
 		<string>extensionWristCurl</string>
 		<key>tags</key>
@@ -282,6 +348,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>6fa0cccb-993d-40ec-bae5-a50a76975b35</string>
 		<key>name</key>
 		<string>flexionWristCurl</string>
 		<key>tags</key>
@@ -290,6 +358,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>846efc7b-f3b6-48db-ba60-c1840b1d9460</string>
 		<key>name</key>
 		<string>chinUps</string>
 		<key>tags</key>
@@ -299,6 +369,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>62ac9b90-5f31-4d44-a11c-a33d8460f172</string>
 		<key>name</key>
 		<string>farmerCarry</string>
 		<key>tags</key>
@@ -307,6 +379,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>2fa23d4b-de46-4e2c-879b-ba52919efef3</string>
 		<key>name</key>
 		<string>halfTurkishGetUp</string>
 		<key>tags</key>
@@ -315,6 +389,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>c45d2762-b3da-4dfa-b5fe-7362798b44ce</string>
 		<key>name</key>
 		<string>hammerCurl</string>
 		<key>tags</key>
@@ -323,6 +399,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>08ddfa21-3ecf-46dd-a2c9-dfa06ddc42b8</string>
 		<key>name</key>
 		<string>lateralCrawls</string>
 		<key>tags</key>
@@ -331,6 +409,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>a875736e-58e0-4f0a-bd41-2b51d9c2cdbc</string>
 		<key>name</key>
 		<string>lyingBarbellTricepsExtension</string>
 		<key>tags</key>
@@ -339,6 +419,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>9d7f3d3e-d327-4b58-a8e7-90e96f0fd017</string>
 		<key>name</key>
 		<string>lyingChestFly</string>
 		<key>tags</key>
@@ -348,6 +430,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>55b59c05-f6c8-4fa0-b182-6250c85c9752</string>
 		<key>name</key>
 		<string>pullUps</string>
 		<key>tags</key>
@@ -357,6 +441,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>a4945d26-883f-4d5f-b17b-8e6f6d906738</string>
 		<key>name</key>
 		<string>reverseBicepsCurl</string>
 		<key>tags</key>
@@ -365,6 +451,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>90b52ac8-81fe-45f8-b438-a4c6a7a78879</string>
 		<key>name</key>
 		<string>reverseLunge</string>
 		<key>tags</key>
@@ -374,6 +462,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>9423b7bb-0a44-4f58-8a79-65711a5e09e1</string>
 		<key>name</key>
 		<string>romanianDeadlift</string>
 		<key>tags</key>
@@ -383,6 +473,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>6b9b45ef-839d-4798-ad5a-5c9398a31d31</string>
 		<key>name</key>
 		<string>Asynchronous Waves</string>
 		<key>tags</key>
@@ -391,6 +483,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>1b3cbfeb-747f-48c4-a2a6-c350506d1e76</string>
 		<key>name</key>
 		<string>backSquat</string>
 		<key>tags</key>
@@ -400,6 +494,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>18a3e03d-c653-4371-b072-9c5d6763225e</string>
 		<key>name</key>
 		<string>singleArmRow</string>
 		<key>tags</key>
@@ -408,6 +504,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>18bb5d2e-317b-46fc-b503-8f59899cbef9</string>
 		<key>name</key>
 		<string>singleArmShoulderPress</string>
 		<key>tags</key>
@@ -417,6 +515,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>bb6af630-f87a-4237-808f-cd7af6fa6c30</string>
 		<key>name</key>
 		<string>seatedSingleArmShoulderPress</string>
 		<key>tags</key>
@@ -425,14 +525,8 @@
 		</array>
 	</dict>
 	<dict>
-		<key>name</key>
-		<string>singleArmRow</string>
-		<key>tags</key>
-		<array>
-			<string>back</string>
-		</array>
-	</dict>
-	<dict>
+		<key>id</key>
+		<string>23ab84c7-94a8-4ea7-8e11-3602ddd3b6c7</string>
 		<key>name</key>
 		<string>standingChestFly</string>
 		<key>tags</key>
@@ -441,6 +535,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>8187f8ee-b1e6-4d4f-942b-ac20ae946574</string>
 		<key>name</key>
 		<string>swing</string>
 		<key>tags</key>
@@ -449,6 +545,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>d65881f8-b97b-4942-b3f2-1239f9b90ce8</string>
 		<key>name</key>
 		<string>tricepsExtension</string>
 		<key>tags</key>
@@ -457,6 +555,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>44b26925-2d5b-4de2-af80-89275a90d4b7</string>
 		<key>name</key>
 		<string>horseRow</string>
 		<key>tags</key>
@@ -466,6 +566,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>d80660d4-199a-4c95-947d-8140ad1a8143</string>
 		<key>name</key>
 		<string>deadlift</string>
 		<key>tags</key>
@@ -476,6 +578,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>78e7dfc8-bee0-4fc0-a64d-a9660dd4f84e</string>
 		<key>name</key>
 		<string>bentOverRow</string>
 		<key>tags</key>
@@ -486,6 +590,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>a6547712-a744-488b-8348-428f864c8dbc</string>
 		<key>name</key>
 		<string>burpee</string>
 		<key>tags</key>
@@ -494,6 +600,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>48d7ae86-9dce-4275-a99a-ba5de408f794</string>
 		<key>name</key>
 		<string>powerClean</string>
 		<key>tags</key>
@@ -502,6 +610,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>5820c00a-4952-47ac-bf98-c457fd319e1a</string>
 		<key>name</key>
 		<string>standingShoulderPress</string>
 		<key>tags</key>
@@ -511,6 +621,8 @@
 		</array>
 	</dict>
 	<dict>
+		<key>id</key>
+		<string>2c78bf9f-240d-4c61-9fb3-2766fb033b12</string>
 		<key>name</key>
 		<string>turkishGetUp</string>
 		<key>tags</key>

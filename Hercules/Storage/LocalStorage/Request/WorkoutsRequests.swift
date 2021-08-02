@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-extension Workout {
+extension ADWorkout {
     
-    static var allWorkouts: NSFetchRequest<Workout> {
-        let request: NSFetchRequest<Workout> = Workout.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \Workout.name, ascending: true)]
+    static var allWorkouts: NSFetchRequest<ADWorkout> {
+        let request: NSFetchRequest<ADWorkout> = ADWorkout.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ADWorkout.name, ascending: true)]
         
         return request
     }

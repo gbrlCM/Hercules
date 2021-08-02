@@ -8,11 +8,11 @@
 import Foundation
 import CoreData
 
-extension ExerciseTags {
+extension ADExerciseTags {
     
-    static var allTags: NSFetchRequest<ExerciseTags> {
-        let request: NSFetchRequest<ExerciseTags> = ExerciseTags.fetchRequest()
-        request.sortDescriptors = [NSSortDescriptor(keyPath: \ExerciseTags.name, ascending: true)]
+    static var allTags: NSFetchRequest<ADExerciseTags> {
+        let request: NSFetchRequest<ADExerciseTags> = ADExerciseTags.fetchRequest()
+        request.sortDescriptors = [NSSortDescriptor(keyPath: \ADExerciseTags.name, ascending: true)]
         
         return request
     }

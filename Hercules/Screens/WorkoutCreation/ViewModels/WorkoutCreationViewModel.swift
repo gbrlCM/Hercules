@@ -6,65 +6,105 @@
 //
 
 import Foundation
+import Combine
 
 class WorkoutCreationViewModel: ObservableObject {
     
-    private let dataStorage = DataStorage.shared
+    private let dataStorage = WorkoutsStorage()
+    private var cancellables = Set<AnyCancellable>()
+    private let savedObjectID: URL?
     
     @Published
-    var daysSelected: [Bool] = Day.allCases.map {_ in false }
+    var daysSelected: [Bool]
     @Published
-    var nameField: String = ""
+    var nameField: String
     @Published
-    var areaOfFocus: Int = 0
+    var areaOfFocus: Int
     @Published
-    var createdExercises: [WorkoutExercise] = []
+    var createdExercises: [WorkoutExercise]
+    @Published
+    var endDate: Date
+    
     @Published
     var creatingNewItem: Bool = false
     
+    var exerciseCreationController = WorkoutExerciseCreationController()
     let areasOfFocus = ExerciseFocusArea.allCases
     
-    func saveExercise(series: Int, repetitions: Int, intesityType: Int, intesityValue: Double, restTime: Double, exerciseName: Exercise) {
-        let exercise = WorkoutExercise(context: DataStorage.shared.persistentContainer.viewContext)
-        exercise.exercise = exerciseName
-        exercise.series = Int32(series)
-        exercise.repetitions = Int32(repetitions)
-        exercise.intesityMetric = Int32(intesityType)
-        exercise.intesityValue = intesityValue
-        exercise.restTime = restTime
-        createdExercises.append(exercise)
-        creatingNewItem = false
+    @Published
+    var isStillCreating: Bool = true
+    
+    private var isStillCreatingPublisher: AnyPublisher<Bool, Never> {
+        Publishers.CombineLatest3($nameField,$createdExercises, $endDate)
+            .map {(nameField, createdExercises, endDate) -> Bool in
+                guard
+                    !nameField.isEmpty,
+                    !createdExercises.isEmpty
+                else {
+                    return true
+                }
+                return false
+            }
+            .eraseToAnyPublisher()
+    }
+    
+    init(workout: Workout) {
+        self.nameField = workout.name
+        self.areaOfFocus = workout.focusArea.rawValue
+        self.createdExercises = workout.exercises
+        self.endDate = workout.finalDate
+        self.savedObjectID = workout.objectID
+        self.daysSelected = Day.allCases.map { day in workout.daysOfTheWeek.contains(day.rawValue) ? true : false }
+        initiateBindings()
+    }
+    
+    init() {
+        self.nameField = ""
+        self.areaOfFocus = 1
+        self.createdExercises = []
+        self.endDate = Date()
+        self.savedObjectID = nil
+        self.daysSelected = Day.allCases.map {_ in false }
+        initiateBindings()
+    }
+    
+    private func initiateBindings() {
+        exerciseCreationController
+            .createdExercise
+            .sink { [weak self] exercise in
+                self?.createdExercises.append(exercise)
+            }
+            .store(in: &cancellables)
+        
+        isStillCreatingPublisher
+            .assign(to: \.isStillCreating, on: self)
+            .store(in: &cancellables)
     }
     
     func saveWorkout() {
-        let workout = Workout(context: dataStorage.persistentContainer.viewContext)
-        
-        createdExercises.forEach { exercise in
-            workout.addToExercises(exercise)
+        guard let focusArea = ExerciseFocusArea(rawValue: areaOfFocus) else {
+            preconditionFailure("Error implementing Picker, Review imediatly")
         }
         
-        workout.name = nameField
-        workout.focusArea = Int32(areaOfFocus)
+        let days = Day.allCases
+            .enumerated()
+            .filter { index, day in
+                return daysSelected[index]
+            }
+            .map { index , day in day.rawValue}
         
-        let days = daysSelected
-                    .enumerated()
-                    .filter {$1 == true}
-                    .map{index, value in index + 1}
+        let workout = Workout(name: nameField,
+                              focusArea: focusArea,
+                              daysOfTheWeek: days,
+                              exercises: createdExercises,
+                              finalDate: endDate,
+                              sessions: [])
         
-        workout.daysOfTheWeek = days
         
-        do {
-            try dataStorage.persistentContainer.viewContext.save()
-            print("""
-                Saved object:
-                name: \(workout.name ?? "nil")
-                days: \(days)
-                areaOfFocus: \(areaOfFocus)
-                exercises: \(createdExercises.map{$0.exercise?.name ?? "nil"})
-                """)
-        } catch {
-            print("faleid saving workout")
-            dataStorage.persistentContainer.viewContext.rollback()
+        if let id = self.savedObjectID {
+            dataStorage.editWorkout(withID: id, workout)
+        } else {
+            dataStorage.saveWorkout(workout)
         }
     }
 }

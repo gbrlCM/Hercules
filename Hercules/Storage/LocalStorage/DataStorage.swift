@@ -12,10 +12,18 @@ class DataStorage {
     
     static var shared: DataStorage = DataStorage()
     
-    let persistentContainer: NSPersistentContainer
+    private let persistentContainer: NSPersistentContainer
     private let containerName: String
     
-    public init() {
+    var context: NSManagedObjectContext {
+        persistentContainer.viewContext
+    }
+    
+    func convertURLToObjectID(_ url: URL) -> NSManagedObjectID? {
+        persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: url)
+    }
+    
+    private init() {
         containerName = "HerculesModel"
         persistentContainer = NSPersistentContainer(name: containerName)
         
@@ -25,35 +33,6 @@ class DataStorage {
                 fatalError("Core Data store failed to load with error: \(error)")
             }
         }
-        
-        if !UserDefaults.standard.bool(forKey: "shouldMigrate") {
-            UserDefaults.standard.setValue(true, forKey: "shouldMigrate")
-            performMigration()
-        }
     }
-    
-    private func performMigration() {
-        let backgroundContext = persistentContainer.newBackgroundContext()
-        let request: NSFetchRequest<Exercise> = Exercise.fetchRequest()
-        let tagRequest: NSFetchRequest<ExerciseTags> = ExerciseTags.fetchRequest()
-        guard
-            let exercises = try? backgroundContext.fetch(request),
-            let tags = try? backgroundContext.fetch(tagRequest)
-        else {
-            
-            return
-        }
-        
-        if tags.isEmpty {
-            let migration: Migration = TagsMigration()
-            migration.performMigration(to: backgroundContext)
-        }
-        
-        if exercises.isEmpty {
-            let migration: Migration = ExercisesMigration()
-            migration.performMigration(to: backgroundContext)
-        }
-    }
-    
 }
 

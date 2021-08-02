@@ -10,13 +10,25 @@ import SwiftUI
 
 struct FeedView: View {
     
+    @ObservedObject
+    var viewModel: FeedViewModel
+    @State
+    var isCreatingWorkout = false
+    
     var body: some View {
         NavigationView {
-            ZStack {
-                Color.backgroundColor
-                    .ignoresSafeArea()
+            MainView(background: Color.backgroundColor) {
                 feed
             }
+            .onAppear {
+                viewModel.isOnForeground = true
+            }
+            .onDisappear {
+                viewModel.isOnForeground = false
+            }
+            .sheet(isPresented: $isCreatingWorkout, content: {
+                WorkoutCreationView(presentationBinding: $isCreatingWorkout, viewModel: WorkoutCreationViewModel())
+            })
             .navigationTitle("Feed")
         }
     }
@@ -24,9 +36,13 @@ struct FeedView: View {
     @ViewBuilder
     var feed: some View {
         ScrollView(.vertical, showsIndicators: true) {
-            ThisWeekSection(viewModel: .init())
-            StatHighlightSection(viewModel: .init())
-            PreviousWorkoutsSection(viewModel: .init())
+            ThisWeekSection(viewModel: ThisWeekSectionViewModel(cardViewModels: $viewModel.thisWeekCardViewModel), isCreatingWorkout: $isCreatingWorkout)
+            HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: .statsHighlights, cards: $viewModel.activityRing)) {
+                Text("There is no stats yet, allow Health so you can see you rings")
+            } content: { index in
+                ActivityRingCard(actityRingData: $viewModel.activityRing[index])
+            }
+            PreviousWorkoutsSection(viewModel: .init(cardsViewModels: viewModel.sessions.map { PreviousWorkoutsCellViewModelFactory.build(workoutSession: $0)}))
         }
         .listStyle(PlainListStyle())
         .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 0, idealHeight: .infinity, maxHeight: .infinity, alignment: .top)
@@ -36,9 +52,9 @@ struct FeedView: View {
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeedView()
+            FeedView(viewModel: .init(dataStorage: .init(), healthStorage: .init()))
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            FeedView()
+            FeedView(viewModel: .init(dataStorage: .init(), healthStorage: .init()))
                 .preferredColorScheme(.dark)
         }
     }

@@ -6,17 +6,15 @@
 //
 
 import SwiftUI
+import UIKit
 
 struct WorkoutCreationView: View {
-    
-    @Environment(\.managedObjectContext)
-    var viewContext
     
     @Binding
     var presentationBinding: Bool
     
     @ObservedObject
-    var viewModel = WorkoutCreationViewModel()
+    var viewModel: WorkoutCreationViewModel
     
     var body: some View {
         NavigationView {
@@ -26,20 +24,30 @@ struct WorkoutCreationView: View {
                     Form {
                         generalSection
                         exercisesSection
-                    }.sheet(isPresented: $viewModel.creatingNewItem, content: {
-                        ExercisesListView()
-                            .environmentObject(viewModel)
-                            .environment(\.managedObjectContext, viewContext)
-                    })
+                    }.sheet(isPresented: $viewModel.creatingNewItem,
+                            content: {
+                                ExercisesListView(isCreatingExercise: $viewModel.creatingNewItem)
+                                    .environmentObject(viewModel.exerciseCreationController)
+                            })
                 }
             }
             .accentColor(.redGradientStart)
-            .navigationBarItems(leading: cancelButton,trailing: saveButton)
+            .toolbar {
+                ToolbarItem(placement: .navigationBarLeading) {
+                    cancelButton
+                        .accentColor(.redGradientStart)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    EditButton()
+                        .accentColor(.redGradientStart)
+                }
+                ToolbarItem(placement: .navigationBarTrailing) {
+                    saveButton
+                }
+            }
             .navigationTitle("Create Workout")
-        }
+        }.accentColor(.redGradientStart)
     }
-    
-    
     
     @ViewBuilder
     var generalSection: some View {
@@ -54,18 +62,23 @@ struct WorkoutCreationView: View {
                     Text(area.name)
                 }
             }
+            DatePicker("End date", selection: $viewModel.endDate, displayedComponents: .date)
         }
     }
     
     @ViewBuilder
     var exercisesSection: some View {
         Section(header: Text("Exercises")) {
-            List(viewModel.createdExercises) { exercise in
-                NavigationLink(
-                    destination: Text("Destination"),
-                    label: {
-                        ExerciseCreationCell(viewModel: .init(entity: exercise))
-                    })
+            List {
+                ForEach(viewModel.createdExercises, id: \.hashValue) { exercise in
+                    ExerciseCreationCell(viewModel: .init(data: exercise))
+                }
+                .onDelete(perform: { indexSet in
+                    viewModel.createdExercises.remove(atOffsets: indexSet)
+                })
+                .onMove(perform: { indices, newOffset in
+                    viewModel.createdExercises.move(fromOffsets: indices, toOffset: newOffset)
+                })
             }
             Button(action: {
                 viewModel.creatingNewItem = true
@@ -92,18 +105,19 @@ struct WorkoutCreationView: View {
             presentationBinding = false
         } label: {
             Text("Save")
-                .fontWeight(.bold)
+                .fontWeight(viewModel.isStillCreating ? .regular : .bold)
         }
-        .foregroundColor(.redGradientStart)
+        .disabled(viewModel.isStillCreating)
+        .foregroundColor(viewModel.isStillCreating ? .gray : .redGradientStart)
     }
 }
 
 struct WorkoutsCreation_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutCreationView(presentationBinding: .constant(true))
+            WorkoutCreationView(presentationBinding: .constant(true), viewModel: .init())
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutCreationView(presentationBinding: .constant(true))
+            WorkoutCreationView(presentationBinding: .constant(true), viewModel: .init())
                 .preferredColorScheme(.dark)
         }
     }

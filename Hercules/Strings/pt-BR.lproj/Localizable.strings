@@ -1,7 +1,27 @@
+//MARK: General
 "This week" = "Essa semana";
 "Stats highlights" = "Destaques estatísticos";
 "Add workout" = "Adicionar treino";
 "This week empty" = "Não existe treino marcado para essa semana, aperto no botão abaixo para criar um";
+"Workouts" = "Treinos";
+"Workout" = "Treino";
+"Previous Workouts" = "Treinos já concluidos";
+"Days of the week" = "Dias da semana";
+"Name" = "Nome";
+"Area of focus" = "Foco do treino";
+"Scheaduled until" = "Marcado até";
+"Number of exercises" = "Número de exercicios";
+"Create Workout" = "Criar treino";
+"There is no workouts yet, but you can create one tapping the button bellow!" = "Não existem treinos cadastrados, mas você pode criar um apertando no botão abaixo!";
+"move" = "Movimento";
+"calories" = "Exercício";
+"stand" = "Em pé";
+"Save" = "Salvar";
+"Cancel" = "Cancelar";
+"Edit exercises" = "Editar exercícios";
+"Done" = "Pronto";
+
+//MARK: Days
 "Today" = "Hoje";
 "Monday" = "Segunda";
 "Tuesday" = "Terça";
@@ -17,13 +37,8 @@
 "Friday_letter" = "S";
 "Saturday_letter" = "S";
 "Sunday_letter" = "D";
-"Workouts" = "Treinos";
-"Workout" = "Treino";
-"Previous Workouts" = "Treinos já concluidos";
-"Days of the week" = "Dias da semana";
-"Name" = "Nome";
-"Area of focus" = "Foco do treino";
-"Create Workout" = "Criar treino";
+
+//MARK: Area of Focus
 "arm" = "Braço";
 "back" = "Costas";
 "chest" = "Peito";
@@ -35,8 +50,114 @@
 "shoulder" = "Ombros";
 "upperBody" = "Parte superior";
 "General" = "General";
-"Exercises" = "exercícios";
+"Exercises" = "Exercícios";
 "bodyWeight" = "Peso do corpo";
 "Rest" = "de descanso";
+
+//MARK: Strings with interpolation
+// String resuming details of an exercise
 "%d x %d at %@ - %@ of rest" = "%d x %d com %@ - %@ de descanso";
+// String resuming details of an body weight exercise
 "%d x %d at body weight - %@ of rest" = "%d x %d com peso do corpo - %@ of rest";
+// String for number of serires
+"%d out of %d" = "%d de %d";
+
+//MARK: Exercises
+"ankleFlexion" = "Flexão de tornozelo";
+"pushUp" = "Flexão";
+"benchPress" = "Supino";
+"crunch" = "Abdominal Crunch";
+"calfRaise" = "Levantamento de panturrilha";
+"squat" = "Agachamento";
+"bearCrawl" = "Caminhada do urso";
+"fowardLunge" = "Avanço";
+"plank" = "Prancha";
+"frontRaise" = "Elevação Frontal";
+"lateralRaise" = "Elevação Lateral";
+"gluteBridge" = "Elevação de Quadril";
+"inclineBenchPress" = "Supino Inclinado";
+"declineBenchPress" = "Supino Declinado";
+"seatedBicepsCurl" = "Rosca sentada";
+"seatedCablePress" = "Supino Maquina";
+"seatedCrunch" = "Abdominal Crunch Maquina";
+"seatedHighBackRow" = "Remada Alta";
+"seatedLatPulldown" = "Puxada pela frente";
+"seatedLegExtension" = "Cadeira extensora";
+"seatedLegAbdution" = "Cadeira abdutora";
+"seatedLegPress" = "Leg Press Maquina";
+"seatedShoulderPress" = "Desenvolvimento maquina";
+"seatedRow" = "Remada";
+"sidePlank" = "Prancha Lateral";
+"singleArmLateralRaise" = "Elevação lateral polia";
+"squatJumps" = "Agachamento com salto";
+"standingBicepsCurl" = "Rosca em pé";
+"supermans" = "Abdominal Superman";
+"tricepsExtension" = "Extensão de triceps";
+"tricepsPushdowns" = "Triceps polia com corda";
+"vRaise" = "Encolhimento com halteres";
+"extensionWristCurl" = "Rosca de punho - extensão";
+"flexionWristCurl" = "Rosca de punho - flexão";
+"chinUps" = "Barra pegada fechada";
+"farmerCarry" = "Caminhada de fazendeiro";
+"halfTurkishGetUp" = "Meio levantamento turco";
+"hammerCurl" = "Rosca martelo";
+"lateralCrawls" = "Engatinhamento lateral";
+"lyingBarbellTricepsExtension" = "Triceps testa";
+"lyingChestFly" = "Crucifixo deitado";
+"pullUps" = "Barra pegada aberta";
+"reverseBicepsCurl" = "Rosca de biceps reversa";
+"reverseLunge" = "Avanço reverso";
+"romanianDeadlift" = "Peso morto romeno";
+"Asynchronous Waves" = "Ondas alternadas";
+"backSquat" = "Agachamento com peso nas costas";
+"singleArmRow" = "Remada unilateral";
+"singleArmShoulderPress" = "Desenvolvimento unilateral";
+"seatedSingleArmShoulderPress" = "Desenvolvimento unilateral sentado";
+"standingChestFly" = "Crucifixo cross-over";
+"tricepsExtension" = "Triceps francês";
+"horseRow" = "Remada cavalinho";
+"deadlift" = "Levantamento terra";
+"bentOverRow" = "Remada barra inclinado";
+"burpee" = "Burpee";
+"powerClean" = "Power Clean";
+"standingShoulderPress" = "Desenvolvimento";
+"turkishGetUp" = "Levantamento turco";
+"swing" = "Swing";
+
+//MARK: Tags
+"chest" = "Peito";
+"arm" = "Braço";
+"shoulder" = "Ombro";
+"leg" = "Perna";
+"abs" = "Abdomen";
+"fullBody" = "Corpo todo";
+"glutes" = "Glúteos";
+
+//MARK: Criação de workout
+"Quantity" = "Quantidade";
+"Series" = "Séries";
+"Repetitions" = "Repetições";
+"Intesity" = "Intensidade";
+"Measurement" = "Método de medição";
+"1RM" = "1RM";
+"Area of RM" = "Area de RM";
+"Weight(lbs)" = "Peso em Kg";
+"Body weight" = "Peso do corpo";
+"Seconds" = "Segundos";
+"Value" = "Valor";
+"Rest time(segs)" = "Tempo de descanso (segs)";
+"End date" = "Data final";
+"Workout name..." = "Nome do treino...";
+"Add Exercise" = "Adicionar exercício";
+
+//MARK: Notifications
+"Your rest time is over!" = "Acabou seu tempo de descanso!";
+"Let's get back to work!" = "De volta ao trabalho!";
+
+//MARK: Execução de Exercicio
+"Skip" = "Pular";
+"Next" = "Prox.";
+"Start" = "Iniciar";
+"restTime" = "Descanso";
+"Exercise" = "Exercício";
+"Total time" = "Tempo total";

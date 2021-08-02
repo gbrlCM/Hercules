@@ -24,4 +24,8 @@ extension Color {
     static var backgroundColor: Color {
         Color("BackgroundColor")
     }
+    
+    static var timerBackground: Color {
+        Color("TimerBackground")
+    }
 }

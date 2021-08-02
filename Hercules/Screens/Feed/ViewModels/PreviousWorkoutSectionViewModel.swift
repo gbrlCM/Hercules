@@ -19,9 +19,9 @@ struct PreviousWorkoutSectionViewModel {
         cardsViewModels = Array(repeating: PreviousWorkoutCellViewModel(), count: 20)
     }
     
-    init(title: StringKey, emptyMessageDescription: String, cardsViewModels: [PreviousWorkoutCellViewModel]) {
-        self.sectionTitle = title
-        self.emptySectionMessage = emptyMessageDescription
+    init(cardsViewModels: [PreviousWorkoutCellViewModel]) {
+        self.sectionTitle = .previousWorkouts
+        self.emptySectionMessage = "There are no previous workouts"
         self.cardsViewModels = cardsViewModels
     }
 }

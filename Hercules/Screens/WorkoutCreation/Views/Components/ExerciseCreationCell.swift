@@ -14,7 +14,7 @@ struct ExerciseCreationCell: View {
     var body: some View {
         VStack {
             HStack {
-                Text(viewModel.name)
+                Text(LocalizedStringKey(viewModel.name))
                     .font(.title3)
                     .foregroundColor(.primary)
                 Spacer()

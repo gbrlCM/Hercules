@@ -12,16 +12,14 @@ struct WorkoutsView: View {
     @State
     var isCreatingUser: Bool = false
     
-    @FetchRequest(fetchRequest: Workout.allWorkouts)
-    var workouts: FetchedResults<Workout>
-
     @ObservedObject
-    var viewModel: WorkoutsViewModel = WorkoutsViewModel()
+    var viewModel: WorkoutsViewModel
+    
     
     var body: some View {
         NavigationView {
             MainView(background: Color.backgroundColor) {
-                if workouts.isEmpty {
+                if viewModel.workouts.isEmpty {
                     noWorkouts
                 } else {
                     workoutsList
@@ -29,8 +27,7 @@ struct WorkoutsView: View {
             }
             .navigationTitle("Workouts")
             .sheet(isPresented: $isCreatingUser, content: {
-                WorkoutCreationView(presentationBinding: $isCreatingUser)
-                    .environment(\.managedObjectContext, viewModel.storage.context)
+                WorkoutCreationView(presentationBinding: $isCreatingUser, viewModel: WorkoutCreationViewModel())
             })
             .navigationBarItems(trailing: addButton)
         }
@@ -48,6 +45,9 @@ struct WorkoutsView: View {
     var noWorkouts: some View {
         VStack {
             Text("There is no workouts yet, but you can create one tapping the button bellow!")
+                .multilineTextAlignment(.center)
+                .padding(.horizontal, 16)
+                .padding(.vertical, 8)
             Button {
                 isCreatingUser = true
             } label: {
@@ -66,23 +66,39 @@ struct WorkoutsView: View {
     
     @ViewBuilder
     var workoutsList: some View {
-        List(workouts) { workout in
-            VStack {
-                HStack {
-                    Text("\(workout.name ?? "nil") - \(workout.exercises?.count ?? 0) exercises")
-                    Spacer()
-                }
+        List {
+            ForEach(viewModel.workouts.indices, id: \.self) {index  in
+                NavigationLink(
+                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: $viewModel.workouts[index])),
+                    label: {
+                        VStack {
+                            HStack {
+                                Text("\(viewModel.workouts[index].name) - \(viewModel.workouts[index].exercises.count) exercises")
+                                    .font(.headline)
+                                Spacer()
+                            }
+                            HStack {
+                                Text(viewModel.dateString(for: viewModel.workouts[index]))
+                                    .font(.subheadline)
+                                    .foregroundColor(.secondary)
+                                Spacer()
+                            }
+                        }
+                    })
+                    .listRowBackground(Color.cardBackgroundBasic)
             }
         }
     }
 }
 
+
 struct WorkoutsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutsView()
+            WorkoutsView(viewModel: .init(dataStorage: .init()))
+                .preferredColorScheme(.dark)
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutsView()
+            WorkoutsView(viewModel: .init(dataStorage: .init()))
                 .preferredColorScheme(.dark)
         }
     }
