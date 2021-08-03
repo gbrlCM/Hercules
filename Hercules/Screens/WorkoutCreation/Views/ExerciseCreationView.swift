@@ -33,11 +33,15 @@ struct ExerciseCreationView: View {
                 }
                 Section(header: Text("Quantity")) {
                     Stepper("Series \(viewModel.series)", value: $viewModel.series, in: 1...100)
-                    HStack {
-                        Text("Repetitions")
-                        TextField("12", text: $viewModel.repsString)
-                            .keyboardType(.decimalPad)
+                    
+                    if viewModel.intesityMetric != .areaOfRm && viewModel.intesityMetric != .seconds {
+                        HStack {
+                            Text("Repetitions")
+                            TextField("12", text: $viewModel.repsString)
+                                .keyboardType(.decimalPad)
+                        }
                     }
+            
                 }
                 
                 Section(header: Text("Intensity")) {
@@ -46,10 +50,13 @@ struct ExerciseCreationView: View {
                             Text(LocalizedStringKey(viewModel.measurementStyles[index].name))
                         }
                     }
-                    HStack {
-                        Text("Value")
-                        TextField("80", text: $viewModel.intesityString)
-                            .keyboardType(.decimalPad)
+                    
+                    if viewModel.intesityMetric != .bodyWeight {
+                        HStack {
+                            Text("Value")
+                            TextField("80", text: $viewModel.intesityString)
+                                .keyboardType(.decimalPad)
+                        }
                     }
                     
                     HStack {
