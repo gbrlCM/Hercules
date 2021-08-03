@@ -24,6 +24,10 @@ struct ExerciseCreationCell: View {
                     Text("\(viewModel.series, specifier: "%d") x \(viewModel.repetitons, specifier: "%d") at body weight - \(viewModel.restTimeFormatted) of rest")
                         .font(.subheadline)
                         .foregroundColor(.secondary)
+                } else if viewModel.intesityType == .seconds || viewModel.intesityType == .areaOfRm {
+                    Text("\(viewModel.series, specifier: "%d") at \(viewModel.intesityFormatted) - \(viewModel.restTimeFormatted) of rest")
+                        .font(.subheadline)
+                        .foregroundColor(.secondary)
                 } else {
                     Text("\(viewModel.series, specifier: "%d") x \(viewModel.repetitons, specifier: "%d") at \(viewModel.intesityFormatted) - \(viewModel.restTimeFormatted) of rest")
                         .font(.subheadline)
