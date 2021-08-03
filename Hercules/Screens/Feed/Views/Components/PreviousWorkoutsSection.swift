@@ -26,7 +26,7 @@ struct PreviousWorkoutsSection: View {
             
         } else {
             LazyVStack {
-                ForEach(0..<viewModel.cardsViewModels.count) { index in
+                ForEach(viewModel.cardsViewModels.indices, id: \.self) { index in
                     PreviousWorkoutsCell(viewModel: viewModel.cardsViewModels[index])
                 }
             }

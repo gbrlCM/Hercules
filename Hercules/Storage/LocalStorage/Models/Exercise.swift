@@ -23,12 +23,15 @@ struct Exercise: Decodable, Identifiable {
         guard
             let name = entity.name,
             let id = entity.id,
-            let tags = entity.tags?.allObjects as? [ADExerciseTags]
+            let tags = entity.tags?.allObjects as? [ADExerciseTags],
+            let defaultTags = entity.standardTags
         else {
             preconditionFailure("Database misconfigured or error during registration")
         }
         
-        let structTags = tags.compactMap{ ExerciseTag(entity: $0) }
+        var structTags = tags.compactMap{ ExerciseTag(entity: $0) }
+        let defaultStructTags = defaultTags.map { ExerciseTag(name: $0, color: Color($0))}
+        structTags.append(contentsOf: defaultStructTags)
         
         self.name = name
         self.id = id.uuidString

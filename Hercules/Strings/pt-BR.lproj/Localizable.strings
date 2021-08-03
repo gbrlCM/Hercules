@@ -8,6 +8,7 @@
 "Previous Workouts" = "Treinos já concluidos";
 "Days of the week" = "Dias da semana";
 "Name" = "Nome";
+"Name: " = "Nome: ";
 "Area of focus" = "Foco do treino";
 "Scheaduled until" = "Marcado até";
 "Number of exercises" = "Número de exercicios";
@@ -19,6 +20,7 @@
 "Save" = "Salvar";
 "Cancel" = "Cancelar";
 "Edit exercises" = "Editar exercícios";
+"Exercise Creation" = "Criar exercícios";
 "Done" = "Pronto";
 
 //MARK: Days

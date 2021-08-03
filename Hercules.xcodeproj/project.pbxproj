@@ -64,6 +64,8 @@
 		5B92C90826A3309E0078C8ED /* WorkoutsViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B92C90726A3309E0078C8ED /* WorkoutsViewModel.swift */; };
 		5B92C90C26A331540078C8ED /* WorkoutsRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B92C90B26A331540078C8ED /* WorkoutsRequests.swift */; };
 		5B92C91026A332EA0078C8ED /* MainView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B92C90F26A332EA0078C8ED /* MainView.swift */; };
+		5B98595926B86DD0004A500A /* CustomExerciseCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98595826B86DD0004A500A /* CustomExerciseCreationView.swift */; };
+		5B98595B26B87944004A500A /* CustomExerciseCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B98595A26B87944004A500A /* CustomExerciseCreationViewModel.swift */; };
 		5B9997A326B0AD3C004CC142 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9997A226B0AD3C004CC142 /* WorkoutListView.swift */; };
 		5B9997A526B0C43D004CC142 /* SessionStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9997A426B0C43D004CC142 /* SessionStorage.swift */; };
 		5B9997A726B0C4DD004CC142 /* ADWorkoutSession+WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9997A626B0C4DD004CC142 /* ADWorkoutSession+WorkoutSession.swift */; };
@@ -161,6 +163,8 @@
 		5B92C90726A3309E0078C8ED /* WorkoutsViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsViewModel.swift; sourceTree = "<group>"; };
 		5B92C90B26A331540078C8ED /* WorkoutsRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsRequests.swift; sourceTree = "<group>"; };
 		5B92C90F26A332EA0078C8ED /* MainView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = MainView.swift; sourceTree = "<group>"; };
+		5B98595826B86DD0004A500A /* CustomExerciseCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomExerciseCreationView.swift; sourceTree = "<group>"; };
+		5B98595A26B87944004A500A /* CustomExerciseCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CustomExerciseCreationViewModel.swift; sourceTree = "<group>"; };
 		5B9997A226B0AD3C004CC142 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		5B9997A426B0C43D004CC142 /* SessionStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorage.swift; sourceTree = "<group>"; };
 		5B9997A626B0C4DD004CC142 /* ADWorkoutSession+WorkoutSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ADWorkoutSession+WorkoutSession.swift"; sourceTree = "<group>"; };
@@ -594,6 +598,7 @@
 				5B92C90426A330680078C8ED /* WorkoutCreationView.swift */,
 				5B01AE9126A4C13B0031A744 /* ExerciseCreationView.swift */,
 				5BC8D75426A91F4100662A6C /* ExerciseEditView.swift */,
+				5B98595826B86DD0004A500A /* CustomExerciseCreationView.swift */,
 			);
 			path = Views;
 			sourceTree = "<group>";
@@ -653,6 +658,7 @@
 				5B01AE8326A466760031A744 /* WorkoutCreationViewModel.swift */,
 				5B01AE8826A473720031A744 /* ExercisesListViewModel.swift */,
 				5B01AECD26A720C40031A744 /* ExerciseCreationViewModel.swift */,
+				5B98595A26B87944004A500A /* CustomExerciseCreationViewModel.swift */,
 			);
 			path = ViewModels;
 			sourceTree = "<group>";
@@ -782,6 +788,7 @@
 				5BC8D75326A91C5700662A6C /* ExerciseList.swift in Sources */,
 				5BB65F9826A20928004DF873 /* EmptySectionButton.swift in Sources */,
 				5BC8D76626AB6A5F00662A6C /* ActivityRingData.swift in Sources */,
+				5B98595B26B87944004A500A /* CustomExerciseCreationViewModel.swift in Sources */,
 				5B92C90C26A331540078C8ED /* WorkoutsRequests.swift in Sources */,
 				5B01AEB826A65FD70031A744 /* Workout.swift in Sources */,
 				5B5CEA6426AC50540041AA25 /* WorkoutExecutionView.swift in Sources */,
@@ -809,6 +816,7 @@
 				5B292A5A26A1E6680026ED5C /* StatHighlightSection.swift in Sources */,
 				5B9997A726B0C4DD004CC142 /* ADWorkoutSession+WorkoutSession.swift in Sources */,
 				5B9997A526B0C43D004CC142 /* SessionStorage.swift in Sources */,
+				5B98595926B86DD0004A500A /* CustomExerciseCreationView.swift in Sources */,
 				5B292A4926A1E5450026ED5C /* WorkoutsView.swift in Sources */,
 				5B292A6026A1E6DE0026ED5C /* ThisWeekSectionViewModel.swift in Sources */,
 				5B01AEBE26A660830031A744 /* WorkoutSession.swift in Sources */,

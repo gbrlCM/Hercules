@@ -32,9 +32,10 @@ class ExercisesListViewModel:ObservableObject {
     
     private var cancellables = Set<AnyCancellable>()
     
-    private var storage = ExerciseStorage()
+    private var storage: ExerciseStorage
     
-    init() {
+    init(storage: ExerciseStorage) {
+        self.storage = storage
         initiateBindings()
         storage.emitAllExercises()
         tags = PropertyListDecoder.decode("TagsData", to: [ExerciseTag].self) ?? []
