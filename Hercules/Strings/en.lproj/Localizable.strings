@@ -7,7 +7,8 @@
 "Workout" = "Workout";
 "Previous Workouts" = "Previous Workouts";
 "Days of the week" = "Days of the week";
-"Name" = "Nome";
+"Name" = "Name";
+"Name: " = "Name: ";
 "Area of focus" = "Area of focus";
 "Scheaduled until" = "Scheaduled until";
 "Number of exercises" = "Number of exercises";
@@ -19,6 +20,7 @@
 "Save" = "Save";
 "Cancel" = "Cancel";
 "Edit exercises" = "Edit exercises";
+"Exercise Creation" = "Exercise Creation";
 "Done" = "Done";
 
 //MARK: Days
