@@ -19,8 +19,8 @@ class WorkoutExecutionViewModel: ObservableObject {
     var isPaused: Bool
     @Published
     var workout: Workout
-    @Published
-    var restTimeLimit: TimeInterval
+//    @Published
+//    var restTimeLimit: TimeInterval
     @Published
     var generalTime: TimeInterval
     @Published
@@ -47,6 +47,10 @@ class WorkoutExecutionViewModel: ObservableObject {
     
     var currentSerie: Int {
         doneSeriesTimer.count
+    }
+    
+    var restTimeLimit: TimeInterval {
+        currentExercise.restTime
     }
     
     var totalRestTime: TimeInterval = 0
@@ -83,7 +87,7 @@ class WorkoutExecutionViewModel: ObservableObject {
     init(workout: Workout) {
         self.workout = workout
         currentExerciseIndex = 0
-        restTimeLimit = workout.exercises[0].restTime
+        //[[[restTimeLimit = workout.exercises[0].restTime
         
         generalTime = 0
         exerciseTime = 0

@@ -77,6 +77,7 @@
 		5BB65FFD26A222E6004DF873 /* ExercisesData.plist in Resources */ = {isa = PBXBuildFile; fileRef = 5BB65FFC26A222E6004DF873 /* ExercisesData.plist */; };
 		5BB6601526A23CDE004DF873 /* PropertyListDecoder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6601426A23CDE004DF873 /* PropertyListDecoder.swift */; };
 		5BB6601D26A24FAB004DF873 /* ExercisesListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB6601C26A24FAB004DF873 /* ExercisesListView.swift */; };
+		5BBEE7D926BC80EB00DADE68 /* StatHighlightBuilder.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BBEE7D826BC80EB00DADE68 /* StatHighlightBuilder.swift */; };
 		5BC8D74B26A8C78400662A6C /* WorkActionButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8D74A26A8C78400662A6C /* WorkActionButton.swift */; };
 		5BC8D74F26A90A2500662A6C /* TagButton.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8D74E26A90A2500662A6C /* TagButton.swift */; };
 		5BC8D75126A91AD600662A6C /* ExerciseCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BC8D75026A91AD600662A6C /* ExerciseCell.swift */; };
@@ -177,6 +178,7 @@
 		5BB65FFC26A222E6004DF873 /* ExercisesData.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = ExercisesData.plist; sourceTree = "<group>"; };
 		5BB6601426A23CDE004DF873 /* PropertyListDecoder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = PropertyListDecoder.swift; sourceTree = "<group>"; };
 		5BB6601C26A24FAB004DF873 /* ExercisesListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListView.swift; sourceTree = "<group>"; };
+		5BBEE7D826BC80EB00DADE68 /* StatHighlightBuilder.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = StatHighlightBuilder.swift; sourceTree = "<group>"; };
 		5BC8D74A26A8C78400662A6C /* WorkActionButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkActionButton.swift; sourceTree = "<group>"; };
 		5BC8D74E26A90A2500662A6C /* TagButton.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagButton.swift; sourceTree = "<group>"; };
 		5BC8D75026A91AD600662A6C /* ExerciseCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCell.swift; sourceTree = "<group>"; };
@@ -444,6 +446,7 @@
 		5B37B42126ADB2C400B9A940 /* Helpers */ = {
 			isa = PBXGroup;
 			children = (
+				5BAA641C26BC2C1B008A57CD /* Statistics */,
 				5B37B42226ADB2D500B9A940 /* ElapsedTimeFormatter.swift */,
 				5B37B42C26AF6F9E00B9A940 /* NotificationManager.swift */,
 			);
@@ -536,6 +539,14 @@
 				5B01AE8C26A475880031A744 /* ExercisesRequests.swift */,
 			);
 			path = Request;
+			sourceTree = "<group>";
+		};
+		5BAA641C26BC2C1B008A57CD /* Statistics */ = {
+			isa = PBXGroup;
+			children = (
+				5BBEE7D826BC80EB00DADE68 /* StatHighlightBuilder.swift */,
+			);
+			path = Statistics;
 			sourceTree = "<group>";
 		};
 		5BB65F8826A1FBF2004DF873 /* Strings */ = {
@@ -771,6 +782,7 @@
 				5BE0778F26A3573400591DA1 /* DaysSectionViewModel.swift in Sources */,
 				5B01AE9226A4C13B0031A744 /* ExerciseCreationView.swift in Sources */,
 				5B37B42326ADB2D500B9A940 /* ElapsedTimeFormatter.swift in Sources */,
+				5BBEE7D926BC80EB00DADE68 /* StatHighlightBuilder.swift in Sources */,
 				5B01AEBA26A6600B0031A744 /* Note.swift in Sources */,
 				5BB6601526A23CDE004DF873 /* PropertyListDecoder.swift in Sources */,
 				5B292A7726A1E8460026ED5C /* Color+XCAssets.swift.swift in Sources */,
@@ -965,7 +977,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hercules/Hercules.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Hercules/Preview Content\"";
 				DEVELOPMENT_TEAM = WK7599VNDW;
 				ENABLE_PREVIEWS = YES;
@@ -990,7 +1002,7 @@
 				ASSETCATALOG_COMPILER_GLOBAL_ACCENT_COLOR_NAME = AccentColor;
 				CODE_SIGN_ENTITLEMENTS = Hercules/Hercules.entitlements;
 				CODE_SIGN_STYLE = Automatic;
-				CURRENT_PROJECT_VERSION = 2;
+				CURRENT_PROJECT_VERSION = 3;
 				DEVELOPMENT_ASSET_PATHS = "\"Hercules/Preview Content\"";
 				DEVELOPMENT_TEAM = WK7599VNDW;
 				ENABLE_PREVIEWS = YES;

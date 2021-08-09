@@ -10,15 +10,37 @@ import SwiftUI
 
 struct StatHighlightSection: View {
     
+    @ObservedObject
     var viewModel: StatHighlightSectionViewModel
     
     var body: some View {
-        HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: viewModel.$cardsViewModels)) {
-            
-        } content: {index in
-            StatsHighlightsCard(viewModel: viewModel.cardsViewModels[index])
-                .padding(.bottom, 8)
-        }
+        //        HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: viewModel.$cardsViewModels)) {
+        //
+        //        } content: {index in
+        //            StatsHighlightsCard(viewModel: viewModel.cardsViewModels[index])
+        //                .padding(.bottom, 8)
+        //        }
+        content
+    }
+    
+    @ViewBuilder
+    var content: some View {
+        VStack(alignment: .leading) {
+            Text("Stats Highlights")
+                .font(.headline)
+                .bold()
+            ScrollView(.horizontal, showsIndicators: false) {
+                HStack(alignment: .top, spacing: 16) {
+                    ForEach(viewModel.activityRingsViewModels.indices, id: \.self) { index in
+                        ActivityRingCard(actityRingData: $viewModel.activityRingsViewModels[index])
+                    }
+                    ForEach(viewModel.cardsViewModels.indices, id: \.self) { index in
+                        StatsHighlightsCard(viewModel: viewModel.cardsViewModels[index])
+                    }
+                    
+                }.padding(.vertical, 8)
+            }
+        }.padding(.leading, 16)
     }
 }
 

@@ -37,11 +37,7 @@ struct FeedView: View {
     var feed: some View {
         ScrollView(.vertical, showsIndicators: true) {
             ThisWeekSection(viewModel: ThisWeekSectionViewModel(cardViewModels: $viewModel.thisWeekCardViewModel), isCreatingWorkout: $isCreatingWorkout)
-            HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: .statsHighlights, cards: $viewModel.activityRing)) {
-                Text("There is no stats yet, allow Health so you can see you rings")
-            } content: { index in
-                ActivityRingCard(actityRingData: $viewModel.activityRing[index])
-            }
+            StatHighlightSection(viewModel: .init(sectionTitle: .statsHighlights, cardsViewModels: $viewModel.workoutStatCardViewModels, activityRingData: $viewModel.activityRing))
             PreviousWorkoutsSection(viewModel: .init(cardsViewModels: viewModel.sessions.map { PreviousWorkoutsCellViewModelFactory.build(workoutSession: $0)}))
         }
         .listStyle(PlainListStyle())

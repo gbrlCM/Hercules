@@ -27,6 +27,9 @@ final class FeedViewModel: ObservableObject {
     var sessions: [WorkoutSession] = []
 
     @Published
+    var workoutStatCardViewModels: [StatHighlightsCardViewModel] = []
+    
+    @Published
     var activityRing: [ActivityRingData] = []
     
     init(dataStorage: WorkoutsStorage, healthStorage: HealthStorage) {
@@ -35,17 +38,22 @@ final class FeedViewModel: ObservableObject {
         setupDataStorageBindings()
         requestHealthStoreData()
         dataStorage.emitAllWorkoutSubjects()
-        //healthStorage.requestActivityRingData()
+        bindingActivityRing()
         
     }
     
-    func setupDataStorageBindings() {
+    private func setupDataStorageBindings() {
         dataStorage
             .allWorkoutSubjects
             .map { workouts in
                 workouts.flatMap { $0.sessions }
             }
             .assign(to: &$sessions)
+        
+        dataStorage
+            .allWorkoutSubjects
+            .map { StatHighlightCardBuilder.build(for: $0)}
+            .assign(to: &$workoutStatCardViewModels)
         
         dataStorage
             .allWorkoutSubjects
@@ -88,17 +96,19 @@ final class FeedViewModel: ObservableObject {
             .assign(to: &$thisWeekCardViewModel)
     }
     
-    func requestHealthStoreData() {
+    private func requestHealthStoreData() {
         
         healthStorage.requestAuthorization {[weak self] sucess in
             if sucess {
+                print("oi")
                 self?.bindingActivityRing()
             }
         }
         
     }
     
-    func bindingActivityRing() {
+    private func bindingActivityRing() {
+        print("to aqui")
         healthStorage
             .activityRingPublisher
             .assign(to: &$activityRing)
