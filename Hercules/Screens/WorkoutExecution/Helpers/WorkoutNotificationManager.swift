@@ -8,13 +8,12 @@
 import UserNotifications
 
 
-struct WorkoutNotificationManager {
+class WorkoutNotificationManager: NotificationManager {
     
-    private let manager = UserNotificationManager.shared
     private var notificationIds: [String] = []
     
-    mutating func sendEndOfRestingNotification(timeInterval: TimeInterval) {
-        if manager.isNotificationGranted {
+    func send(timeInterval: TimeInterval) {
+        if isNotificationGranted {
             let content = UNMutableNotificationContent()
             content.title = NSString.localizedUserNotificationString(forKey: "Your rest time is over!", arguments: nil)
             content.subtitle = NSString.localizedUserNotificationString(forKey: "Let's get back to work!", arguments: nil)
@@ -25,12 +24,13 @@ struct WorkoutNotificationManager {
             let id = UUID().uuidString
             notificationIds.append(id)
 
-            manager.sendNotification(with: content, when: trigger, id: id)
+            sendNotification(with: content, when: trigger, id: id)
         }
     }
     
-    mutating func cancelRestingNotifications() {
-        manager.cancelNotification(withIds: notificationIds)
+    func cancel() {
+        cancelNotification(withIds: notificationIds)
         notificationIds = []
+
     }
 }

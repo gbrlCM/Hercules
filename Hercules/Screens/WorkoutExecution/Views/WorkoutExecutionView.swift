@@ -29,11 +29,9 @@ struct WorkoutExecutionView: View {
             }.onReceive(viewModel.timer, perform: { _ in
                 viewModel.updateTimer()
             })
-            .sheet(isPresented: $viewModel.isPresentingExerciseList) {
-                
-            } content: {
+            .sheet(isPresented: $viewModel.isPresentingExerciseList, onDismiss: {viewModel.isPaused = false}, content: {
                 WorkoutListView(workout: $viewModel.workout, isPresenting: $viewModel.isPresentingExerciseList)
-            }
+            })
             .sheet(isPresented: $viewModel.isPresentingSummary) {
                 presentationMode.wrappedValue.dismiss()
                 viewModel.saveWorkoutSession()
@@ -143,7 +141,11 @@ struct WorkoutExecutionView: View {
     
     @ViewBuilder
     var moreInfoButtonStack: some View {
-        Button(action: {viewModel.isPresentingExerciseList = true}, label: {
+        Button(action: {
+            viewModel.isPresentingExerciseList = true
+            viewModel.isPaused = true
+            
+        }, label: {
             Image(systemName: "note.text")
                 .font(.title2.bold())
                 .foregroundColor(.white)
