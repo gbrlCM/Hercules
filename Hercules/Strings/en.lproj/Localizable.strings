@@ -62,7 +62,7 @@
 // String resuming details of an body weight exercise
 "%d x %d at body weight - %@ of rest" = "%d x %d at body weight - %@ of rest";
 // String for area of RM or seconds of an exercise
-"%d at %@ - %@ of rest" = "%d com %@ - %@ de descanso";
+"%d at %@ - %@ of rest" = "%d with %@ - %@ of rest";
 // String for number of serires
 "%d out of %d" = "%d out of %d";
 
