@@ -19,8 +19,6 @@ class WorkoutExecutionViewModel: ObservableObject {
     var isPaused: Bool
     @Published
     var workout: Workout
-//    @Published
-//    var restTimeLimit: TimeInterval
     @Published
     var generalTime: TimeInterval
     @Published
@@ -46,7 +44,7 @@ class WorkoutExecutionViewModel: ObservableObject {
     }
     
     var currentSerie: Int {
-        doneSeriesTimer.count
+        doneSeriesTimer.count + 1
     }
     
     var restTimeLimit: TimeInterval {
@@ -61,7 +59,7 @@ class WorkoutExecutionViewModel: ObservableObject {
     private var previousState: ViewState
     private var startDate: Date
     private var lastObservedDate: Date
-    private var notificationManager = WorkoutNotificationManager()
+    private var notificationManager: NotificationManager
     private let storage = SessionStorage()
     private let healthStorage = HealthStorage()
     
@@ -84,10 +82,9 @@ class WorkoutExecutionViewModel: ObservableObject {
         .publish(every: 1/30, on: .main, in: .common)
         .autoconnect()
     
-    init(workout: Workout) {
+    init(workout: Workout, notificationManager: NotificationManager = WorkoutNotificationManager()) {
         self.workout = workout
         currentExerciseIndex = 0
-        //[[[restTimeLimit = workout.exercises[0].restTime
         
         generalTime = 0
         exerciseTime = 0
@@ -99,6 +96,7 @@ class WorkoutExecutionViewModel: ObservableObject {
         isOnForeground = true
         isPaused = true
         lastObservedDate = startDate
+        self.notificationManager = notificationManager
         initiateBindings()
     }
     
@@ -145,16 +143,24 @@ class WorkoutExecutionViewModel: ObservableObject {
     }
     
     func updateTimer() {
-        if !isPaused {
+        if !isPaused && isOnForeground{
             if viewState == .exercise {
-                exerciseTime += timeCoeficient
-                totalExerciseTime += timeCoeficient
+                updateExerciseTimer()
             } else {
-                restTime += timeCoeficient
-                totalRestTime += timeCoeficient
+                updateRestTimer()
             }
             updateGeneralTimer()
         }
+    }
+    
+    private func updateExerciseTimer() {
+        exerciseTime += timeCoeficient
+        totalExerciseTime += timeCoeficient
+    }
+    
+    private func updateRestTimer() {
+        restTime += timeCoeficient
+        totalRestTime += timeCoeficient
     }
     
     private func updateGeneralTimer() {
@@ -178,16 +184,16 @@ class WorkoutExecutionViewModel: ObservableObject {
             let time = exerciseTime - timeUntilStartedExercise
             doneSeriesTimer.append(time)
             viewState = .resting
-            notificationManager.sendEndOfRestingNotification(timeInterval: restTimeLimit)
+            notificationManager.send(timeInterval: restTimeLimit)
         } else {
-            notificationManager.cancelRestingNotifications()
+            notificationManager.cancel()
             viewState = .exercise
             restTime = 0
         }
     }
     
     private func nextExercise() {
-        notificationManager.cancelRestingNotifications()
+        notificationManager.cancel()
         if currentExerciseIndex < workout.exercises.count-1 {
             updateExercise()
         } else {
@@ -197,7 +203,13 @@ class WorkoutExecutionViewModel: ObservableObject {
     
     private func updateExercise() {
         currentExerciseIndex += 1
+        resetExercise()
+    }
+    
+    private func resetExercise() {
         isPaused = true
+        restTime = 0
+        viewState = .exercise
         doneSeriesTimer = []
         exerciseTime = 0
     }

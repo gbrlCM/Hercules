@@ -2,19 +2,17 @@
 //  NotificationManager.swift
 //  Hercules
 //
-//  Created by Gabriel Ferreira de Carvalho on 11/08/21.
+//  Created by Gabriel Ferreira de Carvalho on 26/07/21.
 //
 
 import UserNotifications
+import Combine
 
-protocol NotificationManager {
+class UserNotificationManager {
     
-    func send(timeInterval: TimeInterval) -> Void
-    func cancel() -> Void
+    static var shared = UserNotificationManager()
     
-}
-
-extension NotificationManager {
+    private init() {}
     
     private var isNotificationGrantedKey: String {
         "com.gbrlcm.arnold.notificationManeger.isNotificationGranted"
@@ -41,5 +39,5 @@ extension NotificationManager {
     func cancelNotification(withIds ids: [String]) {
         UNUserNotificationCenter.current().removePendingNotificationRequests(withIdentifiers: ids)
     }
-    
 }
+
