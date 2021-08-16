@@ -2,14 +2,15 @@
 "This week" = "This week";
 "Stats highlights" = "Stats highlights";
 "Add workout" = "Add workout";
-"This week empty" = "There is no training scheaduled for this week, tap the button bellow to scheadule";
+"This week empty" = "There is no training scheduled for this week, tap the button bellow to schedule";
 "Workouts"= "Workouts";
 "Workout" = "Workout";
 "Previous Workouts" = "Previous Workouts";
 "Days of the week" = "Days of the week";
-"Name" = "Nome";
+"Name" = "Name";
+"Name: " = "Name: ";
 "Area of focus" = "Area of focus";
-"Scheaduled until" = "Scheaduled until";
+"Scheaduled until" = "Scheduled until";
 "Number of exercises" = "Number of exercises";
 "Create Workout" = "Create Workout";
 "There is no workouts yet, but you can create one tapping the button bellow!" = "There is no workouts yet, but you can create one tapping the button bellow!";
@@ -19,6 +20,7 @@
 "Save" = "Save";
 "Cancel" = "Cancel";
 "Edit exercises" = "Edit exercises";
+"Exercise Creation" = "Exercise Creation";
 "Done" = "Done";
 
 //MARK: Days
@@ -59,6 +61,8 @@
 "%d x %d at %@ - %@ of rest" = "%d x %d at %@ - %@ of rest";
 // String resuming details of an body weight exercise
 "%d x %d at body weight - %@ of rest" = "%d x %d at body weight - %@ of rest";
+// String for area of RM or seconds of an exercise
+"%d at %@ - %@ of rest" = "%d with %@ - %@ of rest";
 // String for number of serires
 "%d out of %d" = "%d out of %d";
 

@@ -8,6 +8,7 @@
 "Previous Workouts" = "Treinos já concluidos";
 "Days of the week" = "Dias da semana";
 "Name" = "Nome";
+"Name: " = "Nome: ";
 "Area of focus" = "Foco do treino";
 "Scheaduled until" = "Marcado até";
 "Number of exercises" = "Número de exercicios";
@@ -19,6 +20,7 @@
 "Save" = "Salvar";
 "Cancel" = "Cancelar";
 "Edit exercises" = "Editar exercícios";
+"Exercise Creation" = "Criar exercícios";
 "Done" = "Pronto";
 
 //MARK: Days
@@ -58,7 +60,9 @@
 // String resuming details of an exercise
 "%d x %d at %@ - %@ of rest" = "%d x %d com %@ - %@ de descanso";
 // String resuming details of an body weight exercise
-"%d x %d at body weight - %@ of rest" = "%d x %d com peso do corpo - %@ of rest";
+"%d x %d at body weight - %@ of rest" = "%d x %d com peso do corpo - %@ de descanso";
+// String for area of RM or seconds of an exercise
+"%d at %@ - %@ of rest" = "%d com %@ - %@ de descanso";
 // String for number of serires
 "%d out of %d" = "%d de %d";
 

@@ -63,6 +63,7 @@ struct WorkoutCreationView: View {
                 }
             }
             DatePicker("End date", selection: $viewModel.endDate, displayedComponents: .date)
+                .accentColor(.red)
         }
     }
     

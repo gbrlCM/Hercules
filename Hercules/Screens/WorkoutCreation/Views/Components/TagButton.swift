@@ -22,6 +22,7 @@ struct TagButton: View {
         })
         .padding(.vertical, 8)
         .padding(.horizontal, 12)
+        .frame(minWidth: 120, alignment: .center)
         .background(tagBackground(for: tag))
     }
     

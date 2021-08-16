@@ -29,7 +29,7 @@ struct ExerciseCreationCellViewModel {
         series = 4
         repetitons = 12
         intesity = 80
-        intesityType = .bodyWeight
+        intesityType = .areaOfRm
         restTime = 90
         intesityFormatted = generateIntesity()
         restTimeFormatted = generateRestTime()

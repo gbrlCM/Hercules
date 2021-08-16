@@ -7,7 +7,7 @@
 
 import CoreData
 
-class SessionStorage {
+class SessionStorageImpl: SessionStorage {
     
     private let dataStorage: DataStorage
     private let context: NSManagedObjectContext

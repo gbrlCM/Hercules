@@ -27,6 +27,9 @@ final class FeedViewModel: ObservableObject {
     var sessions: [WorkoutSession] = []
 
     @Published
+    var workoutStatCardViewModels: [StatHighlightsCardViewModel] = []
+    
+    @Published
     var activityRing: [ActivityRingData] = []
     
     init(dataStorage: WorkoutsStorage, healthStorage: HealthStorage) {
@@ -35,20 +38,30 @@ final class FeedViewModel: ObservableObject {
         setupDataStorageBindings()
         requestHealthStoreData()
         dataStorage.emitAllWorkoutSubjects()
-        //healthStorage.requestActivityRingData()
+        bindingActivityRing()
         
     }
     
-    func setupDataStorageBindings() {
+    private func setupDataStorageBindings() {
         dataStorage
             .allWorkoutSubjects
-            .map {[weak self] workouts -> [ThisWeekCardViewModel] in
+            .map { workouts in
+                workouts.flatMap { $0.sessions }
+            }
+            .assign(to: &$sessions)
+        
+        dataStorage
+            .allWorkoutSubjects
+            .map { StatHighlightCardBuilder.build(for: $0)}
+            .assign(to: &$workoutStatCardViewModels)
+        
+        dataStorage
+            .allWorkoutSubjects
+            .map {workouts -> [ThisWeekCardViewModel] in
                 var calendar = Calendar.current
                 calendar.locale = Locale.autoupdatingCurrent
                 let days = calendar.weekdaySymbols
                 let today = calendar.component(.weekday, from: Date())
-                
-                self?.sessions = workouts.flatMap { $0.sessions }
                 
                 var workoutGroupedByDay = workouts
                     .filter { workout in workout.finalDate >= Date() }
@@ -83,17 +96,19 @@ final class FeedViewModel: ObservableObject {
             .assign(to: &$thisWeekCardViewModel)
     }
     
-    func requestHealthStoreData() {
+    private func requestHealthStoreData() {
         
         healthStorage.requestAuthorization {[weak self] sucess in
             if sucess {
+                print("oi")
                 self?.bindingActivityRing()
             }
         }
         
     }
     
-    func bindingActivityRing() {
+    private func bindingActivityRing() {
+        print("to aqui")
         healthStorage
             .activityRingPublisher
             .assign(to: &$activityRing)

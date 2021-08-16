@@ -10,7 +10,7 @@ import Combine
 
 class WorkoutCreationViewModel: ObservableObject {
     
-    private let dataStorage = WorkoutsStorage()
+    private let dataStorage: WorkoutsStorage
     private var cancellables = Set<AnyCancellable>()
     private let savedObjectID: URL?
     
@@ -48,23 +48,25 @@ class WorkoutCreationViewModel: ObservableObject {
             .eraseToAnyPublisher()
     }
     
-    init(workout: Workout) {
+    init(workout: Workout, storage: WorkoutsStorage = WorkoutsStorageImpl()) {
         self.nameField = workout.name
         self.areaOfFocus = workout.focusArea.rawValue
         self.createdExercises = workout.exercises
         self.endDate = workout.finalDate
         self.savedObjectID = workout.objectID
         self.daysSelected = Day.allCases.map { day in workout.daysOfTheWeek.contains(day.rawValue) ? true : false }
+        self.dataStorage = storage
         initiateBindings()
     }
     
-    init() {
+    init(storage: WorkoutsStorage = WorkoutsStorageImpl()) {
         self.nameField = ""
         self.areaOfFocus = 1
         self.createdExercises = []
         self.endDate = Date()
         self.savedObjectID = nil
         self.daysSelected = Day.allCases.map {_ in false }
+        self.dataStorage = storage
         initiateBindings()
     }
     
