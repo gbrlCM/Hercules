@@ -14,7 +14,7 @@ struct ExercisesListView: View {
     @State
     var isCreatingNewExercise: Bool = false
     
-    private let storage: ExerciseStorage = ExerciseStorage()
+    private let storage: ExerciseStorage = ExerciseStorageImpl()
     
     var body: some View {
         NavigationView {

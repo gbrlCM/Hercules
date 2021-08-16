@@ -9,12 +9,13 @@ import Foundation
 import CoreData
 import Combine
 
-class ExerciseStorage: NSObject {
-    
+class ExerciseStorageImpl: NSObject, ExerciseStorage {
+ 
     private let context: NSManagedObjectContext
     
     var userExercisesSubject = PassthroughSubject<[Exercise], Never>()
     var defaultExercisesSubject = PassthroughSubject<[Exercise], Never>()
+    var defaultTagsSubjects = PassthroughSubject<[ExerciseTag], Never>()
     private var fetchedResultController: NSFetchedResultsController<ADExercise>
     
     override init() {
@@ -54,6 +55,16 @@ class ExerciseStorage: NSObject {
         
     }
     
+    func emitDefaultTags() {
+        guard let tags = PropertyListDecoder.decode("TagsData", to: [ExerciseTag].self)
+        else {
+            defaultTagsSubjects.send([])
+            return
+        }
+        
+        defaultTagsSubjects.send(tags)
+    }
+    
     func save(exercise: Exercise) {
         
         let entity = ADExercise(context: context)
@@ -66,7 +77,7 @@ class ExerciseStorage: NSObject {
     
 }
 
-extension ExerciseStorage: NSFetchedResultsControllerDelegate {
+extension ExerciseStorageImpl: NSFetchedResultsControllerDelegate {
     
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let data = controller.fetchedObjects as? [ADExercise] else { return }

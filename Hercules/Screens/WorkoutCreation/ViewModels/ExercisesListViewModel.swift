@@ -25,6 +25,9 @@ class ExercisesListViewModel:ObservableObject {
     private var fetchedDefaultExercises: [Exercise] = []
     
     @Published
+    private var fetchedUserExercises: [Exercise] = []
+    
+    @Published
     var shouldNavigateToNextSecion: Bool = true
     
     @Published
@@ -38,7 +41,7 @@ class ExercisesListViewModel:ObservableObject {
         self.storage = storage
         initiateBindings()
         storage.emitAllExercises()
-        tags = PropertyListDecoder.decode("TagsData", to: [ExerciseTag].self) ?? []
+        storage.emitDefaultTags()
     }
     
     private func initiateBindings() {
@@ -59,7 +62,7 @@ class ExercisesListViewModel:ObservableObject {
                 sortedExercises.sort { $0.name < $1.name}
                 return sortedExercises
             }
-            .assign(to: \.userExercises, on: self)
+            .assign(to: \.fetchedUserExercises, on: self)
             .store(in: &cancellables)
         
         $fetchedDefaultExercises
@@ -67,6 +70,15 @@ class ExercisesListViewModel:ObservableObject {
                 self?.defaultExercises = self?.updateExercisesWithTags(for: exercises) ?? []
             }
             .store(in: &cancellables)
+        
+        $fetchedUserExercises
+            .sink { [weak self] exercises in
+                self?.userExercises = self?.updateExercisesWithTags(for: exercises) ?? []
+            }.store(in: &cancellables)
+        
+        storage
+            .defaultTagsSubjects
+            .assign(to: &$tags)
     }
     
     func toggleTag(of tag: ExerciseTag) {
@@ -76,18 +88,18 @@ class ExercisesListViewModel:ObservableObject {
         } else {
             selectedTags.remove(at: index!)
         }
-        userExercises = updateExercisesWithTags(for: userExercises)
+        userExercises = updateExercisesWithTags(for: fetchedUserExercises)
         defaultExercises = updateExercisesWithTags(for: fetchedDefaultExercises)
     }
     
     private func updateExercisesWithTags(for exerciseList: [Exercise]) -> [Exercise] {
         if selectedTags == [] {
             return exerciseList
-        } else {
-            return exerciseList.filter { exercise in
-                let setOfTags = Set(exercise.tags.map(\.name))
-                return setOfTags.isSuperset(of: selectedTags.map(\.name))
-            }
+        }
+        
+        return exerciseList.filter { exercise in
+            let setOfTags = Set(exercise.tags.map(\.name))
+            return setOfTags.isSuperset(of: selectedTags.map(\.name))
         }
     }
     

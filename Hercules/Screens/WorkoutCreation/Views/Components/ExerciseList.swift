@@ -63,7 +63,7 @@ struct ExerciseList<Cell: View>: View {
 
 struct ExerciseList_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseList( viewModel: .init(storage: ExerciseStorage())) { exercise in
+        ExerciseList( viewModel: .init(storage: ExerciseStorageImpl())) { exercise in
             NavigationLink(
                 destination: ExerciseCreationView(viewModel: .init(exercise: .init()), isCreatingExercise: .constant(false)).navigationTitle(LocalizedStringKey(exercise.name)),
                 label: {
