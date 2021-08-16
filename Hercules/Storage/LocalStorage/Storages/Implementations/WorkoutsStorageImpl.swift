@@ -9,7 +9,7 @@ import Foundation
 import Combine
 import CoreData
 
-class WorkoutsStorage: NSObject {
+class WorkoutsStorageImpl:NSObject, WorkoutsStorage {
     
     private let dataStorage: DataStorage
     private let requestController: NSFetchedResultsController<ADWorkout>
@@ -75,7 +75,7 @@ class WorkoutsStorage: NSObject {
     }()
 }
 
-extension WorkoutsStorage: NSFetchedResultsControllerDelegate {
+extension WorkoutsStorageImpl: NSFetchedResultsControllerDelegate {
     func controllerDidChangeContent(_ controller: NSFetchedResultsController<NSFetchRequestResult>) {
         guard let data = controller.fetchedObjects as? [ADWorkout] else { return }
         

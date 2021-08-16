@@ -60,7 +60,7 @@ class WorkoutExecutionViewModel: ObservableObject {
     private var startDate: Date
     private var lastObservedDate: Date
     private var notificationManager: NotificationManager
-    private let storage = SessionStorage()
+    private let storage: SessionStorage
     private let healthStorage = HealthStorage()
     
     
@@ -82,7 +82,7 @@ class WorkoutExecutionViewModel: ObservableObject {
         .publish(every: 1/30, on: .main, in: .common)
         .autoconnect()
     
-    init(workout: Workout, notificationManager: NotificationManager = WorkoutNotificationManager()) {
+    init(workout: Workout, notificationManager: NotificationManager = WorkoutNotificationManager(), storage: SessionStorage = SessionStorageImpl()) {
         self.workout = workout
         currentExerciseIndex = 0
         
@@ -97,6 +97,7 @@ class WorkoutExecutionViewModel: ObservableObject {
         isPaused = true
         lastObservedDate = startDate
         self.notificationManager = notificationManager
+        self.storage = storage
         initiateBindings()
     }
     

@@ -8,7 +8,7 @@
 import Foundation
 import SwiftUI
 
-struct Exercise: Decodable, Identifiable {
+struct Exercise: Decodable, Identifiable, Equatable {
     let name: String
     let id: String
     let tags: [ExerciseTag]

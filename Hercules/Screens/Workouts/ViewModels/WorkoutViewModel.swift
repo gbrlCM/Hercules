@@ -16,7 +16,7 @@ class WorkoutViewModel: ObservableObject {
     @Published
     var isEditing: Bool = false
     
-    private var storage = WorkoutsStorage()
+    private var storage: WorkoutsStorage
     
     var days:[String] = {
         var calendar = Calendar.current
@@ -34,11 +34,13 @@ class WorkoutViewModel: ObservableObject {
         return formatter.string(from: date)
     }
     
-    init(workout: Binding<Workout>) {
+    init(workout: Binding<Workout>, storage: WorkoutsStorage = WorkoutsStorageImpl()) {
         self._workout = workout
+        self.storage = storage
     }
     
     init() {
         self._workout = .constant(Workout())
+        self.storage = WorkoutsStorageImpl()
     }
 }

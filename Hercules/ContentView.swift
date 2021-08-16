@@ -9,7 +9,7 @@ import SwiftUI
 
 struct ContentView: View {
     
-    let workoutStorage: WorkoutsStorage = WorkoutsStorage()
+    let workoutStorage: WorkoutsStorage = WorkoutsStorageImpl()
     let healthStorage: HealthStorage = HealthStorage()
     
     var body: some View {

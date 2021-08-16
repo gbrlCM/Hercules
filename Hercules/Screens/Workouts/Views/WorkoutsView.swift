@@ -95,10 +95,10 @@ struct WorkoutsView: View {
 struct WorkoutsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutsView(viewModel: .init(dataStorage: .init()))
+            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageImpl()))
                 .preferredColorScheme(.dark)
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutsView(viewModel: .init(dataStorage: .init()))
+            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageImpl()))
                 .preferredColorScheme(.dark)
         }
     }
