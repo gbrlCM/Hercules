@@ -74,13 +74,13 @@ class WorkoutExecutionViewModelTest: XCTestCase {
     }
     
     private func finishExercise() {
-        for _ in 0...sut.currentExercise.series {
+        for _ in 0...((sut.currentExercise.series*2)-1) {
             sut.next()
         }
     }
     
     private func finishWorkout() {
-        let seriesCount = sut.workout.exercises.map(\.series).reduce(0, +) + sut.workout.exercises.count
+        let seriesCount = sut.workout.exercises.map{($0.series*2) - 1}.reduce(0, +) + sut.workout.exercises.count
         
         for _ in 0...seriesCount {
             sut.next()
@@ -99,7 +99,7 @@ class WorkoutExecutionViewModelTest: XCTestCase {
     }
     
     func testRestTimeProgressCalculation() {
-        sut.restTime = 30
+        sut.workoutTimer.restTime = 30
         let restLimit = sut.currentExercise.restTime
         
         XCTAssertEqual(sut.restTimeProgress, (restLimit-sut.restTime)/restLimit)
@@ -182,10 +182,11 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         
         XCTAssertEqual(sut.exerciseTime.rounded(), 0)
         XCTAssertEqual(sut.generalTime.rounded(), 0)
+        XCTAssertEqual(sut.isOnForeground, true)
     }
     
     private func clockSetup(isPaused: Bool,
-                            viewState: WorkoutExecutionViewModel.ViewState,
+                            viewState: WorkoutViewState,
                             timerLimit: Double,
                             expectationLimit: Double,
                             timerCompletion: (() -> Void)?) {
