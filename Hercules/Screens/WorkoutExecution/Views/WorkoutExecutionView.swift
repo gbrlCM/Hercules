@@ -26,9 +26,7 @@ struct WorkoutExecutionView: View {
                 clock
                 exercisesList
                 buttonsStack
-            }.onReceive(viewModel.timer, perform: { _ in
-                viewModel.updateTimer()
-            })
+            }
             .sheet(isPresented: $viewModel.isPresentingExerciseList, onDismiss: {viewModel.isPaused = false}, content: {
                 WorkoutListView(workout: $viewModel.workout, isPresenting: $viewModel.isPresentingExerciseList)
             })
@@ -59,6 +57,9 @@ struct WorkoutExecutionView: View {
                      secondaryTimer: viewModel.viewState == .exercise ?
                         viewModel.exerciseTime : viewModel.restTime,
                      isPrimaryTimerInHighlight: {viewModel.viewState == .exercise})
+            .onReceive(viewModel.timer, perform: { _ in
+                viewModel.updateTimer()
+            })
     }
     
     @ViewBuilder

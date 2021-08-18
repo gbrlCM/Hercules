@@ -11,31 +11,22 @@ import Combine
 
 class WorkoutExecutionViewModel: ObservableObject {
     
-    enum ViewState {
-        case exercise, resting
-    }
-    
     @Published
     var isPaused: Bool
     @Published
     var workout: Workout
     @Published
-    var generalTime: TimeInterval
-    @Published
-    var restTime: TimeInterval
-    @Published
-    var exerciseTime: TimeInterval
-    @Published
-    var viewState: ViewState
+    var viewState: WorkoutViewState
     @Published
     var doneSeriesTimer: [TimeInterval]
     @Published
     private var currentExerciseIndex: Int
-    
     @Published
     var isPresentingSummary = false
     @Published
     var isPresentingExerciseList = false
+    @Published
+    var workoutTimer: WorkoutTimer
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -51,12 +42,9 @@ class WorkoutExecutionViewModel: ObservableObject {
         currentExercise.restTime
     }
     
-    var totalRestTime: TimeInterval = 0
-    var totalExerciseTime: TimeInterval = 0
-    
-    private var isOnForeground: Bool
+    private(set) var isOnForeground: Bool
     private let timeCoeficient: TimeInterval = 1/30
-    private var previousState: ViewState
+    private var previousState: WorkoutViewState
     private var startDate: Date
     private var lastObservedDate: Date
     private var notificationManager: NotificationManager
@@ -78,17 +66,32 @@ class WorkoutExecutionViewModel: ObservableObject {
         return timeUntilStartedExercise
     }
     
-    var timer = Timer
-        .publish(every: 1/30, on: .main, in: .common)
-        .autoconnect()
+    var timer: AnyPublisher<Date, Never> {
+        workoutTimer.timer
+    }
+    
+    var generalTime: TimeInterval {
+        workoutTimer.generalTime
+    }
+    
+    var restTime: TimeInterval {
+        workoutTimer.restTime
+    }
+    
+    var exerciseTime: TimeInterval {
+        workoutTimer.exerciseTime
+    }
+    
+    var totalRestTime: TimeInterval {
+        workoutTimer.totalRestTime
+    }
+    var totalExerciseTime: TimeInterval {
+        workoutTimer.totalExerciseTime
+    }
     
     init(workout: Workout, notificationManager: NotificationManager = WorkoutNotificationManager(), storage: SessionStorage = SessionStorageImpl()) {
         self.workout = workout
         currentExerciseIndex = 0
-        
-        generalTime = 0
-        exerciseTime = 0
-        restTime = 0
         viewState = .exercise
         startDate = Date()
         doneSeriesTimer = []
@@ -98,6 +101,7 @@ class WorkoutExecutionViewModel: ObservableObject {
         lastObservedDate = startDate
         self.notificationManager = notificationManager
         self.storage = storage
+        self.workoutTimer = WorkoutTimer()
         initiateBindings()
     }
     
@@ -125,47 +129,15 @@ class WorkoutExecutionViewModel: ObservableObject {
     }
     
     private func prepareClockForForeground() {
-        
-        guard !isPaused else { return }
-        
         isOnForeground = true
-        let now = Date()
-        let timeInBackground = now.timeIntervalSince(lastObservedDate)
-        
-        if viewState == .exercise {
-            exerciseTime += timeInBackground
-            totalExerciseTime += timeInBackground
-        } else {
-            restTime += timeInBackground
-            totalRestTime += timeInBackground
-        }
-        
-        generalTime += timeInBackground
+        guard !isPaused else { return }
+        workoutTimer.updateTimeForForegroundEntrance(state: viewState, lastObservedDate: lastObservedDate)
     }
     
     func updateTimer() {
         if !isPaused && isOnForeground{
-            if viewState == .exercise {
-                updateExerciseTimer()
-            } else {
-                updateRestTimer()
-            }
-            updateGeneralTimer()
+            workoutTimer.updateTimer(state: viewState)
         }
-    }
-    
-    private func updateExerciseTimer() {
-        exerciseTime += timeCoeficient
-        totalExerciseTime += timeCoeficient
-    }
-    
-    private func updateRestTimer() {
-        restTime += timeCoeficient
-        totalRestTime += timeCoeficient
-    }
-    
-    private func updateGeneralTimer() {
-        generalTime += timeCoeficient
     }
     
     func skip() {
@@ -173,7 +145,7 @@ class WorkoutExecutionViewModel: ObservableObject {
     }
     
     func next() {
-        if currentSerie < currentExercise.series {
+        if currentSerie <= currentExercise.series {
             nextSerie()
         } else {
             nextExercise()
@@ -189,7 +161,7 @@ class WorkoutExecutionViewModel: ObservableObject {
         } else {
             notificationManager.cancel()
             viewState = .exercise
-            restTime = 0
+            workoutTimer.resetRestTimer()
         }
     }
     
@@ -209,10 +181,9 @@ class WorkoutExecutionViewModel: ObservableObject {
     
     private func resetExercise() {
         isPaused = true
-        restTime = 0
         viewState = .exercise
         doneSeriesTimer = []
-        exerciseTime = 0
+        workoutTimer.prepareForNextExercise()
     }
     
     func finishWorkout() {

@@ -6,12 +6,14 @@
 //
 
 import SwiftUI
+import Combine
 
 struct WorkoutClock: View {
     
     var progress: Double
     var primaryTimer: TimeInterval
     var secondaryTimer: TimeInterval
+    
     var isPrimaryTimerInHighlight: () -> Bool
     
     let strokeStyle = StrokeStyle(lineWidth: 20,
@@ -29,13 +31,13 @@ struct WorkoutClock: View {
         ZStack {
             Circle()
                 .stroke(style: strokeStyle)
-                .padding(16)
+                .padding(32)
                 .foregroundColor(.timerBackground)
             Circle()
                 .trim(from: 0, to: CGFloat(progress))
                 .stroke(style: strokeStyle)
                 .foregroundColor(.red)
-                .padding(16)
+                .padding(32)
             clockTexts
             
         }
