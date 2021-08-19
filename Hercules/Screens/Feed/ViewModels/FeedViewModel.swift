@@ -46,7 +46,9 @@ final class FeedViewModel: ObservableObject {
         dataStorage
             .allWorkoutSubjects
             .map { workouts in
-                workouts.flatMap { $0.sessions }
+                var sessions = workouts.flatMap { $0.sessions }
+                sessions.sort { $0.date > $1.date }
+                return sessions
             }
             .assign(to: &$sessions)
         
@@ -81,7 +83,6 @@ final class FeedViewModel: ObservableObject {
                     }
                 }
                 workoutGroupedByDay.sort { $0.1 < $1.1 }
-                print(workoutGroupedByDay)
                 return workoutGroupedByDay.map { $0.0 }
             }
             .assign(to: &$fetchedThisWeekCardViewModel)
@@ -100,7 +101,6 @@ final class FeedViewModel: ObservableObject {
         
         healthStorage.requestAuthorization {[weak self] sucess in
             if sucess {
-                print("oi")
                 self?.bindingActivityRing()
             }
         }
@@ -108,7 +108,6 @@ final class FeedViewModel: ObservableObject {
     }
     
     private func bindingActivityRing() {
-        print("to aqui")
         healthStorage
             .activityRingPublisher
             .assign(to: &$activityRing)

@@ -563,6 +563,7 @@
 		5B674F0026C1588C00AE69D4 /* HerculesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5BC4B59526CD496D00115288 /* Extensions */,
 				5BB2871326C1E1C000D071BF /* Dummies */,
 				5B674F0326C1588C00AE69D4 /* Info.plist */,
 				5B674F0926C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift */,
@@ -717,6 +718,13 @@
 				5BC4B58F26CD28E800115288 /* WorkoutViewState.swift */,
 			);
 			path = Models;
+			sourceTree = "<group>";
+		};
+		5BC4B59526CD496D00115288 /* Extensions */ = {
+			isa = PBXGroup;
+			children = (
+			);
+			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5BC8D75F26AB31AC00662A6C /* Frameworks */ = {
@@ -1160,7 +1168,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Arnold;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1186,7 +1194,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.21;
+				MARKETING_VERSION = 1.22;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Arnold;
 				PRODUCT_NAME = "$(TARGET_NAME)";

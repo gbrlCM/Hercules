@@ -8,24 +8,50 @@
 import Foundation
 import Combine
 
-struct WorkoutTimer {
+struct WorkoutTimer: Equatable {
     var generalTime: TimeInterval
     var restTime: TimeInterval
     var exerciseTime: TimeInterval
     var timeRate: TimeInterval
-    var totalRestTime: TimeInterval = 0
-    var totalExerciseTime: TimeInterval = 0
-    let timer: AnyPublisher<Date, Never>
+    var totalRestTime: TimeInterval
+    var totalExerciseTime: TimeInterval
+    var timer: AnyPublisher<Date, Never>
     
     init() {
         generalTime = 0
         restTime = 0
         exerciseTime = 0
+        totalRestTime = 0
+        totalExerciseTime = 0
         timeRate = 1/30
         timer = Timer
             .publish(every: timeRate, on: .main, in: .common)
             .autoconnect()
             .eraseToAnyPublisher()
+    }
+    
+    init(generalTime: TimeInterval,
+                  restTime: TimeInterval,
+                  exerciseTime: TimeInterval,
+                  timeRate: TimeInterval,
+                  totalRestTime: TimeInterval,
+                  totalExerciseTime: TimeInterval) {
+        self.generalTime = generalTime
+        self.restTime = restTime
+        self.exerciseTime = exerciseTime
+        self.timeRate = timeRate
+        self.totalRestTime = totalRestTime
+        self.totalExerciseTime = totalExerciseTime
+        self.timer = Just(Date()).eraseToAnyPublisher()
+    }
+    
+    static func == (lhs: Self, rhs: Self) -> Bool {
+        return
+            lhs.generalTime == rhs.generalTime &&
+            lhs.restTime == rhs.restTime &&
+            lhs.exerciseTime == rhs.exerciseTime &&
+            lhs.totalRestTime == rhs.totalRestTime &&
+            lhs.totalExerciseTime == rhs.totalExerciseTime
     }
     
     mutating func updateTimeForForegroundEntrance(state: WorkoutViewState, lastObservedDate: Date) {
