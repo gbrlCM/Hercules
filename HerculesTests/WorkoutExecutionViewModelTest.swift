@@ -146,7 +146,7 @@ class WorkoutExecutionViewModelTest: XCTestCase {
                    viewState: .exercise,
                    timerLimit: 5,
                    expectationLimit: 6) {
-            NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
         
@@ -161,7 +161,7 @@ class WorkoutExecutionViewModelTest: XCTestCase {
                    viewState: .resting,
                    timerLimit: 5,
                    expectationLimit: 6) {
-            NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
         
@@ -176,7 +176,7 @@ class WorkoutExecutionViewModelTest: XCTestCase {
                    viewState: .exercise,
                    timerLimit: 5,
                    expectationLimit: 6) {
-            NotificationCenter.default.post(name: UIApplication.willEnterForegroundNotification, object: nil)
+            NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
         
