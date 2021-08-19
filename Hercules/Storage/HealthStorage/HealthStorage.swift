@@ -38,14 +38,12 @@ class HealthStorage {
                                                           from: Date())
             dateComponents.calendar = calendar
             let predicate = HKQuery.predicateForActivitySummary(with: dateComponents)
-            print("oiiii")
             let query = HKActivitySummaryQuery(predicate: predicate) { query, data, error in
                 
                 guard let summaries = data,
                       !summaries.isEmpty,
                       let summary = summaries.first
                 else {
-                    print("oiiii")
                     if let error = error {
                         
                         promise(.failure(error))
@@ -61,7 +59,6 @@ class HealthStorage {
             let energyUnit = HKUnit.kilocalorie()
             let standUnit = HKUnit.count()
             let exerciseUnit = HKUnit.minute()
-            print(summary)
             
             let energy = summary.activeEnergyBurned.doubleValue(for: energyUnit)
             let stand = summary.appleStandHours.doubleValue(for: standUnit)

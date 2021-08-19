@@ -25,10 +25,16 @@ class WorkoutExecutionViewModel: ObservableObject {
     var isPresentingSummary = false
     @Published
     var isPresentingExerciseList = false
+    
     @Published
     var workoutTimer: WorkoutTimer
-    
     private var cancellables = Set<AnyCancellable>()
+    private(set) var isOnForeground: Bool
+    private var startDate: Date
+    private var lastObservedDate: Date
+    private var notificationManager: NotificationManager
+    private let storage: SessionStorage
+    private let healthStorage: HealthStorage
     
     var currentExercise: WorkoutExercise {
         workout.exercises[currentExerciseIndex]
@@ -41,16 +47,6 @@ class WorkoutExecutionViewModel: ObservableObject {
     var restTimeLimit: TimeInterval {
         currentExercise.restTime
     }
-    
-    private(set) var isOnForeground: Bool
-    private let timeCoeficient: TimeInterval = 1/30
-    private var previousState: WorkoutViewState
-    private var startDate: Date
-    private var lastObservedDate: Date
-    private var notificationManager: NotificationManager
-    private let storage: SessionStorage
-    private let healthStorage = HealthStorage()
-    
     
     var restTimeProgress: TimeInterval {
         (restTimeLimit - restTime)/restTimeLimit
@@ -89,19 +85,23 @@ class WorkoutExecutionViewModel: ObservableObject {
         workoutTimer.totalExerciseTime
     }
     
-    init(workout: Workout, notificationManager: NotificationManager = WorkoutNotificationManager(), storage: SessionStorage = SessionStorageImpl()) {
+    init(workout: Workout,
+         notificationManager: NotificationManager = WorkoutNotificationManager(),
+         storage: SessionStorage = SessionStorageImpl(),
+         timer: WorkoutTimer = WorkoutTimer(),
+         healthStorage: HealthStorage = HealthStorage()) {
         self.workout = workout
-        currentExerciseIndex = 0
-        viewState = .exercise
-        startDate = Date()
-        doneSeriesTimer = []
-        previousState = .exercise
-        isOnForeground = true
-        isPaused = true
-        lastObservedDate = startDate
+        self.currentExerciseIndex = 0
+        self.viewState = .exercise
+        self.startDate = Date()
+        self.doneSeriesTimer = []
+        self.isOnForeground = true
+        self.isPaused = true
+        self.lastObservedDate = startDate
         self.notificationManager = notificationManager
         self.storage = storage
-        self.workoutTimer = WorkoutTimer()
+        self.workoutTimer = timer
+        self.healthStorage = healthStorage
         initiateBindings()
     }
     
@@ -114,9 +114,10 @@ class WorkoutExecutionViewModel: ObservableObject {
             }
             .store(in: &cancellables)
         
+        
         NotificationCenter
             .default
-            .publisher(for: UIApplication.willEnterForegroundNotification)
+            .publisher(for: UIApplication.didBecomeActiveNotification)
             .sink {[weak self] _ in
                 self?.prepareClockForForeground()
             }
@@ -212,7 +213,6 @@ class WorkoutExecutionViewModel: ObservableObject {
                                          workoutName: workoutName,
                                          exerciseCount: exerciseCount,
                                          seriesCount: seriesCount)
-            print(session)
             self?.storage.saveSession(session, workoutID: workoutId)
         }
     }
