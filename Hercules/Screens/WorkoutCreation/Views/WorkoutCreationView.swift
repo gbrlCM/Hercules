@@ -16,6 +16,13 @@ struct WorkoutCreationView: View {
     @ObservedObject
     var viewModel: WorkoutCreationViewModel
     
+    enum Field: Hashable {
+        case name
+    }
+    
+    @FocusState
+    var focus: Field?
+    
     var body: some View {
         NavigationView {
             MainView(background: Color.backgroundColor) {
@@ -56,6 +63,7 @@ struct WorkoutCreationView: View {
                 Text("Name")
                 TextField("Workout name...", text: $viewModel.nameField)
                     .textFieldStyle(PlainTextFieldStyle())
+                    .focused($focus, equals: .name)
             }
             Picker("Area of focus", selection: $viewModel.areaOfFocus) {
                 ForEach(viewModel.areasOfFocus, id: \.rawValue) { area in

@@ -48,9 +48,9 @@ struct FeedView: View {
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeedView(viewModel: .init(dataStorage: WorkoutsStorageImpl(), healthStorage: .init()))
+            FeedView(viewModel: .init(dataStorage: WorkoutsStorageMock(), healthStorage: .init()))
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            FeedView(viewModel: .init(dataStorage: WorkoutsStorageImpl(), healthStorage: .init()))
+            FeedView(viewModel: .init(dataStorage: WorkoutsStorageMock(), healthStorage: .init()))
                 .preferredColorScheme(.dark)
         }
     }

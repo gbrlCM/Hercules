@@ -30,6 +30,7 @@ struct PreviousWorkoutsSection: View {
                     PreviousWorkoutsCell(viewModel: viewModel.cardsViewModels[index])
                 }
             }
+            .padding(.horizontal, 8)
         }
     }
 }

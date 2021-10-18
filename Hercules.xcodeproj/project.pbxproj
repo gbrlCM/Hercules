@@ -77,6 +77,8 @@
 		5B9997A326B0AD3C004CC142 /* WorkoutListView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9997A226B0AD3C004CC142 /* WorkoutListView.swift */; };
 		5B9997A526B0C43D004CC142 /* SessionStorageImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9997A426B0C43D004CC142 /* SessionStorageImpl.swift */; };
 		5B9997A726B0C4DD004CC142 /* ADWorkoutSession+WorkoutSession.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B9997A626B0C4DD004CC142 /* ADWorkoutSession+WorkoutSession.swift */; };
+		5BA3EBAE271E25F900B933F2 /* WorkoutsStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA3EBAD271E25F900B933F2 /* WorkoutsStorageMock.swift */; };
+		5BA3EBB0271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BA3EBAF271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift */; };
 		5BB2871226C1E10300D071BF /* WorkoutExecutionViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB2871126C1E10300D071BF /* WorkoutExecutionViewTest.swift */; };
 		5BB2871526C1E1D300D071BF /* WorkoutDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BB2871426C1E1D300D071BF /* WorkoutDummy.swift */; };
 		5BB2871A26C1EC4100D071BF /* SnapshotTesting in Frameworks */ = {isa = PBXBuildFile; productRef = 5BB2871926C1EC4100D071BF /* SnapshotTesting */; };
@@ -204,6 +206,8 @@
 		5B9997A226B0AD3C004CC142 /* WorkoutListView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutListView.swift; sourceTree = "<group>"; };
 		5B9997A426B0C43D004CC142 /* SessionStorageImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = SessionStorageImpl.swift; sourceTree = "<group>"; };
 		5B9997A626B0C4DD004CC142 /* ADWorkoutSession+WorkoutSession.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ADWorkoutSession+WorkoutSession.swift"; sourceTree = "<group>"; };
+		5BA3EBAD271E25F900B933F2 /* WorkoutsStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsStorageMock.swift; sourceTree = "<group>"; };
+		5BA3EBAF271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCreationViewModelTests.swift; sourceTree = "<group>"; };
 		5BB2871126C1E10300D071BF /* WorkoutExecutionViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutExecutionViewTest.swift; sourceTree = "<group>"; };
 		5BB2871426C1E1D300D071BF /* WorkoutDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutDummy.swift; sourceTree = "<group>"; };
 		5BB65F8626A1FAF8004DF873 /* DataStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DataStorage.swift; sourceTree = "<group>"; };
@@ -277,6 +281,7 @@
 		5B01AE8526A467E30031A744 /* Storages */ = {
 			isa = PBXGroup;
 			children = (
+				5BA3EBAC271E25D700B933F2 /* Mocks */,
 				5B2A13CC26C44BF900FAD4AE /* Implementations */,
 				5B2A13CB26C44BF200FAD4AE /* Protocols */,
 			);
@@ -569,6 +574,7 @@
 				5B674F0926C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift */,
 				5BB2871126C1E10300D071BF /* WorkoutExecutionViewTest.swift */,
 				5B2A141E26C4951800FAD4AE /* ExerciseListViewModelTest.swift */,
+				5BA3EBAF271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift */,
 			);
 			path = HerculesTests;
 			sourceTree = "<group>";
@@ -624,6 +630,14 @@
 				5B01AE8C26A475880031A744 /* ExercisesRequests.swift */,
 			);
 			path = Request;
+			sourceTree = "<group>";
+		};
+		5BA3EBAC271E25D700B933F2 /* Mocks */ = {
+			isa = PBXGroup;
+			children = (
+				5BA3EBAD271E25F900B933F2 /* WorkoutsStorageMock.swift */,
+			);
+			path = Mocks;
 			sourceTree = "<group>";
 		};
 		5BAA641C26BC2C1B008A57CD /* Statistics */ = {
@@ -837,7 +851,7 @@
 			isa = PBXProject;
 			attributes = {
 				LastSwiftUpdateCheck = 1250;
-				LastUpgradeCheck = 1250;
+				LastUpgradeCheck = 1300;
 				TargetAttributes = {
 					5B292A3226A1E49F0026ED5C = {
 						CreatedOnToolsVersion = 12.5.1;
@@ -919,6 +933,7 @@
 				5BE0779726A3875900591DA1 /* IntensityType.swift in Sources */,
 				5B292A5826A1E6520026ED5C /* ThisWeekSection.swift in Sources */,
 				5BE0779126A35CD300591DA1 /* ExerciseFocusArea.swift in Sources */,
+				5BA3EBAE271E25F900B933F2 /* WorkoutsStorageMock.swift in Sources */,
 				5B01AECA26A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift in Sources */,
 				5BB65F9326A20147004DF873 /* StringKeys.swift in Sources */,
 				5B01AEB426A659970031A744 /* Exercise.swift in Sources */,
@@ -1000,6 +1015,7 @@
 			isa = PBXSourcesBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5BA3EBB0271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift in Sources */,
 				5B674F0A26C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift in Sources */,
 				5B985E9726CA907B00615116 /* TagDummy.swift in Sources */,
 				5BFA734E26C43EDB002C7959 /* WorkoutNotificationManagerDummy.swift in Sources */,
@@ -1038,6 +1054,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1085,7 +1102,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = INCLUDE_SOURCE;
 				MTL_FAST_MATH = YES;
 				ONLY_ACTIVE_ARCH = YES;
@@ -1099,6 +1116,7 @@
 			isa = XCBuildConfiguration;
 			buildSettings = {
 				ALWAYS_SEARCH_USER_PATHS = NO;
+				CLANG_ANALYZER_LOCALIZABILITY_NONLOCALIZED = YES;
 				CLANG_ANALYZER_NONNULL = YES;
 				CLANG_ANALYZER_NUMBER_OBJECT_CONVERSION = YES_AGGRESSIVE;
 				CLANG_CXX_LANGUAGE_STANDARD = "gnu++14";
@@ -1140,7 +1158,7 @@
 				GCC_WARN_UNINITIALIZED_AUTOS = YES_AGGRESSIVE;
 				GCC_WARN_UNUSED_FUNCTION = YES;
 				GCC_WARN_UNUSED_VARIABLE = YES;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				MTL_FAST_MATH = YES;
 				SDKROOT = iphoneos;
@@ -1163,7 +1181,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				INFOPLIST_FILE = Hercules/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1189,7 +1207,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				INFOPLIST_FILE = Hercules/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 14.5;
+				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

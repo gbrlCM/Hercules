@@ -14,12 +14,6 @@ struct StatHighlightSection: View {
     var viewModel: StatHighlightSectionViewModel
     
     var body: some View {
-        //        HorizontalSection(viewModel: HorizontalSectionViewModel(sectionTitle: viewModel.sectionTitle, cards: viewModel.$cardsViewModels)) {
-        //
-        //        } content: {index in
-        //            StatsHighlightsCard(viewModel: viewModel.cardsViewModels[index])
-        //                .padding(.bottom, 8)
-        //        }
         content
     }
     
@@ -27,7 +21,7 @@ struct StatHighlightSection: View {
     var content: some View {
         VStack(alignment: .leading) {
             Text("Stats Highlights")
-                .font(.headline)
+                .font(.title3.bold())
                 .bold()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 16) {

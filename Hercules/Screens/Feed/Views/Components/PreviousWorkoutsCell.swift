@@ -27,11 +27,17 @@ struct PreviousWorkoutsCell: View {
             label: {
                 VStack {
                     text(viewModel.dateOfWorkout, font: .title3.bold())
-                        .padding(.vertical, 4)
+                        .foregroundColor(.primary)
+                        .padding(.top, 6)
+                        .padding(.bottom, 1)
                     text(viewModel.workoutInfo, font: .subheadline)
                         .foregroundColor(.secondary)
-                        .padding(.bottom, 4)
-                }.padding(.horizontal, 16)
+                        .padding(.bottom, 6)
+                }
+                .padding(.horizontal, 16)
+                .background(Color.cardBackgroundBasic)
+                .cornerRadius(8)
+                .shadow(color: .black.opacity(0.1), radius: 6, x: 4, y: 4)
             })
     }
     
@@ -48,5 +54,6 @@ struct PreviousWorkoutsCell: View {
 struct LastWorkoutsCell_Previews: PreviewProvider {
     static var previews: some View {
         PreviousWorkoutsCell(viewModel: .init())
+            .preferredColorScheme(.light)
     }
 }
