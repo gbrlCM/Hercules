@@ -37,7 +37,7 @@ struct PreviousWorkoutsCell: View {
                 .padding(.horizontal, 16)
                 .background(Color.cardBackgroundBasic)
                 .cornerRadius(8)
-                .shadow(color: .black.opacity(0.1), radius: 6, x: 4, y: 4)
+                .withCardShadow()
             })
     }
     

@@ -21,8 +21,7 @@ struct StatHighlightSection: View {
     var content: some View {
         VStack(alignment: .leading) {
             Text("Stats Highlights")
-                .font(.title3.bold())
-                .bold()
+                .withSectionHeaderStyle()
             ScrollView(.horizontal, showsIndicators: false) {
                 HStack(alignment: .top, spacing: 16) {
                     ForEach(viewModel.activityRingsViewModels.indices, id: \.self) { index in

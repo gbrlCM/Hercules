@@ -24,6 +24,7 @@ class WorkoutExecutionViewModelTest: XCTestCase {
     
     override func tearDown() {
         sut = nil
+        cancellables.forEach { $0.cancel() }
         cancellables = nil
     }
     
@@ -201,7 +202,7 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         }.store(in: &cancellables)
         
         Timer
-            .publish(every: 5, on: .main, in: .common)
+            .publish(every: timerLimit, on: .main, in: .common)
             .autoconnect()
             .sink {_ in
                 if let action = timerCompletion {

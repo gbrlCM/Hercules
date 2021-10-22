@@ -11,6 +11,7 @@ final class FeedViewModel: ObservableObject {
     
     private var dataStorage: WorkoutsStorage
     private var healthStorage: HealthStorage
+    private let dateHelper: DatesHelper
     
     private var cancellables = Set<AnyCancellable>()
     
@@ -32,9 +33,10 @@ final class FeedViewModel: ObservableObject {
     @Published
     var activityRing: [ActivityRingData] = []
     
-    init(dataStorage: WorkoutsStorage, healthStorage: HealthStorage) {
+    init(dataStorage: WorkoutsStorage, healthStorage: HealthStorage, dateHelper: DatesHelper = DatesHelperImpl()) {
         self.dataStorage = dataStorage
         self.healthStorage = healthStorage
+        self.dateHelper = dateHelper
         setupDataStorageBindings()
         requestHealthStoreData()
         dataStorage.emitAllWorkoutSubjects()
@@ -45,11 +47,7 @@ final class FeedViewModel: ObservableObject {
     private func setupDataStorageBindings() {
         dataStorage
             .allWorkoutSubjects
-            .map { workouts in
-                var sessions = workouts.flatMap { $0.sessions }
-                sessions.sort { $0.date > $1.date }
-                return sessions
-            }
+            .map(fetchAllSectionsFromWorkouts)
             .assign(to: &$sessions)
         
         dataStorage
@@ -59,32 +57,7 @@ final class FeedViewModel: ObservableObject {
         
         dataStorage
             .allWorkoutSubjects
-            .map {workouts -> [ThisWeekCardViewModel] in
-                var calendar = Calendar.current
-                calendar.locale = Locale.autoupdatingCurrent
-                let days = calendar.weekdaySymbols
-                let today = calendar.component(.weekday, from: Date())
-                
-                var workoutGroupedByDay = workouts
-                    .filter { workout in workout.finalDate >= Date() }
-                    .flatMap { workout in
-                    workout
-                        .daysOfTheWeek
-                        .filter {$0 >= today }
-                        .map { day -> (ThisWeekCardViewModel, Int) in
-                        let dateString: String
-                        if day == today {
-                            dateString = "Today"
-                        } else {
-                            dateString = days[day-1]
-                        }
-                        
-                        return (ThisWeekCardViewModel(name: workout.name, dateString: dateString, workout: workout), day)
-                    }
-                }
-                workoutGroupedByDay.sort { $0.1 < $1.1 }
-                return workoutGroupedByDay.map { $0.0 }
-            }
+            .map(transformWorkoutDataIntoCards)
             .assign(to: &$fetchedThisWeekCardViewModel)
         
         Publishers.CombineLatest($isOnForeground, $fetchedThisWeekCardViewModel)
@@ -95,6 +68,37 @@ final class FeedViewModel: ObservableObject {
                 return fetchedThisWeekCardViewModel
             }
             .assign(to: &$thisWeekCardViewModel)
+    }
+    
+    private func fetchAllSectionsFromWorkouts(_ workouts: [Workout]) -> [WorkoutSession] {
+        var sessions = workouts.flatMap { $0.sessions }
+        sessions.sort { $0.date > $1.date }
+        return sessions
+    }
+    
+    private func transformWorkoutDataIntoCards(workouts: [Workout]) -> [ThisWeekCardViewModel] {
+        let days = dateHelper.days
+        let today = dateHelper.todayWeekDay
+        
+        var workoutGroupedByDay = workouts
+            .filter { workout in workout.finalDate >= dateHelper.today }
+            .flatMap { workout in
+            workout
+                .daysOfTheWeek
+                .filter {$0 >= today }
+                .map { day -> (ThisWeekCardViewModel, Int) in
+                let dateString: String
+                if day == today {
+                    dateString = "Today"
+                } else {
+                    dateString = days[day-1]
+                }
+                
+                return (ThisWeekCardViewModel(name: workout.name, dateString: dateString, workout: workout), day)
+            }
+        }
+        workoutGroupedByDay.sort { $0.1 < $1.1 }
+        return workoutGroupedByDay.map { $0.0 }
     }
     
     private func requestHealthStoreData() {

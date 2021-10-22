@@ -10,7 +10,7 @@ import SwiftUI
 struct ContentView: View {
     
     let workoutStorage: WorkoutsStorage = WorkoutsStorageImpl()
-    let healthStorage: HealthStorage = HealthStorage()
+    let healthStorage: HealthStorage = HealthStorageImpl()
     
     var body: some View {
         TabView {
