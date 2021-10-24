@@ -13,10 +13,10 @@ final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
     var allWorkoutSubjects: PassthroughSubject<[Workout], Never> = .init()
     
     var lastSavedWorkout: Workout? = nil
+    var workouts: [Workout]
     
-    func emitAllWorkoutSubjects() {
-        
-        let exerciseDummy: [WorkoutExercise] = [
+    override init() {
+        let exerciseDummy = [
             WorkoutExercise(exerciseName: "Wall Ball",
                             exerciseID: UUID(),
                             intesityMetric: .weight,
@@ -38,10 +38,9 @@ final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
                             repetitions: 12,
                             series: 3,
                             restTime: 90)
-            
         ]
         
-        let sessions: [WorkoutSession] = [
+        let sessions = [
             WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 125), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 1", exerciseCount: 4, seriesCount: 12),
             WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 250), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 2", exerciseCount: 4, seriesCount: 12),
             WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 375), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 3", exerciseCount: 4, seriesCount: 12),
@@ -55,7 +54,16 @@ final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
                               finalDate: Date(timeIntervalSince1970: 35000),
                               sessions: sessions)
         
-        allWorkoutSubjects.send([workout, workout, workout, workout])
+        workouts = [workout, workout, workout, workout]
+        super.init()
+    }
+    
+    init(workouts: [Workout]) {
+        self.workouts = workouts
+    }
+    
+    func emitAllWorkoutSubjects() {
+        allWorkoutSubjects.send(workouts)
     }
     
     func saveWorkout(_ workout: Workout) {

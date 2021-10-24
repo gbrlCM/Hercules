@@ -67,6 +67,7 @@
 		5B46790627219A04000FB60B /* HealthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B46790527219A04000FB60B /* HealthStorage.swift */; };
 		5B46790827219B7D000FB60B /* HealthStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B46790727219B7D000FB60B /* HealthStorageMock.swift */; };
 		5B46790A27219EFC000FB60B /* DatesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B46790927219EFC000FB60B /* DatesHelper.swift */; };
+		5B5893262725FDD900C36D3C /* WorkoutStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5893252725FDD900C36D3C /* WorkoutStorageMock.swift */; };
 		5B5CEA6426AC50540041AA25 /* WorkoutExecutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CEA6326AC50540041AA25 /* WorkoutExecutionView.swift */; };
 		5B674F0A26C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B674F0926C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift */; };
 		5B88922D271F6E5B001F81DB /* Text+SectionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88922C271F6E5B001F81DB /* Text+SectionTitle.swift */; };
@@ -201,6 +202,7 @@
 		5B46790527219A04000FB60B /* HealthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStorage.swift; sourceTree = "<group>"; };
 		5B46790727219B7D000FB60B /* HealthStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStorageMock.swift; sourceTree = "<group>"; };
 		5B46790927219EFC000FB60B /* DatesHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesHelper.swift; sourceTree = "<group>"; };
+		5B5893252725FDD900C36D3C /* WorkoutStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStorageMock.swift; sourceTree = "<group>"; };
 		5B5CEA6326AC50540041AA25 /* WorkoutExecutionView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutExecutionView.swift; sourceTree = "<group>"; };
 		5B674EFF26C1588C00AE69D4 /* HerculesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HerculesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B674F0326C1588C00AE69D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
@@ -569,6 +571,34 @@
 			path = Helpers;
 			sourceTree = "<group>";
 		};
+		5B5893272726035D00C36D3C /* Tests */ = {
+			isa = PBXGroup;
+			children = (
+				5B5893292726037600C36D3C /* Views */,
+				5B5893282726036200C36D3C /* ViewModels */,
+			);
+			path = Tests;
+			sourceTree = "<group>";
+		};
+		5B5893282726036200C36D3C /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5B674F0926C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift */,
+				5B2A141E26C4951800FAD4AE /* ExerciseListViewModelTest.swift */,
+				5BA3EBAF271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5B5893292726037600C36D3C /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5BB2871126C1E10300D071BF /* WorkoutExecutionViewTest.swift */,
+				5B889230271F74D8001F81DB /* FeedViewTests.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
 		5B5CEA6226AC50440041AA25 /* Views */ = {
 			isa = PBXGroup;
 			children = (
@@ -583,14 +613,10 @@
 		5B674F0026C1588C00AE69D4 /* HerculesTests */ = {
 			isa = PBXGroup;
 			children = (
+				5B5893272726035D00C36D3C /* Tests */,
 				5BC4B59526CD496D00115288 /* Extensions */,
 				5BB2871326C1E1C000D071BF /* Dummies */,
 				5B674F0326C1588C00AE69D4 /* Info.plist */,
-				5B674F0926C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift */,
-				5BB2871126C1E10300D071BF /* WorkoutExecutionViewTest.swift */,
-				5B2A141E26C4951800FAD4AE /* ExerciseListViewModelTest.swift */,
-				5BA3EBAF271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift */,
-				5B889230271F74D8001F81DB /* FeedViewTests.swift */,
 			);
 			path = HerculesTests;
 			sourceTree = "<group>";
@@ -673,6 +699,7 @@
 				5B2A142026C4986000FAD4AE /* ExercisesDummy.swift */,
 				5B985E9626CA907B00615116 /* TagDummy.swift */,
 				5B889232271F75D4001F81DB /* FeedViewModelDummy.swift */,
+				5B5893252725FDD900C36D3C /* WorkoutStorageMock.swift */,
 			);
 			path = Dummies;
 			sourceTree = "<group>";
@@ -1042,6 +1069,7 @@
 			buildActionMask = 2147483647;
 			files = (
 				5BA3EBB0271E2A0200B933F2 /* WorkoutCreationViewModelTests.swift in Sources */,
+				5B5893262725FDD900C36D3C /* WorkoutStorageMock.swift in Sources */,
 				5B674F0A26C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift in Sources */,
 				5B889231271F74D8001F81DB /* FeedViewTests.swift in Sources */,
 				5B985E9726CA907B00615116 /* TagDummy.swift in Sources */,
