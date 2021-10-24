@@ -24,7 +24,7 @@ struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
         VStack {
             HStack {
                 Text(LocalizedStringKey(viewModel.sectionTitle))
-                    .font(.title3.bold())
+                    .withSectionHeaderStyle()
                     .padding(.leading, 16)
                 Spacer()
             }
@@ -44,7 +44,7 @@ struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
             HStack(alignment: .top, spacing: 16) {
                 ForEach(viewModel.cards.indices, id: \.self) {index in
                     content(index)
-                        .padding(.vertical, 12)
+                        .padding(.vertical, 8)
                 }
             }
         })

@@ -89,7 +89,7 @@ class WorkoutExecutionViewModel: ObservableObject {
          notificationManager: NotificationManager = WorkoutNotificationManager(),
          storage: SessionStorage = SessionStorageImpl(),
          timer: WorkoutTimer = WorkoutTimer(),
-         healthStorage: HealthStorage = HealthStorage()) {
+         healthStorage: HealthStorage = HealthStorageImpl()) {
         self.workout = workout
         self.currentExerciseIndex = 0
         self.viewState = .exercise
@@ -109,27 +109,23 @@ class WorkoutExecutionViewModel: ObservableObject {
         NotificationCenter
             .default
             .publisher(for: UIApplication.willResignActiveNotification)
-            .sink {[weak self] _ in
-                self?.prepareClockForBackground()
-            }
+            .sink(receiveValue: prepareClockForBackground)
             .store(in: &cancellables)
         
         
         NotificationCenter
             .default
             .publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink {[weak self] _ in
-                self?.prepareClockForForeground()
-            }
+            .sink(receiveValue: prepareClockForForeground)
             .store(in: &cancellables)
     }
     
-    private func prepareClockForBackground() {
+    private func prepareClockForBackground(_ notification: Notification) {
         isOnForeground = false
         lastObservedDate = Date()
     }
     
-    private func prepareClockForForeground() {
+    private func prepareClockForForeground(_ notification: Notification) {
         isOnForeground = true
         guard !isPaused else { return }
         workoutTimer.updateTimeForForegroundEntrance(state: viewState, lastObservedDate: lastObservedDate)
