@@ -109,30 +109,32 @@ class WorkoutExecutionViewModelTest: XCTestCase {
     func testTimerDuringExerciseInForeground() {
         clockSetup(isPaused: false,
                    viewState: .exercise,
-                   timerLimit: 5,
-                   expectationLimit: 6,
+                   timerLimit: 2,
+                   expectationLimit: 3,
                    timerCompletion: nil)
         
-        XCTAssertEqual(sut.exerciseTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        print("exercise time: \(sut.exerciseTime) \n general time: \(sut.generalTime) \n")
+        XCTAssertEqual(sut.exerciseTime.rounded(), 1)
+        XCTAssertEqual(sut.generalTime.rounded(), 1)
     }
     
     func testTimerDuringRestInForeGround() {
         clockSetup(isPaused: false,
                    viewState: .resting,
-                   timerLimit: 5,
-                   expectationLimit: 6,
+                   timerLimit: 1,
+                   expectationLimit: 2,
                    timerCompletion: nil)
         
-        XCTAssertEqual(sut.restTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        print("exercise time: \(sut.exerciseTime) \n general time: \(sut.generalTime) \n")
+        XCTAssertEqual(sut.restTime.rounded(), 1)
+        XCTAssertEqual(sut.generalTime.rounded(), 1)
     }
     
     func testTimerDuringPauseInForeground() {
         clockSetup(isPaused: true,
                    viewState: .resting,
-                   timerLimit: 5,
-                   expectationLimit: 6,
+                   timerLimit: 1,
+                   expectationLimit: 2,
                    timerCompletion: nil)
         
         XCTAssertEqual(sut.restTime.rounded(), 0)
@@ -140,19 +142,17 @@ class WorkoutExecutionViewModelTest: XCTestCase {
     }
     
     func testTimerDuringExerciseInBackground() throws {
-        
-        NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
-        
         clockSetup(isPaused: false,
                    viewState: .exercise,
-                   timerLimit: 5,
-                   expectationLimit: 6) {
+                   timerLimit: 1,
+                   expectationLimit: 2) {
             NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
+        NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
         
-        XCTAssertEqual(sut.exerciseTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        XCTAssertEqual(sut.exerciseTime.rounded(), 1)
+        XCTAssertEqual(sut.generalTime.rounded(), 1)
     }
     
     func testTimerDuringRestInBackground() {
@@ -160,14 +160,14 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         
         clockSetup(isPaused: false,
                    viewState: .resting,
-                   timerLimit: 5,
-                   expectationLimit: 6) {
+                   timerLimit: 1,
+                   expectationLimit: 2) {
             NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
         
-        XCTAssertEqual(sut.restTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        XCTAssertEqual(sut.restTime.rounded(), 1)
+        XCTAssertEqual(sut.generalTime.rounded(), 1)
     }
     
     func testTimerDuringPauseInBackground() {
@@ -175,8 +175,8 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         
         clockSetup(isPaused: true,
                    viewState: .exercise,
-                   timerLimit: 5,
-                   expectationLimit: 6) {
+                   timerLimit: 1,
+                   expectationLimit: 2) {
             NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         

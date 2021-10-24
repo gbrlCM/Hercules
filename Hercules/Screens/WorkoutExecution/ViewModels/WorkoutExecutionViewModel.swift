@@ -29,7 +29,7 @@ class WorkoutExecutionViewModel: ObservableObject {
     @Published
     var workoutTimer: WorkoutTimer
     private var cancellables = Set<AnyCancellable>()
-    private(set) var isOnForeground: Bool
+    var isOnForeground: Bool
     private var startDate: Date
     private var lastObservedDate: Date
     private var notificationManager: NotificationManager

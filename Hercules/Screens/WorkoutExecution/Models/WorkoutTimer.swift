@@ -25,7 +25,7 @@ struct WorkoutTimer: Equatable {
         totalExerciseTime = 0
         timeRate = 1/30
         timer = Timer
-            .publish(every: timeRate, on: .main, in: .common)
+            .publish(every: timeRate, on: .current, in: .default)
             .autoconnect()
             .eraseToAnyPublisher()
     }
