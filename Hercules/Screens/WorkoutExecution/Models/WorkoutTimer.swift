@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-struct WorkoutTimer: Equatable {
+class WorkoutTimer {
     var generalTime: TimeInterval
     var restTime: TimeInterval
     var exerciseTime: TimeInterval
@@ -25,7 +25,7 @@ struct WorkoutTimer: Equatable {
         totalExerciseTime = 0
         timeRate = 1/30
         timer = Timer
-            .publish(every: timeRate, on: .main, in: .common)
+            .publish(every: timeRate, on: .current, in: .common)
             .autoconnect()
             .eraseToAnyPublisher()
     }
@@ -45,16 +45,7 @@ struct WorkoutTimer: Equatable {
         self.timer = Just(Date()).eraseToAnyPublisher()
     }
     
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return
-            lhs.generalTime == rhs.generalTime &&
-            lhs.restTime == rhs.restTime &&
-            lhs.exerciseTime == rhs.exerciseTime &&
-            lhs.totalRestTime == rhs.totalRestTime &&
-            lhs.totalExerciseTime == rhs.totalExerciseTime
-    }
-    
-    mutating func updateTimeForForegroundEntrance(state: WorkoutViewState, lastObservedDate: Date) {
+    func updateTimeForForegroundEntrance(state: WorkoutViewState, lastObservedDate: Date) {
         
         let now = Date()
         let timeInBackground = now.timeIntervalSince(lastObservedDate)
@@ -70,7 +61,7 @@ struct WorkoutTimer: Equatable {
         generalTime += timeInBackground
     }
     
-    mutating func updateTimer(state: WorkoutViewState) {
+    func updateTimer(state: WorkoutViewState) {
         if state == .exercise {
             updateExerciseTimer()
         } else {
@@ -79,25 +70,25 @@ struct WorkoutTimer: Equatable {
         updateGeneralTimer()
     }
     
-    private mutating func updateExerciseTimer() {
+    private func updateExerciseTimer() {
         exerciseTime += timeRate
         totalExerciseTime += timeRate
     }
     
-    private mutating func updateRestTimer() {
+    private func updateRestTimer() {
         restTime += timeRate
         totalRestTime += timeRate
     }
     
-    private mutating func updateGeneralTimer() {
+    private func updateGeneralTimer() {
         generalTime += timeRate
     }
     
-    mutating func resetRestTimer() {
+    func resetRestTimer() {
         restTime = 0
     }
     
-    mutating func prepareForNextExercise() {
+    func prepareForNextExercise() {
         resetRestTimer()
         exerciseTime = 0
     }

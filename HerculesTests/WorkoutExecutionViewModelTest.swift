@@ -14,11 +14,13 @@ class WorkoutExecutionViewModelTest: XCTestCase {
     
     var sut: WorkoutExecutionViewModel!
     var notificationManager: WorkoutNotificationManagerDummy!
+    var timer: WorkoutTimer!
     var cancellables: Set<AnyCancellable>!
     
     override func setUpWithError() throws {
         notificationManager = WorkoutNotificationManagerDummy()
-        sut = .init(workout: WorkoutDummy.dummy, notificationManager: notificationManager)
+        timer = WorkoutTimer()
+        sut = .init(workout: WorkoutDummy.dummy, notificationManager: notificationManager, timer: timer)
         cancellables = Set<AnyCancellable>()
     }
     
@@ -107,52 +109,39 @@ class WorkoutExecutionViewModelTest: XCTestCase {
     }
     
     func testTimerDuringExerciseInForeground() {
-        clockSetup(isPaused: false,
-                   viewState: .exercise,
-                   timerLimit: 5,
-                   expectationLimit: 6,
-                   timerCompletion: nil)
-        
-        XCTAssertEqual(sut.exerciseTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        syncClockSetup(isPaused: false, viewState: .exercise)
+        XCTAssert(sut.exerciseTime == 1/30)
+        XCTAssert(sut.generalTime == 1/30)
+        XCTAssert(sut.restTime == 0)
     }
     
     func testTimerDuringRestInForeGround() {
-        clockSetup(isPaused: false,
-                   viewState: .resting,
-                   timerLimit: 5,
-                   expectationLimit: 6,
-                   timerCompletion: nil)
+        syncClockSetup(isPaused: false, viewState: .resting)
         
-        XCTAssertEqual(sut.restTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        XCTAssertEqual(sut.restTime, 1/30)
+        XCTAssertEqual(sut.generalTime, 1/30)
+        XCTAssertEqual(sut.exerciseTime, 0)
     }
     
     func testTimerDuringPauseInForeground() {
-        clockSetup(isPaused: true,
-                   viewState: .resting,
-                   timerLimit: 5,
-                   expectationLimit: 6,
-                   timerCompletion: nil)
+        syncClockSetup(isPaused: true, viewState: .resting)
         
         XCTAssertEqual(sut.restTime.rounded(), 0)
         XCTAssertEqual(sut.generalTime.rounded(), 0)
     }
     
     func testTimerDuringExerciseInBackground() throws {
-        
         NotificationCenter.default.post(name: UIApplication.willResignActiveNotification, object: nil)
         
         clockSetup(isPaused: false,
                    viewState: .exercise,
-                   timerLimit: 5,
-                   expectationLimit: 6) {
+                   timerLimit: 1,
+                   expectationLimit: 2) {
             NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
-        
-        XCTAssertEqual(sut.exerciseTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        XCTAssertEqual(sut.exerciseTime.rounded(), 1)
+        XCTAssertEqual(sut.generalTime.rounded(), 1)
     }
     
     func testTimerDuringRestInBackground() {
@@ -160,14 +149,14 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         
         clockSetup(isPaused: false,
                    viewState: .resting,
-                   timerLimit: 5,
-                   expectationLimit: 6) {
+                   timerLimit: 1,
+                   expectationLimit: 2) {
             NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
         
-        XCTAssertEqual(sut.restTime.rounded(), 5)
-        XCTAssertEqual(sut.generalTime.rounded(), 5)
+        XCTAssertEqual(sut.restTime.rounded(), 1)
+        XCTAssertEqual(sut.generalTime.rounded(), 1)
     }
     
     func testTimerDuringPauseInBackground() {
@@ -175,8 +164,8 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         
         clockSetup(isPaused: true,
                    viewState: .exercise,
-                   timerLimit: 5,
-                   expectationLimit: 6) {
+                   timerLimit: 1,
+                   expectationLimit: 2) {
             NotificationCenter.default.post(name: UIApplication.didBecomeActiveNotification, object: nil)
         }
         
@@ -184,6 +173,13 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         XCTAssertEqual(sut.exerciseTime.rounded(), 0)
         XCTAssertEqual(sut.generalTime.rounded(), 0)
         XCTAssertEqual(sut.isOnForeground, true)
+    }
+    
+    private func syncClockSetup(isPaused: Bool, viewState: WorkoutViewState) {
+        sut.isPaused = isPaused
+        sut.viewState = viewState
+        
+        sut.updateTimer()
     }
     
     private func clockSetup(isPaused: Bool,
@@ -197,21 +193,25 @@ class WorkoutExecutionViewModelTest: XCTestCase {
         sut.isPaused = isPaused
         sut.viewState = viewState
         
+        let before: Date = Date()
+        
+        let timer = Timer.scheduledTimer(withTimeInterval: timerLimit, repeats: false) {_ in
+            if let action = timerCompletion {
+                action()
+            }
+            
+            let dif = Date().timeIntervalSince(before)
+            print("Timer: \(dif)")
+            expectation.fulfill()
+        }
+        
+        timer.tolerance = 0.2
+        
         sut.timer.sink { [weak self] _ in
             self?.sut.updateTimer()
         }.store(in: &cancellables)
         
-        Timer
-            .publish(every: timerLimit, on: .main, in: .common)
-            .autoconnect()
-            .sink {_ in
-                if let action = timerCompletion {
-                    action()
-                }
-                expectation.fulfill()
-            }.store(in: &cancellables)
-        
-        waitForExpectations(timeout: expectationLimit)
+        wait(for: [expectation], timeout: 2)
     }
     
     func testAditionOfRestNotificationOnTheEndOfAnSerie() {
