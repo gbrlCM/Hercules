@@ -25,7 +25,7 @@ struct DayButton: View {
         .frame(width: 44, height: 44, alignment: .center)
         .background(background)
         .cornerRadius(22)
-        .shadow(color: .black.opacity(0.4), radius: 5, x: 4, y: 4)
+        .withCardShadow()
     }
     
     @ViewBuilder

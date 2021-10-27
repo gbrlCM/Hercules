@@ -15,7 +15,7 @@ struct PreviousWorkoutsSection: View {
     var body: some View {
         HStack {
             Text(LocalizedStringKey(viewModel.sectionTitle))
-                .font(.title3.bold())
+                .withSectionHeaderStyle()
             Spacer()
         }.padding(.horizontal, 16)
         .padding(.bottom, 8)
@@ -28,8 +28,10 @@ struct PreviousWorkoutsSection: View {
             LazyVStack {
                 ForEach(viewModel.cardsViewModels.indices, id: \.self) { index in
                     PreviousWorkoutsCell(viewModel: viewModel.cardsViewModels[index])
+                        .padding(.bottom, 4)
                 }
             }
+            .padding(.horizontal, 16)
         }
     }
 }

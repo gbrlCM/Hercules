@@ -7,7 +7,7 @@
 
 import Foundation
 
-struct Workout: Hashable {
+struct Workout: Hashable, Equatable {
     var focusArea: ExerciseFocusArea
     var exercises: [WorkoutExercise]
     var sessions: [WorkoutSession]

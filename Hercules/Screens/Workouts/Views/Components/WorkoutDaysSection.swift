@@ -35,10 +35,10 @@ struct WorkoutDaysSection: View {
     func background(forTagAt index: Int) -> some View {
         if(daysOfTheWeek.contains(index+1)) {
             GradientBackground(start: .redGradientStart, finish: .redGradientFinish)
-                .shadow(color: .black.opacity(0.35), radius: 8, x: 4, y: 4)
+                .withCardShadow()
         } else {
             Color(.tertiarySystemBackground)
-                .shadow(color: .black.opacity(0.35), radius: 8, x: 4, y: 4)
+                .withCardShadow()
         }
     }
 }

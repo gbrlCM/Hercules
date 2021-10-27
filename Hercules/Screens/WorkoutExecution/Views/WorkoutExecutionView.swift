@@ -63,15 +63,24 @@ struct WorkoutExecutionView: View {
     }
     
     @ViewBuilder
+    var exerciseListHeader: some View {
+        HStack {
+            Text("\(viewModel.currentSerie, specifier: "%d") out of \(viewModel.currentExercise.series, specifier: "%d")").withSectionHeaderStyle()
+            Spacer()
+        }
+    }
+    
+    @ViewBuilder
     var exercisesList: some View {
         List {
-            Section(header: Text("\(viewModel.currentSerie, specifier: "%d") out of \(viewModel.currentExercise.series, specifier: "%d")")) {
+            Section(header: exerciseListHeader) {
                 ForEach(viewModel.doneSeriesTimer.indices, id: \.self) { index in
                     VStack(alignment: .leading) {
                         Text("Serie - \(index+1)")
                         Text(NSNumber(value: viewModel.doneSeriesTimer[index]), formatter: timeFormatter)
                     }
                 }
+                .listStyle(.plain)
                 .listRowBackground(Color.backgroundColor)
             }
         }
