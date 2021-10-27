@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-class WorkoutTimer {
+struct WorkoutTimer {
     var generalTime: TimeInterval
     var restTime: TimeInterval
     var exerciseTime: TimeInterval
@@ -25,7 +25,7 @@ class WorkoutTimer {
         totalExerciseTime = 0
         timeRate = 1/30
         timer = Timer
-            .publish(every: timeRate, on: .current, in: .common)
+            .publish(every: timeRate, on: .main, in: .default)
             .autoconnect()
             .eraseToAnyPublisher()
     }
@@ -45,9 +45,8 @@ class WorkoutTimer {
         self.timer = Just(Date()).eraseToAnyPublisher()
     }
     
-    func updateTimeForForegroundEntrance(state: WorkoutViewState, lastObservedDate: Date) {
+    mutating func updateTimeForForegroundEntrance(state: WorkoutViewState, lastObservedDate: Date, now: Date) {
         
-        let now = Date()
         let timeInBackground = now.timeIntervalSince(lastObservedDate)
         
         if state == .exercise {
@@ -61,7 +60,7 @@ class WorkoutTimer {
         generalTime += timeInBackground
     }
     
-    func updateTimer(state: WorkoutViewState) {
+    mutating func updateTimer(state: WorkoutViewState) {
         if state == .exercise {
             updateExerciseTimer()
         } else {
@@ -70,25 +69,25 @@ class WorkoutTimer {
         updateGeneralTimer()
     }
     
-    private func updateExerciseTimer() {
+    private mutating func updateExerciseTimer() {
         exerciseTime += timeRate
         totalExerciseTime += timeRate
     }
     
-    private func updateRestTimer() {
+    private mutating func updateRestTimer() {
         restTime += timeRate
         totalRestTime += timeRate
     }
     
-    private func updateGeneralTimer() {
+    private mutating func updateGeneralTimer() {
         generalTime += timeRate
     }
     
-    func resetRestTimer() {
+    mutating func resetRestTimer() {
         restTime = 0
     }
     
-    func prepareForNextExercise() {
+    mutating func prepareForNextExercise() {
         resetRestTimer()
         exerciseTime = 0
     }

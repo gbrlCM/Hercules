@@ -26,6 +26,8 @@
 		5B01AECA26A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AEC926A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift */; };
 		5B01AECC26A717860031A744 /* ADExercise+Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AECB26A717860031A744 /* ADExercise+Exercise.swift */; };
 		5B01AECE26A720C40031A744 /* ExerciseCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AECD26A720C40031A744 /* ExerciseCreationViewModel.swift */; };
+		5B0E7CFD2728D270003C2B01 /* DeviceActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0E7CFC2728D270003C2B01 /* DeviceActivityMonitor.swift */; };
+		5B0E7CFF2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0E7CFE2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift */; };
 		5B292A3726A1E49F0026ED5C /* HerculesApp.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B292A3626A1E49F0026ED5C /* HerculesApp.swift */; };
 		5B292A3926A1E49F0026ED5C /* ContentView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B292A3826A1E49F0026ED5C /* ContentView.swift */; };
 		5B292A3B26A1E4A00026ED5C /* Assets.xcassets in Resources */ = {isa = PBXBuildFile; fileRef = 5B292A3A26A1E4A00026ED5C /* Assets.xcassets */; };
@@ -159,6 +161,8 @@
 		5B01AEC926A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ADWorkoutExercise+WorkoutExercise.swift"; sourceTree = "<group>"; };
 		5B01AECB26A717860031A744 /* ADExercise+Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ADExercise+Exercise.swift"; sourceTree = "<group>"; };
 		5B01AECD26A720C40031A744 /* ExerciseCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCreationViewModel.swift; sourceTree = "<group>"; };
+		5B0E7CFC2728D270003C2B01 /* DeviceActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitor.swift; sourceTree = "<group>"; };
+		5B0E7CFE2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorDummy.swift; sourceTree = "<group>"; };
 		5B292A3326A1E49F0026ED5C /* Hercules.app */ = {isa = PBXFileReference; explicitFileType = wrapper.application; includeInIndex = 0; path = Hercules.app; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B292A3626A1E49F0026ED5C /* HerculesApp.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HerculesApp.swift; sourceTree = "<group>"; };
 		5B292A3826A1E49F0026ED5C /* ContentView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ContentView.swift; sourceTree = "<group>"; };
@@ -542,6 +546,7 @@
 				5B37B42C26AF6F9E00B9A940 /* UserNotificationManager.swift */,
 				5BFA734B26C43575002C7959 /* NotificationManager.swift */,
 				5B46790927219EFC000FB60B /* DatesHelper.swift */,
+				5B0E7CFC2728D270003C2B01 /* DeviceActivityMonitor.swift */,
 			);
 			path = Helpers;
 			sourceTree = "<group>";
@@ -700,6 +705,7 @@
 				5B985E9626CA907B00615116 /* TagDummy.swift */,
 				5B889232271F75D4001F81DB /* FeedViewModelDummy.swift */,
 				5B5893252725FDD900C36D3C /* WorkoutStorageMock.swift */,
+				5B0E7CFE2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift */,
 			);
 			path = Dummies;
 			sourceTree = "<group>";
@@ -1015,6 +1021,7 @@
 				5B292A7926A1E85F0026ED5C /* UIApplication.swift in Sources */,
 				5BE0779926A3880700591DA1 /* ExerciseCreationCellViewModel.swift in Sources */,
 				5B01AE8726A468230031A744 /* WorkoutsStorageImpl.swift in Sources */,
+				5B0E7CFD2728D270003C2B01 /* DeviceActivityMonitor.swift in Sources */,
 				5BC8D75326A91C5700662A6C /* ExerciseList.swift in Sources */,
 				5BB65F9826A20928004DF873 /* EmptySectionButton.swift in Sources */,
 				5BC8D76626AB6A5F00662A6C /* ActivityRingData.swift in Sources */,
@@ -1072,6 +1079,7 @@
 				5B5893262725FDD900C36D3C /* WorkoutStorageMock.swift in Sources */,
 				5B674F0A26C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift in Sources */,
 				5B889231271F74D8001F81DB /* FeedViewTests.swift in Sources */,
+				5B0E7CFF2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift in Sources */,
 				5B985E9726CA907B00615116 /* TagDummy.swift in Sources */,
 				5BFA734E26C43EDB002C7959 /* WorkoutNotificationManagerDummy.swift in Sources */,
 				5B2A141F26C4951800FAD4AE /* ExerciseListViewModelTest.swift in Sources */,
