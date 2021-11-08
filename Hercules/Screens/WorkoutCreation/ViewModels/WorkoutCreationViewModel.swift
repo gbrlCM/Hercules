@@ -96,11 +96,12 @@ class WorkoutCreationViewModel: ObservableObject {
                               daysOfTheWeek: days,
                               exercises: createdExercises,
                               finalDate: endDate,
-                              sessions: [])
+                              sessions: [],
+                              objectID: savedObjectID)
         
         
-        if let id = savedObjectID {
-            dataStorage.editWorkout(withID: id, workout)
+        if savedObjectID != nil {
+            dataStorage.editWorkout(workout)
         } else {
             dataStorage.saveWorkout(workout)
         }

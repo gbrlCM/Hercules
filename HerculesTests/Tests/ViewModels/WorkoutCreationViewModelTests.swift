@@ -56,15 +56,14 @@ class WorkoutCreationViewModelTests: XCTestCase {
     }
     
     func testUserDidUpdateWorkout() {
-        var dummy = WorkoutDummy.dummy
-        dummy.objectID = URL(fileURLWithPath: "")
+        var dummy = WorkoutDummy.dummyWithID
         sut = .init(workout: dummy, storage: mockStorage)
         
         sut.nameField = "New Name"
         
         sut.saveWorkout()
         
-        XCTAssertEqual(mockStorage.lastSavedWorkout!.name, "New Name")
+        XCTAssertEqual(mockStorage.lastUpdatedWorkout?.name ?? "empty", "New Name")
         
     }
 

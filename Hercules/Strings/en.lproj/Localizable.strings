@@ -23,6 +23,12 @@
 "Exercise Creation" = "Exercise Creation";
 "Done" = "Done";
 
+//MARK: Delete Message
+"Are you sure?" = "Are you sure?";
+"Yes I'm sure" = "Yes I'm sure";
+"Cancel" = "Cancel";
+"Your deleted workout cannot be restored" = "Your deleted workout cannot be restored";
+
 //MARK: Days
 "Today" = "Today";
 "Monday" = "Monday";
@@ -162,6 +168,8 @@
 "Skip" = "Skip";
 "Next" = "Next";
 "Start" = "Start";
+"Edit" = "Edit";
+"Delete" = "Delete";
 "restTime" = "Rest";
 "Exercise" = "Exercise";
 "Total time" = "Total time";

@@ -23,6 +23,12 @@
 "Exercise Creation" = "Criar exercícios";
 "Done" = "Pronto";
 
+//MARK: Delete Message
+"Are you sure?" = "Voce tem certeza?";
+"Yes I'm sure" = "Deletar";
+"Cancel" = "Cancelar";
+"Your deleted workout cannot be restored" = "Seu treino deletado não poderá ser restaurado";
+
 //MARK: Days
 "Today" = "Hoje";
 "Monday" = "Segunda";
@@ -162,6 +168,8 @@
 "Skip" = "Pular";
 "Next" = "Prox.";
 "Start" = "Iniciar";
+"Edit" = "Editar";
+"Delete" = "Deletar";
 "restTime" = "Descanso";
 "Exercise" = "Exercício";
 "Total time" = "Tempo total";

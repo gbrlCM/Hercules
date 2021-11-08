@@ -58,4 +58,9 @@ class WorkoutsViewModel: ObservableObject {
             }
         return dates.joined(separator: " - ")
     }
+    
+    func deleteWorkout(offset: Int) {
+        guard let workout = workouts[safe: offset] else { return }
+        storage.deleteWorkout(workout)
+    }
 }

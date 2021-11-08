@@ -15,7 +15,16 @@ enum WorkoutDummy {
                                         daysOfTheWeek: [1,3],
                                         exercises: exerciseDummy,
                                         finalDate: Date(),
-                                        sessions: [])
+                                        sessions: [],
+                                        objectID:  nil)
+    
+    static var dummyWithID: Workout = Workout(name: "Test Workout",
+                                              focusArea: .leg,
+                                              daysOfTheWeek: [1,3],
+                                              exercises: exerciseDummy,
+                                              finalDate: Date(),
+                                              sessions: [],
+                                              objectID:  URL(fileURLWithPath: ""))
     
     private static var exerciseDummy: [WorkoutExercise] = [
         WorkoutExercise(exerciseName: "Wall Ball",

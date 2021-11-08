@@ -12,9 +12,6 @@ struct WorkoutView: View {
     @ObservedObject
     var viewModel: WorkoutViewModel
     
-    @State
-    var isPlayingWorkout = false
-    
     var body: some View {
         MainView(background: Color.backgroundColor) {
             VStack {
@@ -31,7 +28,7 @@ struct WorkoutView: View {
         .sheet(isPresented: $viewModel.isEditing) {
             WorkoutCreationView(presentationBinding: $viewModel.isEditing, viewModel: WorkoutCreationViewModel(workout: viewModel.workout))
         }
-        .fullScreenCover(isPresented: $isPlayingWorkout, content: {
+        .fullScreenCover(isPresented: $viewModel.isPlayingWorkout, content: {
             WorkoutExecutionView(viewModel: WorkoutExecutionViewModel(workout: viewModel.workout))
         })
     }
@@ -71,17 +68,20 @@ struct WorkoutView: View {
     
     @ViewBuilder
     var actionSection: some View {
-        HStack(spacing: 32) {
-            WorkoutActionButton(action: {viewModel.isEditing = true}, color: .redGradientFinish, label: Label(
-                title: { Text("Edit") },
-                icon: { Image(systemName: "pencil") }
-            ))
-            WorkoutActionButton(action: {isPlayingWorkout = true}, color: .redGradientStart, label: Label(
-                title: { Text("Start") },
-                icon: { Image(systemName: "play.fill") }
-            ))
-        }.padding(.vertical, 16)
-        
+        HStack(spacing: 16) {
+            WorkoutActionButton(action: viewModel.startEditing,
+                                color: .redGradientFinish,
+                                text: .init("Edit"),
+                                image: Image(systemName: "pencil"))
+            WorkoutActionButton(action: viewModel.startWorkout,
+                                color: .redGradientStart,
+                                text: .init("Start"),
+                                image: Image(systemName: "play.fill"))
+            WorkoutActionButton(action: viewModel.deleteWorkout,
+                                color: .redGradientStart,
+                                text: .init("Delete"),
+                                image: Image(systemName: "trash.fill"))
+        }.padding(.vertical, 8)
     }
     
 }
@@ -89,11 +89,14 @@ struct WorkoutView: View {
 struct WorkoutView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutView(viewModel: WorkoutViewModel())
-                .previewDevice("iPhone SE (2nd generation)")
+            NavigationView {
+                WorkoutView(viewModel: WorkoutViewModel())
+            } .previewDevice("iPhone SE (2nd generation)")
                 .preferredColorScheme(.dark)
-                .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutView(viewModel: WorkoutViewModel())
+            .environment(\.locale, .init(identifier: "pt_BR"))
+            NavigationView {
+                WorkoutView(viewModel: WorkoutViewModel())
+            }
         }
     }
 }
