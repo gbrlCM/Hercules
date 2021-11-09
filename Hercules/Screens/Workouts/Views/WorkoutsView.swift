@@ -68,7 +68,7 @@ struct WorkoutsView: View {
         List {
             ForEach(viewModel.workouts.indices, id: \.self) {index  in
                 NavigationLink(
-                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: $viewModel.workouts[index])),
+                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: $viewModel.workouts[index], storage: viewModel.storage)),
                     label: {
                         WorkoutListCell(exerciseName: viewModel.workouts[index].name,
                                         exerciseCount: viewModel.workouts[index].exercises.count,

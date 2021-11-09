@@ -11,6 +11,8 @@ struct WorkoutView: View {
     
     @ObservedObject
     var viewModel: WorkoutViewModel
+    @Environment(\.dismiss)
+    var dismiss
     
     var body: some View {
         MainView(background: Color.backgroundColor) {
@@ -77,11 +79,16 @@ struct WorkoutView: View {
                                 color: .redGradientStart,
                                 text: .init("Start"),
                                 image: Image(systemName: "play.fill"))
-            WorkoutActionButton(action: viewModel.deleteWorkout,
+            WorkoutActionButton(action: deleteWorkout,
                                 color: .redGradientStart,
                                 text: .init("Delete"),
                                 image: Image(systemName: "trash.fill"))
         }.padding(.vertical, 8)
+    }
+    
+    private func deleteWorkout() {
+        viewModel.deleteWorkout()
+        dismiss()
     }
     
 }

@@ -55,6 +55,6 @@ class WorkoutViewModel: ObservableObject {
     }
     
     func deleteWorkout() {
-        
+        storage.deleteWorkout(workout)
     }
 }

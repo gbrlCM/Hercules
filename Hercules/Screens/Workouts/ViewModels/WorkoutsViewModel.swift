@@ -11,7 +11,7 @@ import Combine
 
 class WorkoutsViewModel: ObservableObject {
     
-    private let storage: WorkoutsStorage
+    let storage: WorkoutsStorage
     private var cancellables: Set<AnyCancellable>
     
     @Published
