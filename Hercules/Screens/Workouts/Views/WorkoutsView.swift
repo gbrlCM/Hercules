@@ -8,7 +8,6 @@
 import SwiftUI
 
 struct WorkoutsView: View {
-    
     @State
     var isCreatingUser: Bool = false
     
@@ -55,8 +54,8 @@ struct WorkoutsView: View {
                     title: { Text(LocalizedStringKey(.addWorkout)) },
                     icon: { Image(systemName: "plus") }
                 )
-                .foregroundColor(.redGradientStart)
-                .font(.title3.bold())
+                    .foregroundColor(.redGradientStart)
+                    .font(.title3.bold())
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 16)
@@ -69,25 +68,23 @@ struct WorkoutsView: View {
         List {
             ForEach(viewModel.workouts.indices, id: \.self) {index  in
                 NavigationLink(
-                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: $viewModel.workouts[index])),
+                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: $viewModel.workouts[index], storage: viewModel.storage)),
                     label: {
-                        VStack {
-                            HStack {
-                                Text("\(viewModel.workouts[index].name) - \(viewModel.workouts[index].exercises.count) exercises")
-                                    .font(.headline)
-                                Spacer()
-                            }
-                            HStack {
-                                Text(viewModel.dateString(for: viewModel.workouts[index]))
-                                    .font(.subheadline)
-                                    .foregroundColor(.secondary)
-                                Spacer()
-                            }
-                        }
+                        WorkoutListCell(exerciseName: viewModel.workouts[index].name,
+                                        exerciseCount: viewModel.workouts[index].exercises.count,
+                                        formattedDates: viewModel.dateString(for: viewModel.workouts[index]))
                     })
-                    .listRowBackground(Color.cardBackgroundBasic)
             }
+            .onDelete(perform: presentDeleteAlert)
+            .listRowBackground(Color.cardBackgroundBasic)
         }
+        .backgroundColor(.clear)
+        .listStyle(.insetGrouped)
+    }
+    
+    private func presentDeleteAlert(at index: IndexSet) {
+        guard let index = index.first else { return }
+        viewModel.deleteWorkout(offset: index)
     }
 }
 
@@ -95,11 +92,13 @@ struct WorkoutsView: View {
 struct WorkoutsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageImpl()))
+            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageMock()))
                 .preferredColorScheme(.dark)
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageImpl()))
+            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageMock()))
                 .preferredColorScheme(.dark)
         }
     }
 }
+
+

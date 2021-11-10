@@ -11,7 +11,7 @@ import Combine
 
 class WorkoutsViewModel: ObservableObject {
     
-    private let storage: WorkoutsStorage
+    let storage: WorkoutsStorage
     private var cancellables: Set<AnyCancellable>
     
     @Published
@@ -57,5 +57,10 @@ class WorkoutsViewModel: ObservableObject {
                 day
             }
         return dates.joined(separator: " - ")
+    }
+    
+    func deleteWorkout(offset: Int) {
+        guard let workout = workouts[safe: offset] else { return }
+        storage.deleteWorkout(workout)
     }
 }

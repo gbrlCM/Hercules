@@ -11,9 +11,9 @@ import Combine
 
 enum WorkoutStorageDummy {
     
-    static var standard: WorkoutsStorageMock = WorkoutsStorageMock()
-    static var empty: WorkoutsStorageMock = WorkoutsStorageMock(workouts: [])
-    static var noSessions: WorkoutsStorageMock = {
+    static var standard: WorkoutsStorageMock { WorkoutsStorageMock() }
+    static var empty: WorkoutsStorageMock { WorkoutsStorageMock(workouts: []) }
+    static var noSessions: WorkoutsStorageMock {
         let exerciseDummy = [
             WorkoutExercise(exerciseName: "Wall Ball",
                             exerciseID: UUID(),
@@ -48,8 +48,8 @@ enum WorkoutStorageDummy {
         let workouts = [workout, workout, workout, workout]
         
         return WorkoutsStorageMock(workouts: workouts)
-    }()
-    static var outdatedNoSessions: WorkoutsStorageMock = {
+    }
+    static var outdatedNoSessions: WorkoutsStorageMock {
         let exerciseDummy = [
             WorkoutExercise(exerciseName: "Wall Ball",
                             exerciseID: UUID(),
@@ -84,9 +84,9 @@ enum WorkoutStorageDummy {
         let workouts = [workout, workout, workout, workout]
         
         return WorkoutsStorageMock(workouts: workouts)
-    }()
+    }
     
-    static var outdated: WorkoutsStorageMock = {
+    static var outdated: WorkoutsStorageMock {
         let exerciseDummy = [
             WorkoutExercise(exerciseName: "Wall Ball",
                             exerciseID: UUID(),
@@ -128,5 +128,5 @@ enum WorkoutStorageDummy {
         let workouts = [workout, workout, workout, workout]
         
         return WorkoutsStorageMock(workouts: workouts)
-    }()
+    }
 }

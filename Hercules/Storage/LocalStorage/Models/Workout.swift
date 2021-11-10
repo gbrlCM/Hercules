@@ -14,7 +14,7 @@ struct Workout: Hashable, Equatable {
     var name: String
     var daysOfTheWeek: [Int]
     var finalDate: Date
-    var objectID: URL?
+    let objectID: URL?
     
     
     init?(entity: ADWorkout) {
@@ -38,13 +38,13 @@ struct Workout: Hashable, Equatable {
         self.objectID = entity.objectID.uriRepresentation()
     }
     
-    init(name: String, focusArea: ExerciseFocusArea, daysOfTheWeek: [Int], exercises: [WorkoutExercise], finalDate: Date, sessions: [WorkoutSession]) {
+    init(name: String, focusArea: ExerciseFocusArea, daysOfTheWeek: [Int], exercises: [WorkoutExercise], finalDate: Date, sessions: [WorkoutSession], objectID: URL? = nil) {
         self.name = name
         self.focusArea = focusArea
         self.daysOfTheWeek = daysOfTheWeek
         self.exercises = exercises
         self.finalDate = finalDate
-        self.objectID = nil
+        self.objectID = objectID
         self.sessions = sessions
     }
     
@@ -56,5 +56,14 @@ struct Workout: Hashable, Equatable {
         self.finalDate = Date()
         self.objectID = nil
         self.sessions = Array(repeating: WorkoutSession(), count: 4)
+    }
+    
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.daysOfTheWeek == rhs.daysOfTheWeek &&
+        lhs.focusArea == rhs.focusArea &&
+        lhs.exercises == rhs.exercises &&
+        lhs.name == rhs.name &&
+        lhs.finalDate == rhs.finalDate &&
+        lhs.sessions == rhs.sessions
     }
 }

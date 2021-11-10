@@ -9,10 +9,10 @@ import Foundation
 import Combine
 
 final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
-    
     var allWorkoutSubjects: PassthroughSubject<[Workout], Never> = .init()
     
     var lastSavedWorkout: Workout? = nil
+    var lastUpdatedWorkout: Workout? = nil
     var workouts: [Workout]
     
     override init() {
@@ -52,9 +52,34 @@ final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
                               daysOfTheWeek: [1,3,4,5,6],
                               exercises: exerciseDummy,
                               finalDate: Date(timeIntervalSince1970: 35000),
-                              sessions: sessions)
+                              sessions: sessions,
+                              objectID: URL(fileURLWithPath: "w1"))
         
-        workouts = [workout, workout, workout, workout]
+        let workout2 = Workout(name: "Test2 Workout",
+                              focusArea: .leg,
+                              daysOfTheWeek: [1,3,4,5,6],
+                              exercises: exerciseDummy,
+                              finalDate: Date(timeIntervalSince1970: 35000),
+                              sessions: sessions,
+                               objectID: URL(fileURLWithPath: "w2"))
+        
+        let workout3 = Workout(name: "Test3 Workout",
+                              focusArea: .leg,
+                              daysOfTheWeek: [1,3,4,5,6],
+                              exercises: exerciseDummy,
+                              finalDate: Date(timeIntervalSince1970: 35000),
+                              sessions: sessions,
+                               objectID: URL(fileURLWithPath: "w3"))
+        
+        let workout4 = Workout(name: "Test4 Workout",
+                              focusArea: .leg,
+                              daysOfTheWeek: [1,3,4,5,6],
+                              exercises: exerciseDummy,
+                              finalDate: Date(timeIntervalSince1970: 35000),
+                              sessions: sessions,
+                               objectID: URL(fileURLWithPath: "w4"))
+        
+        workouts = [workout, workout2, workout3, workout4]
         super.init()
     }
     
@@ -70,9 +95,13 @@ final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
         lastSavedWorkout = workout
     }
     
-    func editWorkout(withID url: URL, _ workout: Workout) {
-        lastSavedWorkout = workout
+    func editWorkout(_ workout: Workout) {
+        lastUpdatedWorkout = workout
     }
     
-    
+    func deleteWorkout(_ workout: Workout) {
+        guard let index = workouts.firstIndex(of: workout) else { return }
+        workouts.remove(at: index)
+        allWorkoutSubjects.send(workouts)
+    }
 }
