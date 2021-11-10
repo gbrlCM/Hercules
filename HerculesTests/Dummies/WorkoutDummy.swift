@@ -14,7 +14,7 @@ enum WorkoutDummy {
                                         focusArea: .leg,
                                         daysOfTheWeek: [1,3],
                                         exercises: exerciseDummy,
-                                        finalDate: Date(),
+                                        finalDate: Date(timeIntervalSince1970: 3600),
                                         sessions: [],
                                         objectID:  nil)
     
@@ -22,7 +22,7 @@ enum WorkoutDummy {
                                               focusArea: .leg,
                                               daysOfTheWeek: [1,3],
                                               exercises: exerciseDummy,
-                                              finalDate: Date(),
+                                              finalDate: Date(timeIntervalSince1970: 3600),
                                               sessions: [],
                                               objectID:  URL(fileURLWithPath: ""))
     

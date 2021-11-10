@@ -12,6 +12,20 @@ class DataStorage {
     
     static var shared: DataStorage = DataStorage()
     
+    private static var managedObjectModel: NSManagedObjectModel = {
+        let bundle = Bundle(for: DataStorage.self)
+        let containerName = "HerculesModel"
+        guard let url = bundle.url(forResource: containerName, withExtension: "momd") else {
+          fatalError("Failed to locate momd file")
+        }
+
+        guard let model = NSManagedObjectModel(contentsOf: url) else {
+          fatalError("Failed to load momd file")
+        }
+
+        return model
+      }()
+    
     private let persistentContainer: NSPersistentContainer
     private let containerName: String
     
@@ -23,9 +37,13 @@ class DataStorage {
         persistentContainer.persistentStoreCoordinator.managedObjectID(forURIRepresentation: url)
     }
     
-    private init() {
+    init(_ storeType: StoreType = .persisted) {
         containerName = "HerculesModel"
-        persistentContainer = NSPersistentContainer(name: containerName)
+        persistentContainer = NSPersistentContainer(name: containerName, managedObjectModel: Self.managedObjectModel)
+        
+        if storeType == .inMemory {
+            persistentContainer.persistentStoreDescriptions.first!.url = URL(fileURLWithPath: "/dev/null")
+        }
         
         persistentContainer.loadPersistentStores { description, error in
             
@@ -34,5 +52,9 @@ class DataStorage {
             }
         }
     }
+}
+
+enum StoreType {
+    case persisted, inMemory
 }
 

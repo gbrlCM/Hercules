@@ -30,6 +30,12 @@ struct WorkoutView: View {
         .sheet(isPresented: $viewModel.isEditing) {
             WorkoutCreationView(presentationBinding: $viewModel.isEditing, viewModel: WorkoutCreationViewModel(workout: viewModel.workout))
         }
+        .alert("Are you sure?",
+               isPresented: $viewModel.isShowingDeleteAlert,
+               actions: { Button("Delete",
+                                 role: .destructive,
+                                 action: deleteWorkout) },
+               message: { Text("Your deleted workout cannot be restored") })
         .fullScreenCover(isPresented: $viewModel.isPlayingWorkout, content: {
             WorkoutExecutionView(viewModel: WorkoutExecutionViewModel(workout: viewModel.workout))
         })
@@ -79,7 +85,7 @@ struct WorkoutView: View {
                                 color: .redGradientStart,
                                 text: .init("Start"),
                                 image: Image(systemName: "play.fill"))
-            WorkoutActionButton(action: deleteWorkout,
+            WorkoutActionButton(action: viewModel.presentDeleteAlert,
                                 color: .redGradientStart,
                                 text: .init("Delete"),
                                 image: Image(systemName: "trash.fill"))

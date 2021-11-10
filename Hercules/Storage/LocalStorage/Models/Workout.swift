@@ -57,4 +57,13 @@ struct Workout: Hashable, Equatable {
         self.objectID = nil
         self.sessions = Array(repeating: WorkoutSession(), count: 4)
     }
+    
+    static func ==(lhs: Self, rhs: Self) -> Bool {
+        lhs.daysOfTheWeek == rhs.daysOfTheWeek &&
+        lhs.focusArea == rhs.focusArea &&
+        lhs.exercises == rhs.exercises &&
+        lhs.name == rhs.name &&
+        lhs.finalDate == rhs.finalDate &&
+        lhs.sessions == rhs.sessions
+    }
 }

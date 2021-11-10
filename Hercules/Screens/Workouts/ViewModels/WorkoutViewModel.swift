@@ -17,6 +17,8 @@ class WorkoutViewModel: ObservableObject {
     var isEditing: Bool = false
     @Published
     var isPlayingWorkout: Bool = false
+    @Published
+    var isShowingDeleteAlert: Bool = false
     
     private var storage: WorkoutsStorage
     
@@ -56,5 +58,9 @@ class WorkoutViewModel: ObservableObject {
     
     func deleteWorkout() {
         storage.deleteWorkout(workout)
+    }
+    
+    func presentDeleteAlert() {
+        isShowingDeleteAlert = true
     }
 }
