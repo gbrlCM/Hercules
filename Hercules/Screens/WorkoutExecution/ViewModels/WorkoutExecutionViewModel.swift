@@ -25,16 +25,20 @@ class WorkoutExecutionViewModel: ObservableObject {
     var isPresentingSummary = false
     @Published
     var isPresentingExerciseList = false
-    
     @Published
     var workoutTimer: WorkoutTimer
-    private var cancellables = Set<AnyCancellable>()
-    private(set) var isOnForeground: Bool
-    private var startDate: Date
-    private var lastObservedDate: Date
-    private var notificationManager: NotificationManager
+    var isOnForeground: Bool
+    
+    private let deviceActivityMonitor: DeviceActivityMonitor
+    private let notificationManager: NotificationManager
     private let storage: SessionStorage
     private let healthStorage: HealthStorage
+    private var startDate: Date
+    private var lastObservedDate: Date
+    
+    
+    private var cancellables = Set<AnyCancellable>()
+    
     
     var currentExercise: WorkoutExercise {
         workout.exercises[currentExerciseIndex]
@@ -89,7 +93,9 @@ class WorkoutExecutionViewModel: ObservableObject {
          notificationManager: NotificationManager = WorkoutNotificationManager(),
          storage: SessionStorage = SessionStorageImpl(),
          timer: WorkoutTimer = WorkoutTimer(),
-         healthStorage: HealthStorage = HealthStorage()) {
+         healthStorage: HealthStorage = HealthStorageImpl(),
+         deviceActivityMonitor: DeviceActivityMonitor = DeviceActivityMonitorImpl()
+    ) {
         self.workout = workout
         self.currentExerciseIndex = 0
         self.viewState = .exercise
@@ -102,41 +108,35 @@ class WorkoutExecutionViewModel: ObservableObject {
         self.storage = storage
         self.workoutTimer = timer
         self.healthStorage = healthStorage
+        self.deviceActivityMonitor = deviceActivityMonitor
         initiateBindings()
     }
     
     func initiateBindings() {
-        NotificationCenter
-            .default
-            .publisher(for: UIApplication.willResignActiveNotification)
-            .sink {[weak self] _ in
-                self?.prepareClockForBackground()
-            }
+        deviceActivityMonitor
+            .deviceWillExitForegroundPublisher
+            .sink(receiveValue: prepareClockForBackground)
             .store(in: &cancellables)
         
-        
-        NotificationCenter
-            .default
-            .publisher(for: UIApplication.didBecomeActiveNotification)
-            .sink {[weak self] _ in
-                self?.prepareClockForForeground()
-            }
+        deviceActivityMonitor
+            .deviceDidEnterForegroundPublisher
+            .sink(receiveValue: prepareClockForForeground)
             .store(in: &cancellables)
     }
     
-    private func prepareClockForBackground() {
+    private func prepareClockForBackground(_ now: Date) {
         isOnForeground = false
-        lastObservedDate = Date()
+        lastObservedDate = now
     }
     
-    private func prepareClockForForeground() {
+    private func prepareClockForForeground(_ now: Date) {
         isOnForeground = true
         guard !isPaused else { return }
-        workoutTimer.updateTimeForForegroundEntrance(state: viewState, lastObservedDate: lastObservedDate)
+        workoutTimer.updateTimeForForegroundEntrance(state: viewState, lastObservedDate: lastObservedDate, now: now)
     }
     
     func updateTimer() {
-        if !isPaused && isOnForeground{
+        if !isPaused && isOnForeground {
             workoutTimer.updateTimer(state: viewState)
         }
     }

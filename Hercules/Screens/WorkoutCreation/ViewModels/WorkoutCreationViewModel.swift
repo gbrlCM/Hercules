@@ -35,16 +35,8 @@ class WorkoutCreationViewModel: ObservableObject {
     var isStillCreating: Bool = true
     
     private var isStillCreatingPublisher: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest3($nameField,$createdExercises, $endDate)
-            .map {(nameField, createdExercises, endDate) -> Bool in
-                guard
-                    !nameField.isEmpty,
-                    !createdExercises.isEmpty
-                else {
-                    return true
-                }
-                return false
-            }
+        Publishers.CombineLatest($nameField, $createdExercises)
+            .map(validateUserDidFinishForm)
             .eraseToAnyPublisher()
     }
     
@@ -68,6 +60,10 @@ class WorkoutCreationViewModel: ObservableObject {
         self.daysSelected = Day.allCases.map {_ in false }
         self.dataStorage = storage
         initiateBindings()
+    }
+    
+    private func validateUserDidFinishForm(_ s1: String, _ s2: [WorkoutExercise]) -> Bool {
+        return s1.isEmpty || s2.isEmpty
     }
     
     private func initiateBindings() {
@@ -100,11 +96,12 @@ class WorkoutCreationViewModel: ObservableObject {
                               daysOfTheWeek: days,
                               exercises: createdExercises,
                               finalDate: endDate,
-                              sessions: [])
+                              sessions: [],
+                              objectID: savedObjectID)
         
         
-        if let id = self.savedObjectID {
-            dataStorage.editWorkout(withID: id, workout)
+        if savedObjectID != nil {
+            dataStorage.editWorkout(workout)
         } else {
             dataStorage.saveWorkout(workout)
         }

@@ -8,7 +8,7 @@
 import Foundation
 import Combine
 
-struct WorkoutTimer: Equatable {
+struct WorkoutTimer {
     var generalTime: TimeInterval
     var restTime: TimeInterval
     var exerciseTime: TimeInterval
@@ -25,7 +25,7 @@ struct WorkoutTimer: Equatable {
         totalExerciseTime = 0
         timeRate = 1/30
         timer = Timer
-            .publish(every: timeRate, on: .main, in: .common)
+            .publish(every: timeRate, on: .main, in: .default)
             .autoconnect()
             .eraseToAnyPublisher()
     }
@@ -45,18 +45,8 @@ struct WorkoutTimer: Equatable {
         self.timer = Just(Date()).eraseToAnyPublisher()
     }
     
-    static func == (lhs: Self, rhs: Self) -> Bool {
-        return
-            lhs.generalTime == rhs.generalTime &&
-            lhs.restTime == rhs.restTime &&
-            lhs.exerciseTime == rhs.exerciseTime &&
-            lhs.totalRestTime == rhs.totalRestTime &&
-            lhs.totalExerciseTime == rhs.totalExerciseTime
-    }
-    
-    mutating func updateTimeForForegroundEntrance(state: WorkoutViewState, lastObservedDate: Date) {
+    mutating func updateTimeForForegroundEntrance(state: WorkoutViewState, lastObservedDate: Date, now: Date) {
         
-        let now = Date()
         let timeInBackground = now.timeIntervalSince(lastObservedDate)
         
         if state == .exercise {

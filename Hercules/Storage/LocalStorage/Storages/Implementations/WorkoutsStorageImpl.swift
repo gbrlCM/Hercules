@@ -10,7 +10,6 @@ import Combine
 import CoreData
 
 class WorkoutsStorageImpl:NSObject, WorkoutsStorage {
-    
     private let dataStorage: DataStorage
     private let requestController: NSFetchedResultsController<ADWorkout>
     private let context: NSManagedObjectContext
@@ -44,8 +43,9 @@ class WorkoutsStorageImpl:NSObject, WorkoutsStorage {
         context.safeSave()
     }
     
-    func editWorkout(withID url: URL, _ workout: Workout) {
+    func editWorkout(_ workout: Workout) {
         guard
+            let url = workout.objectID,
             let id = dataStorage.convertURLToObjectID(url),
             let entity = context.object(with: id) as? ADWorkout,
             let entityExercises = entity.exercises?.array as? [ADWorkoutExercise]
@@ -65,6 +65,18 @@ class WorkoutsStorageImpl:NSObject, WorkoutsStorage {
             entity.name = workout.name
             entity.finalDate = workout.finalDate
         }
+        context.safeSave()
+    }
+    
+    func deleteWorkout(_ workout: Workout) {
+        guard
+            let url = workout.objectID,
+            let id = dataStorage.convertURLToObjectID(url)
+        else { return }
+        
+        let entity = context.object(with: id)
+        
+        context.delete(entity)
         context.safeSave()
     }
     

@@ -15,6 +15,10 @@ class WorkoutViewModel: ObservableObject {
     
     @Published
     var isEditing: Bool = false
+    @Published
+    var isPlayingWorkout: Bool = false
+    @Published
+    var isShowingDeleteAlert: Bool = false
     
     private var storage: WorkoutsStorage
     
@@ -42,5 +46,21 @@ class WorkoutViewModel: ObservableObject {
     init() {
         self._workout = .constant(Workout())
         self.storage = WorkoutsStorageImpl()
+    }
+    
+    func startEditing() {
+        isEditing = true
+    }
+    
+    func startWorkout() {
+        isPlayingWorkout = true
+    }
+    
+    func deleteWorkout() {
+        storage.deleteWorkout(workout)
+    }
+    
+    func presentDeleteAlert() {
+        isShowingDeleteAlert = true
     }
 }

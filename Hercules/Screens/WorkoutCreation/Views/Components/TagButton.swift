@@ -30,12 +30,12 @@ struct TagButton: View {
     func tagBackground(for tag: ExerciseTag) -> some View {
         if(isSelected) {
             Capsule().fill(tag.color.opacity(0.25))
-                .shadow(color: .black.opacity(0.25), radius: 4, x: 2, y: 2)
+                .withCardShadow()
             
         }
         else {
             Capsule().fill(Color.cardBackgroundBasic)
-                .shadow(color: .black.opacity(0.25), radius: 4, x: 2, y: 2)
+                .withCardShadow()
         }
     }
 }
