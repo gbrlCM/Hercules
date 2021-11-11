@@ -135,6 +135,7 @@
 		5BE0779526A3867B00591DA1 /* ExerciseCreationCell.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0779426A3867B00591DA1 /* ExerciseCreationCell.swift */; };
 		5BE0779726A3875900591DA1 /* IntensityType.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0779626A3875900591DA1 /* IntensityType.swift */; };
 		5BE0779926A3880700591DA1 /* ExerciseCreationCellViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BE0779826A3880700591DA1 /* ExerciseCreationCellViewModel.swift */; };
+		5BFA1C9A273BE97300321024 /* ChatBalloon.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA1C99273BE97300321024 /* ChatBalloon.swift */; };
 		5BFA734C26C43575002C7959 /* NotificationManager.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA734B26C43575002C7959 /* NotificationManager.swift */; };
 		5BFA734E26C43EDB002C7959 /* WorkoutNotificationManagerDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5BFA734D26C43EDB002C7959 /* WorkoutNotificationManagerDummy.swift */; };
 /* End PBXBuildFile section */
@@ -283,6 +284,7 @@
 		5BE0779426A3867B00591DA1 /* ExerciseCreationCell.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCreationCell.swift; sourceTree = "<group>"; };
 		5BE0779626A3875900591DA1 /* IntensityType.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = IntensityType.swift; sourceTree = "<group>"; };
 		5BE0779826A3880700591DA1 /* ExerciseCreationCellViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCreationCellViewModel.swift; sourceTree = "<group>"; };
+		5BFA1C99273BE97300321024 /* ChatBalloon.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ChatBalloon.swift; sourceTree = "<group>"; };
 		5BFA734B26C43575002C7959 /* NotificationManager.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = NotificationManager.swift; sourceTree = "<group>"; };
 		5BFA734D26C43EDB002C7959 /* WorkoutNotificationManagerDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutNotificationManagerDummy.swift; sourceTree = "<group>"; };
 /* End PBXFileReference section */
@@ -503,6 +505,7 @@
 				5BB65F9726A20928004DF873 /* EmptySectionButton.swift */,
 				5B92C90F26A332EA0078C8ED /* MainView.swift */,
 				5BC8D75C26AB2F0E00662A6C /* FeedHorizontalSection.swift */,
+				5BFA1C99273BE97300321024 /* ChatBalloon.swift */,
 			);
 			path = Components;
 			sourceTree = "<group>";
@@ -1069,6 +1072,7 @@
 				5B88922F271F7059001F81DB /* View+CardShadow.swift in Sources */,
 				5B92C91026A332EA0078C8ED /* MainView.swift in Sources */,
 				5BC8D74B26A8C78400662A6C /* WorkActionButton.swift in Sources */,
+				5BFA1C9A273BE97300321024 /* ChatBalloon.swift in Sources */,
 				5B92C90826A3309E0078C8ED /* WorkoutsViewModel.swift in Sources */,
 				5BB65F9626A20775004DF873 /* SectionStyle.swift in Sources */,
 				5B2A13D026C44D0600FAD4AE /* ExerciseStorage.swift in Sources */,
@@ -1290,7 +1294,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.22;
+				MARKETING_VERSION = 1.23;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Arnold;
 				PRODUCT_NAME = "$(TARGET_NAME)";
 				SWIFT_VERSION = 5.0;
@@ -1316,7 +1320,7 @@
 					"$(inherited)",
 					"@executable_path/Frameworks",
 				);
-				MARKETING_VERSION = 1.22;
+				MARKETING_VERSION = 1.23;
 				MTL_ENABLE_DEBUG_INFO = NO;
 				PRODUCT_BUNDLE_IDENTIFIER = com.gbrlcm.Arnold;
 				PRODUCT_NAME = "$(TARGET_NAME)";
