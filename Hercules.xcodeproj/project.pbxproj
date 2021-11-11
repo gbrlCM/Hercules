@@ -74,6 +74,11 @@
 		5B38F7F3273B4E77002CDC72 /* WorkoutViewTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B38F7F2273B4E77002CDC72 /* WorkoutViewTest.swift */; };
 		5B38F7F5273B4FD5002CDC72 /* WorkoutViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B38F7F4273B4FD5002CDC72 /* WorkoutViewModelTest.swift */; };
 		5B38F7FA273B55CB002CDC72 /* WorkoutStorageTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B38F7F9273B55CB002CDC72 /* WorkoutStorageTest.swift */; };
+		5B4257F0273DD50A00DC0AC2 /* OnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4257EF273DD50A00DC0AC2 /* OnboardingView.swift */; };
+		5B4257F2273DDF3900DC0AC2 /* View+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4257F1273DDF3900DC0AC2 /* View+BackgroundColor.swift */; };
+		5B4257F4273DE2F200DC0AC2 /* ArnoldOnboardingView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4257F3273DE2F200DC0AC2 /* ArnoldOnboardingView.swift */; };
+		5B4257F7273DE33A00DC0AC2 /* OnboardingPage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4257F6273DE33A00DC0AC2 /* OnboardingPage.swift */; };
+		5B4257F9273DE35F00DC0AC2 /* ArnoldOnboardingViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B4257F8273DE35F00DC0AC2 /* ArnoldOnboardingViewModel.swift */; };
 		5B46790627219A04000FB60B /* HealthStorage.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B46790527219A04000FB60B /* HealthStorage.swift */; };
 		5B46790827219B7D000FB60B /* HealthStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B46790727219B7D000FB60B /* HealthStorageMock.swift */; };
 		5B46790A27219EFC000FB60B /* DatesHelper.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B46790927219EFC000FB60B /* DatesHelper.swift */; };
@@ -220,6 +225,11 @@
 		5B38F7F2273B4E77002CDC72 /* WorkoutViewTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewTest.swift; sourceTree = "<group>"; };
 		5B38F7F4273B4FD5002CDC72 /* WorkoutViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutViewModelTest.swift; sourceTree = "<group>"; };
 		5B38F7F9273B55CB002CDC72 /* WorkoutStorageTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutStorageTest.swift; sourceTree = "<group>"; };
+		5B4257EF273DD50A00DC0AC2 /* OnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingView.swift; sourceTree = "<group>"; };
+		5B4257F1273DDF3900DC0AC2 /* View+BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+BackgroundColor.swift"; sourceTree = "<group>"; };
+		5B4257F3273DE2F200DC0AC2 /* ArnoldOnboardingView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArnoldOnboardingView.swift; sourceTree = "<group>"; };
+		5B4257F6273DE33A00DC0AC2 /* OnboardingPage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = OnboardingPage.swift; sourceTree = "<group>"; };
+		5B4257F8273DE35F00DC0AC2 /* ArnoldOnboardingViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ArnoldOnboardingViewModel.swift; sourceTree = "<group>"; };
 		5B46790527219A04000FB60B /* HealthStorage.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStorage.swift; sourceTree = "<group>"; };
 		5B46790727219B7D000FB60B /* HealthStorageMock.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = HealthStorageMock.swift; sourceTree = "<group>"; };
 		5B46790927219EFC000FB60B /* DatesHelper.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DatesHelper.swift; sourceTree = "<group>"; };
@@ -404,6 +414,7 @@
 		5B292A4526A1E5030026ED5C /* Screens */ = {
 			isa = PBXGroup;
 			children = (
+				5B4257EC273DD47200DC0AC2 /* Onboarding */,
 				5B92C90926A330E70078C8ED /* WorkoutExecution */,
 				5BB6601826A24F5C004DF873 /* WorkoutCreation */,
 				5B292A4A26A1E5560026ED5C /* Feed */,
@@ -604,6 +615,41 @@
 			path = Storage;
 			sourceTree = "<group>";
 		};
+		5B4257EC273DD47200DC0AC2 /* Onboarding */ = {
+			isa = PBXGroup;
+			children = (
+				5B4257F5273DE32C00DC0AC2 /* Models */,
+				5B4257EE273DD4EE00DC0AC2 /* ViewModels */,
+				5B4257ED273DD4E700DC0AC2 /* Views */,
+			);
+			path = Onboarding;
+			sourceTree = "<group>";
+		};
+		5B4257ED273DD4E700DC0AC2 /* Views */ = {
+			isa = PBXGroup;
+			children = (
+				5B4257EF273DD50A00DC0AC2 /* OnboardingView.swift */,
+				5B4257F3273DE2F200DC0AC2 /* ArnoldOnboardingView.swift */,
+			);
+			path = Views;
+			sourceTree = "<group>";
+		};
+		5B4257EE273DD4EE00DC0AC2 /* ViewModels */ = {
+			isa = PBXGroup;
+			children = (
+				5B4257F8273DE35F00DC0AC2 /* ArnoldOnboardingViewModel.swift */,
+			);
+			path = ViewModels;
+			sourceTree = "<group>";
+		};
+		5B4257F5273DE32C00DC0AC2 /* Models */ = {
+			isa = PBXGroup;
+			children = (
+				5B4257F6273DE33A00DC0AC2 /* OnboardingPage.swift */,
+			);
+			path = Models;
+			sourceTree = "<group>";
+		};
 		5B5893272726035D00C36D3C /* Tests */ = {
 			isa = PBXGroup;
 			children = (
@@ -785,6 +831,7 @@
 				5B88922C271F6E5B001F81DB /* Text+SectionTitle.swift */,
 				5B88922E271F7059001F81DB /* View+CardShadow.swift */,
 				5B0E7D0027297604003C2B01 /* List+BackgroundColor.swift */,
+				5B4257F1273DDF3900DC0AC2 /* View+BackgroundColor.swift */,
 			);
 			path = Styles;
 			sourceTree = "<group>";
@@ -1050,6 +1097,7 @@
 				5BC8D76326AB31E400662A6C /* HealthStorageImpl.swift in Sources */,
 				5B292A5E26A1E6970026ED5C /* ThisWeekCardViewModel.swift in Sources */,
 				5B292A6C26A1E7A80026ED5C /* HorizontalSectionViewModel.swift in Sources */,
+				5B4257F7273DE33A00DC0AC2 /* OnboardingPage.swift in Sources */,
 				5B292A3926A1E49F0026ED5C /* ContentView.swift in Sources */,
 				5B292A6826A1E7640026ED5C /* PreviousWorkoutSectionViewModel.swift in Sources */,
 				5B01AE8426A466760031A744 /* WorkoutCreationViewModel.swift in Sources */,
@@ -1065,6 +1113,7 @@
 				5BC8D76626AB6A5F00662A6C /* ActivityRingData.swift in Sources */,
 				5B98595B26B87944004A500A /* CustomExerciseCreationViewModel.swift in Sources */,
 				5B92C90C26A331540078C8ED /* WorkoutsRequests.swift in Sources */,
+				5B4257F0273DD50A00DC0AC2 /* OnboardingView.swift in Sources */,
 				5B01AEB826A65FD70031A744 /* Workout.swift in Sources */,
 				5B5CEA6426AC50540041AA25 /* WorkoutExecutionView.swift in Sources */,
 				5B01AEC026A671590031A744 /* ExerciseStorageImpl.swift in Sources */,
@@ -1079,6 +1128,7 @@
 				5B01AE8B26A475010031A744 /* TagsRequest.swift in Sources */,
 				5B292A6F26A1E7CC0026ED5C /* HorizontalSection.swift in Sources */,
 				5BC4B59026CD28E800115288 /* WorkoutViewState.swift in Sources */,
+				5B4257F4273DE2F200DC0AC2 /* ArnoldOnboardingView.swift in Sources */,
 				5B292A6626A1E7450026ED5C /* PreviousWorkoutCellViewModel.swift in Sources */,
 				5BC8D75126A91AD600662A6C /* ExerciseCell.swift in Sources */,
 				5B37B42926AF1F9200B9A940 /* WorkoutExecutionHeader.swift in Sources */,
@@ -1086,6 +1136,7 @@
 				5BDB152326A8920200A0B709 /* WorkoutInfo.swift in Sources */,
 				5B292A3726A1E49F0026ED5C /* HerculesApp.swift in Sources */,
 				5BE0778C26A3569700591DA1 /* DaysSection.swift in Sources */,
+				5B4257F9273DE35F00DC0AC2 /* ArnoldOnboardingViewModel.swift in Sources */,
 				5BC8D76826ABA88B00662A6C /* ActivityRingCard.swift in Sources */,
 				5B46790A27219EFC000FB60B /* DatesHelper.swift in Sources */,
 				5B2A13D226C44D1F00FAD4AE /* SessionStorage.swift in Sources */,
@@ -1106,6 +1157,7 @@
 				5B37B42626ADB31F00B9A940 /* WorkoutExecutionViewModel.swift in Sources */,
 				5B46790627219A04000FB60B /* HealthStorage.swift in Sources */,
 				5B292A5626A1E63B0026ED5C /* PreviousWorkoutsCell.swift in Sources */,
+				5B4257F2273DDF3900DC0AC2 /* View+BackgroundColor.swift in Sources */,
 				5BC8D75D26AB2F0E00662A6C /* FeedHorizontalSection.swift in Sources */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
