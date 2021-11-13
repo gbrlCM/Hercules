@@ -12,67 +12,21 @@ struct ArnoldOnboardingView: View {
     var viewModel: ArnoldOnboardingViewModel
     @Environment(\.dismiss)
     var dismiss
-    @Environment(\.sizeCategory)
-    var sizeCategory
     
     var body: some View {
         VStack {
             Spacer()
-            ChatBalloon {
-                if sizeCategory >= .extraLarge {
-                    balloonContentForLargeSize
-                } else {
-                    balloonContent
-                }
-            }
+            OnboardingChatBalloon(title: viewModel.title,
+                                  content: viewModel.text)
             .padding()
             Image("ArnoldGradient")
                 .padding(.top, 32)
             Spacer()
-            buttonsSection
+            OnboardingButtonSection(leftButtonTitle: .init("Skip"),
+                                    leftButtonAction: { dismiss() },
+                                    rightButtonTitle: .init("Next"),
+                                    rightButtonAction: viewModel.next)
         }
-    }
-    
-    @ViewBuilder
-    var balloonContent: some View {
-        VStack {
-            Text(viewModel.title)
-                .foregroundColor(.redGradientStart)
-                .font(.title.bold())
-                .padding(.bottom, 2)
-            Text(viewModel.text)
-                .multilineTextAlignment(.center)
-        }
-    }
-    
-    @ViewBuilder
-    var balloonContentForLargeSize: some View {
-        ScrollView(.vertical, showsIndicators: true) { balloonContent }
-    }
-    
-    @ViewBuilder
-    var buttonsSection: some View {
-        HStack {
-            Spacer()
-            Button(action: { dismiss() }, label: {
-                Text("Skip")
-                    .font(.system(size: 18))
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 32)
-            })
-                .buttonStyle(.bordered)
-                .tint(.redGradientStart)
-            Spacer()
-            Button(action: viewModel.next, label: {
-                Text("Next")
-                    .font(.system(size: 18))
-                    .padding(.vertical, 8)
-                    .padding(.horizontal, 32)
-            })
-                .buttonStyle(.bordered)
-                .tint(.redGradientStart)
-            Spacer()
-        }.padding()
     }
 }
 
