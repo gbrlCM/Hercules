@@ -9,7 +9,7 @@ import Foundation
 import Combine
 
 protocol WorkoutsStorage {
-    var allWorkoutSubjects: PassthroughSubject<[Workout], Never> { get }
+    var allWorkoutsPublisher: AnyPublisher<[Workout], Never> { get }
     func emitAllWorkoutSubjects()
     func saveWorkout(_ workout: Workout)
     func editWorkout(_ workout: Workout)

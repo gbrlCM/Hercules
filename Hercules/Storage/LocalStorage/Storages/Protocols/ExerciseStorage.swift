@@ -10,9 +10,9 @@ import Combine
 
 protocol ExerciseStorage {
     
-    var userExercisesSubject: PassthroughSubject<[Exercise], Never> { get }
-    var defaultExercisesSubject: PassthroughSubject<[Exercise], Never> { get }
-    var defaultTagsSubjects: PassthroughSubject<[ExerciseTag], Never> { get }
+    var userExercisesPublisher: AnyPublisher<[Exercise], Never> { get }
+    var defaultExercisesPublisher: AnyPublisher<[Exercise], Never> { get }
+    var defaultTagsPublisher: AnyPublisher<[ExerciseTag], Never> { get }
     
     func emitAllExercises()
     func emitUserExercises()

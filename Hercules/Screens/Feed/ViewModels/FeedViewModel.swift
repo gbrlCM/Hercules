@@ -46,17 +46,17 @@ final class FeedViewModel: ObservableObject {
     
     private func setupDataStorageBindings() {
         dataStorage
-            .allWorkoutSubjects
+            .allWorkoutsPublisher
             .map(fetchAllSectionsFromWorkouts)
             .assign(to: &$sessions)
         
         dataStorage
-            .allWorkoutSubjects
+            .allWorkoutsPublisher
             .map { StatHighlightCardBuilder.build(for: $0)}
             .assign(to: &$workoutStatCardViewModels)
         
         dataStorage
-            .allWorkoutSubjects
+            .allWorkoutsPublisher
             .map(transformWorkoutDataIntoCards)
             .assign(to: &$fetchedThisWeekCardViewModel)
         

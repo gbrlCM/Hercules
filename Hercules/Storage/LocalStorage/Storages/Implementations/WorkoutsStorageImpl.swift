@@ -9,12 +9,16 @@ import Foundation
 import Combine
 import CoreData
 
-class WorkoutsStorageImpl:NSObject, WorkoutsStorage {
+class WorkoutsStorageImpl: NSObject, WorkoutsStorage {
     private let dataStorage: DataStorage
     private let requestController: NSFetchedResultsController<ADWorkout>
     private let context: NSManagedObjectContext
     
-    var allWorkoutSubjects = PassthroughSubject<[Workout], Never>()
+    var allWorkoutsPublisher: AnyPublisher<[Workout], Never> {
+        allWorkoutSubjects.eraseToAnyPublisher()
+    }
+    
+    private var allWorkoutSubjects = PassthroughSubject<[Workout], Never>()
     
     init(dataStorage: DataStorage = DataStorage.shared) {
         self.dataStorage = dataStorage

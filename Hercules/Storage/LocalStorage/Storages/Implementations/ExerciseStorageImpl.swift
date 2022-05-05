@@ -13,9 +13,21 @@ class ExerciseStorageImpl: NSObject, ExerciseStorage {
  
     private let context: NSManagedObjectContext
     
-    var userExercisesSubject = PassthroughSubject<[Exercise], Never>()
-    var defaultExercisesSubject = PassthroughSubject<[Exercise], Never>()
-    var defaultTagsSubjects = PassthroughSubject<[ExerciseTag], Never>()
+    var userExercisesPublisher: AnyPublisher<[Exercise], Never> {
+        userExercisesSubject.eraseToAnyPublisher()
+    }
+    
+    var defaultTagsPublisher: AnyPublisher<[ExerciseTag], Never> {
+        defaultTagsSubject.eraseToAnyPublisher()
+    }
+    
+    var defaultExercisesPublisher: AnyPublisher<[Exercise], Never> {
+        defaultExercisesSubject.eraseToAnyPublisher()
+    }
+    
+    private let userExercisesSubject = PassthroughSubject<[Exercise], Never>()
+    private var defaultExercisesSubject = PassthroughSubject<[Exercise], Never>()
+    private var defaultTagsSubject = PassthroughSubject<[ExerciseTag], Never>()
     private var fetchedResultController: NSFetchedResultsController<ADExercise>
     
     override init() {
@@ -58,11 +70,11 @@ class ExerciseStorageImpl: NSObject, ExerciseStorage {
     func emitDefaultTags() {
         guard let tags = PropertyListDecoder.decode("TagsData", to: [ExerciseTag].self)
         else {
-            defaultTagsSubjects.send([])
+            defaultTagsSubject.send([])
             return
         }
         
-        defaultTagsSubjects.send(tags)
+        defaultTagsSubject.send(tags)
     }
     
     func save(exercise: Exercise) {

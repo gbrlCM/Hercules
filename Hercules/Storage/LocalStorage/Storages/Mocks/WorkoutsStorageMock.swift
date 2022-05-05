@@ -9,6 +9,10 @@ import Foundation
 import Combine
 
 final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
+    
+    var allWorkoutsPublisher: AnyPublisher<[Workout], Never> {
+        allWorkoutSubjects.eraseToAnyPublisher()
+    }
     var allWorkoutSubjects: PassthroughSubject<[Workout], Never> = .init()
     
     var lastSavedWorkout: Workout? = nil

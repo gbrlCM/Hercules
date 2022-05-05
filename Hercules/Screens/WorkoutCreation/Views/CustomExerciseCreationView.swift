@@ -31,11 +31,12 @@ struct CustomExerciseCreationView: View {
                                 ForEach(0..<viewModel.allTags.count) { index in
                                     TagButton(tag: viewModel.allTags[index],
                                               isSelected: viewModel
-                                                .exerciseTags
-                                                .contains(viewModel.allTags[index]))
-                                        {}.onTapGesture {
-                                            viewModel.toggleTag(of: viewModel.allTags[index])
-                                        }
+                                        .exerciseTags
+                                        .contains(viewModel.allTags[index]))
+                                    {}.onTapGesture {
+                                        viewModel.toggleTag(of: viewModel.allTags[index])
+                                    }
+                                    // Work around to Grid Flick when a button is touched
                                 }
                             }
                             .padding()
@@ -48,9 +49,9 @@ struct CustomExerciseCreationView: View {
                 leading: Button(action: {
                     isPresenting = false
                 }, label: {
-                Text("Cancel")
-                    .font(.body)
-            }),
+                    Text("Cancel")
+                        .font(.body)
+                }),
                 trailing: Button(action: {
                     save(viewModel.exercise)
                     isPresenting = false

@@ -10,6 +10,18 @@ import Combine
 @testable import Hercules
 
 class ExerciseStorageDummy: ExerciseStorage {
+    var userExercisesPublisher: AnyPublisher<[Exercise], Never> {
+        userExercisesSubject.eraseToAnyPublisher()
+    }
+    
+    var defaultExercisesPublisher: AnyPublisher<[Exercise], Never> {
+        defaultExercisesSubject.eraseToAnyPublisher()
+    }
+    
+    var defaultTagsPublisher: AnyPublisher<[ExerciseTag], Never> {
+        defaultTagsSubjects.eraseToAnyPublisher()
+    }
+    
     var defaultTagsSubjects: PassthroughSubject<[ExerciseTag], Never>
     
     var userExercisesSubject: PassthroughSubject<[Exercise], Never>
