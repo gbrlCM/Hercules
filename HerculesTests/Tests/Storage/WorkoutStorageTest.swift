@@ -23,7 +23,7 @@ class WorkoutStorageTest: XCTestCase {
         sut.emitAllWorkoutSubjects()
         workouts = []
         sut
-            .allWorkoutSubjects
+            .allWorkoutsPublisher
             .map { Optional($0) }
             .assign(to: &$workouts)
     }

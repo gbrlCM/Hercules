@@ -32,7 +32,7 @@ class WorkoutsViewModel: ObservableObject {
     
     private func initiateBindings() {
         storage
-            .allWorkoutSubjects
+            .allWorkoutsPublisher
             .assign(to: &$fetchedWorkouts)
         
         Publishers.CombineLatest($isOnForeground, $fetchedWorkouts)
