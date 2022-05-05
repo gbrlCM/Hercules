@@ -46,7 +46,7 @@ class ExercisesListViewModel:ObservableObject {
     
     private func initiateBindings() {
         storage
-            .defaultExercisesSubject
+            .defaultExercisesPublisher
             .map { exercises -> [Exercise] in
                 var sortedExercises = exercises
                 sortedExercises.sort { $0.name < $1.name}
@@ -56,28 +56,24 @@ class ExercisesListViewModel:ObservableObject {
             .store(in: &cancellables)
         
         storage
-            .userExercisesSubject
+            .userExercisesPublisher
             .map { exercises -> [Exercise] in
                 var sortedExercises = exercises
                 sortedExercises.sort { $0.name < $1.name}
                 return sortedExercises
             }
-            .assign(to: \.fetchedUserExercises, on: self)
-            .store(in: &cancellables)
+            .assign(to: &$fetchedUserExercises)
         
         $fetchedDefaultExercises
-            .sink {[weak self] exercises in
-                self?.defaultExercises = self?.updateExercisesWithTags(for: exercises) ?? []
-            }
-            .store(in: &cancellables)
+            .map(updateExercisesWithTags)
+            .assign(to: &$defaultExercises)
         
         $fetchedUserExercises
-            .sink { [weak self] exercises in
-                self?.userExercises = self?.updateExercisesWithTags(for: exercises) ?? []
-            }.store(in: &cancellables)
+            .map(updateExercisesWithTags)
+            .assign(to: &$userExercises)
         
         storage
-            .defaultTagsSubjects
+            .defaultTagsPublisher
             .assign(to: &$tags)
     }
     
