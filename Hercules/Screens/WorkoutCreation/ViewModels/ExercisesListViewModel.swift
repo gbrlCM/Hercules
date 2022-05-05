@@ -47,21 +47,13 @@ class ExercisesListViewModel:ObservableObject {
     private func initiateBindings() {
         storage
             .defaultExercisesPublisher
-            .map { exercises -> [Exercise] in
-                var sortedExercises = exercises
-                sortedExercises.sort { $0.name < $1.name}
-                return sortedExercises
-            }
+            .sort { $0.name < $1.name }
             .assign(to: \.fetchedDefaultExercises, on: self)
             .store(in: &cancellables)
         
         storage
             .userExercisesPublisher
-            .map { exercises -> [Exercise] in
-                var sortedExercises = exercises
-                sortedExercises.sort { $0.name < $1.name}
-                return sortedExercises
-            }
+            .sort { $0.name < $1.name }
             .assign(to: &$fetchedUserExercises)
         
         $fetchedDefaultExercises

@@ -80,6 +80,7 @@
 		5B5893262725FDD900C36D3C /* WorkoutStorageMock.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5893252725FDD900C36D3C /* WorkoutStorageMock.swift */; };
 		5B5CEA6426AC50540041AA25 /* WorkoutExecutionView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B5CEA6326AC50540041AA25 /* WorkoutExecutionView.swift */; };
 		5B674F0A26C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B674F0926C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift */; };
+		5B7DAEA72823EAB2000BAFD2 /* CombineUtils.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B7DAEA62823EAB2000BAFD2 /* CombineUtils.swift */; };
 		5B88922D271F6E5B001F81DB /* Text+SectionTitle.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88922C271F6E5B001F81DB /* Text+SectionTitle.swift */; };
 		5B88922F271F7059001F81DB /* View+CardShadow.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B88922E271F7059001F81DB /* View+CardShadow.swift */; };
 		5B889231271F74D8001F81DB /* FeedViewTests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B889230271F74D8001F81DB /* FeedViewTests.swift */; };
@@ -227,6 +228,7 @@
 		5B674EFF26C1588C00AE69D4 /* HerculesTests.xctest */ = {isa = PBXFileReference; explicitFileType = wrapper.cfbundle; includeInIndex = 0; path = HerculesTests.xctest; sourceTree = BUILT_PRODUCTS_DIR; };
 		5B674F0326C1588C00AE69D4 /* Info.plist */ = {isa = PBXFileReference; lastKnownFileType = text.plist.xml; path = Info.plist; sourceTree = "<group>"; };
 		5B674F0926C1592900AE69D4 /* WorkoutExecutionViewModelTest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutExecutionViewModelTest.swift; sourceTree = "<group>"; };
+		5B7DAEA62823EAB2000BAFD2 /* CombineUtils.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = CombineUtils.swift; sourceTree = "<group>"; };
 		5B88922C271F6E5B001F81DB /* Text+SectionTitle.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "Text+SectionTitle.swift"; sourceTree = "<group>"; };
 		5B88922E271F7059001F81DB /* View+CardShadow.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "View+CardShadow.swift"; sourceTree = "<group>"; };
 		5B889230271F74D8001F81DB /* FeedViewTests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = FeedViewTests.swift; sourceTree = "<group>"; };
@@ -522,6 +524,7 @@
 				5B292A7826A1E85F0026ED5C /* UIApplication.swift */,
 				5BB6601426A23CDE004DF873 /* PropertyListDecoder.swift */,
 				5B0E7D082729AADB003C2B01 /* Array+SafeIndex.swift */,
+				5B7DAEA62823EAB2000BAFD2 /* CombineUtils.swift */,
 			);
 			path = Extensions;
 			sourceTree = "<group>";
@@ -1055,6 +1058,7 @@
 				5BC4B58E26CD259600115288 /* WorkoutTimer.swift in Sources */,
 				5B292A7926A1E85F0026ED5C /* UIApplication.swift in Sources */,
 				5BE0779926A3880700591DA1 /* ExerciseCreationCellViewModel.swift in Sources */,
+				5B7DAEA72823EAB2000BAFD2 /* CombineUtils.swift in Sources */,
 				5B01AE8726A468230031A744 /* WorkoutsStorageImpl.swift in Sources */,
 				5B0E7CFD2728D270003C2B01 /* DeviceActivityMonitor.swift in Sources */,
 				5BC8D75326A91C5700662A6C /* ExerciseList.swift in Sources */,
