@@ -7,16 +7,16 @@
 
 import Foundation
 import SwiftUI
+import SwiftUINavigation
+import Habitat
 
 struct FeedView: View {
     
     @ObservedObject
     var viewModel: FeedViewModel
-    @State
-    var isCreatingWorkout = false
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             MainView(background: Color.backgroundColor) {
                 feed
             }
@@ -26,9 +26,25 @@ struct FeedView: View {
             .onDisappear {
                 viewModel.isOnForeground = false
             }
-            .sheet(isPresented: $isCreatingWorkout, content: {
-                WorkoutCreationView(presentationBinding: $isCreatingWorkout, viewModel: WorkoutCreationViewModel())
-            })
+            .sheet(
+                unwrapping: $viewModel.destination,
+                case: /FeedViewModel.Destination.createWorkout
+            ) { $creationModel in
+                    WorkoutCreationView(viewModel: creationModel)
+            }
+            .sheet(
+                unwrapping: $viewModel.destination,
+                case: /FeedViewModel.Destination.previousSessionSummary
+            ) { $summary in
+                WorkoutSummaryView(model: summary)
+            }
+            .navigationDestination(
+                unwrapping: $viewModel.destination,
+                case: /FeedViewModel.Destination.workoutDetail)
+            { $workoutModel in
+                WorkoutView(viewModel: workoutModel)
+            }
+            .environmentObject(viewModel)
             .navigationTitle("Feed")
         }
     }
@@ -36,9 +52,9 @@ struct FeedView: View {
     @ViewBuilder
     var feed: some View {
         ScrollView(.vertical, showsIndicators: true) {
-            ThisWeekSection(viewModel: ThisWeekSectionViewModel(cardViewModels: $viewModel.thisWeekCardViewModel), isCreatingWorkout: $isCreatingWorkout)
+            ThisWeekSection()
             StatHighlightSection(viewModel: .init(sectionTitle: .statsHighlights, cardsViewModels: $viewModel.workoutStatCardViewModels, activityRingData: $viewModel.activityRing))
-            PreviousWorkoutsSection(viewModel: .init(cardsViewModels: viewModel.sessions.map { PreviousWorkoutsCellViewModelFactory.build(workoutSession: $0)}))
+            PreviousWorkoutsSection()
         }
         .listStyle(PlainListStyle())
         .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 0, idealHeight: .infinity, maxHeight: .infinity, alignment: .top)
@@ -48,10 +64,24 @@ struct FeedView: View {
 struct FeedView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            FeedView(viewModel: .init(dataStorage: WorkoutsStorageMock(), healthStorage: HealthStorageMock(), dateHelper: DatesHelperMock()))
-                .environment(\.locale, .init(identifier: "pt_BR"))
-            FeedView(viewModel: .init(dataStorage: WorkoutsStorageMock(), healthStorage: HealthStorageMock(), dateHelper: DatesHelperMock()))
-                .preferredColorScheme(.dark)
+            HabitatPreview {
+                FeedView(viewModel: .init())
+                    .environment(\.locale, .init(identifier: "pt_BR"))
+            } setupEnvirontment: {
+                Habitat[\.workoutsStorage] = WorkoutsStorageMock()
+                Habitat[\.healthStorage] = HealthStorageMock()
+                Habitat[\.dateHelper] = DatesHelperMock()
+                    
+            }
+            HabitatPreview {
+                FeedView(viewModel: .init())
+                    .preferredColorScheme(.dark)
+            } setupEnvirontment: {
+                Habitat[\.workoutsStorage] = WorkoutsStorageMock()
+                Habitat[\.healthStorage] = HealthStorageMock()
+                Habitat[\.dateHelper] = DatesHelperMock()
+                    
+            }
         }
     }
 }

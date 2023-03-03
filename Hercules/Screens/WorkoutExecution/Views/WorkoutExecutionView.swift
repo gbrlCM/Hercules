@@ -34,12 +34,12 @@ struct WorkoutExecutionView: View {
                 presentationMode.wrappedValue.dismiss()
                 viewModel.saveWorkoutSession()
             } content: {
-                WorkoutSummaryView(workoutName: viewModel.workout.name,
-                                   totalTime: viewModel.generalTime,
-                                   restTime: viewModel.totalRestTime,
-                                   exerciseTime: viewModel.totalExerciseTime,
-                                   exerciseCount: viewModel.workout.exercises.count,
-                                   seriesCount: viewModel.workout.exercises.map(\.series).reduce(0, +))
+                WorkoutSummaryView(model: SummaryModel(workoutName: viewModel.workout.name,
+                                                       totalTime: viewModel.generalTime,
+                                                       restTime: viewModel.totalRestTime,
+                                                       exerciseTime: viewModel.totalExerciseTime,
+                                                       exerciseCount: viewModel.workout.exercises.count,
+                                                       seriesCount: viewModel.workout.exercises.map(\.series).reduce(0, +)))
                     { viewModel.isPresentingSummary = false }
             }
             

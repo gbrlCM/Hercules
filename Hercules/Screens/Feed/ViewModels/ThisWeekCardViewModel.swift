@@ -7,8 +7,9 @@
 
 import SwiftUI
 
-class ThisWeekCardViewModel: ObservableObject {
+class ThisWeekCardViewModel: ObservableObject, Identifiable {
     
+    var id: URL { workout.objectID! }
     let exerciseName: String
     let exerciseDate: String
     var workout: Workout

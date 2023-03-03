@@ -26,6 +26,9 @@
 		5B01AECA26A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AEC926A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift */; };
 		5B01AECC26A717860031A744 /* ADExercise+Exercise.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AECB26A717860031A744 /* ADExercise+Exercise.swift */; };
 		5B01AECE26A720C40031A744 /* ExerciseCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AECD26A720C40031A744 /* ExerciseCreationViewModel.swift */; };
+		5B0ABCF129B030EC00AB5879 /* SwiftUINavigation in Frameworks */ = {isa = PBXBuildFile; productRef = 5B0ABCF029B030EC00AB5879 /* SwiftUINavigation */; };
+		5B0ABCF629B036E500AB5879 /* Habitat in Frameworks */ = {isa = PBXBuildFile; productRef = 5B0ABCF529B036E500AB5879 /* Habitat */; };
+		5B0ABCF929B0370300AB5879 /* Keys.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0ABCF829B0370300AB5879 /* Keys.swift */; };
 		5B0E7CFD2728D270003C2B01 /* DeviceActivityMonitor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0E7CFC2728D270003C2B01 /* DeviceActivityMonitor.swift */; };
 		5B0E7CFF2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0E7CFE2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift */; };
 		5B0E7D0127297604003C2B01 /* List+BackgroundColor.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B0E7D0027297604003C2B01 /* List+BackgroundColor.swift */; };
@@ -169,6 +172,7 @@
 		5B01AEC926A7177B0031A744 /* ADWorkoutExercise+WorkoutExercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ADWorkoutExercise+WorkoutExercise.swift"; sourceTree = "<group>"; };
 		5B01AECB26A717860031A744 /* ADExercise+Exercise.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "ADExercise+Exercise.swift"; sourceTree = "<group>"; };
 		5B01AECD26A720C40031A744 /* ExerciseCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCreationViewModel.swift; sourceTree = "<group>"; };
+		5B0ABCF829B0370300AB5879 /* Keys.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = Keys.swift; sourceTree = "<group>"; };
 		5B0E7CFC2728D270003C2B01 /* DeviceActivityMonitor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitor.swift; sourceTree = "<group>"; };
 		5B0E7CFE2728D9B6003C2B01 /* DeviceActivityMonitorDummy.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = DeviceActivityMonitorDummy.swift; sourceTree = "<group>"; };
 		5B0E7D0027297604003C2B01 /* List+BackgroundColor.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = "List+BackgroundColor.swift"; sourceTree = "<group>"; };
@@ -292,6 +296,8 @@
 			isa = PBXFrameworksBuildPhase;
 			buildActionMask = 2147483647;
 			files = (
+				5B0ABCF629B036E500AB5879 /* Habitat in Frameworks */,
+				5B0ABCF129B030EC00AB5879 /* SwiftUINavigation in Frameworks */,
 				5BC8D76126AB31AC00662A6C /* HealthKit.framework in Frameworks */,
 			);
 			runOnlyForDeploymentPostprocessing = 0;
@@ -353,6 +359,14 @@
 			path = Extensions;
 			sourceTree = "<group>";
 		};
+		5B0ABCF729B036F000AB5879 /* Environment */ = {
+			isa = PBXGroup;
+			children = (
+				5B0ABCF829B0370300AB5879 /* Keys.swift */,
+			);
+			path = Environment;
+			sourceTree = "<group>";
+		};
 		5B292A2A26A1E49F0026ED5C = {
 			isa = PBXGroup;
 			children = (
@@ -375,6 +389,7 @@
 		5B292A3526A1E49F0026ED5C /* Hercules */ = {
 			isa = PBXGroup;
 			children = (
+				5B0ABCF729B036F000AB5879 /* Environment */,
 				5B37B42126ADB2C400B9A940 /* Helpers */,
 				5BC8D75E26AB31AC00662A6C /* Hercules.entitlements */,
 				5BB65F8826A1FBF2004DF873 /* Strings */,
@@ -904,6 +919,8 @@
 			);
 			name = Hercules;
 			packageProductDependencies = (
+				5B0ABCF029B030EC00AB5879 /* SwiftUINavigation */,
+				5B0ABCF529B036E500AB5879 /* Habitat */,
 			);
 			productName = Hercules;
 			productReference = 5B292A3326A1E49F0026ED5C /* Hercules.app */;
@@ -960,6 +977,8 @@
 			mainGroup = 5B292A2A26A1E49F0026ED5C;
 			packageReferences = (
 				5BB2871826C1EC4100D071BF /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */,
+				5B0ABCEF29B030EC00AB5879 /* XCRemoteSwiftPackageReference "swiftui-navigation" */,
+				5B0ABCF429B036E500AB5879 /* XCRemoteSwiftPackageReference "Habitat" */,
 			);
 			productRefGroup = 5B292A3426A1E49F0026ED5C /* Products */;
 			projectDirPath = "";
@@ -1039,6 +1058,7 @@
 				5B01AE9226A4C13B0031A744 /* ExerciseCreationView.swift in Sources */,
 				5B37B42326ADB2D500B9A940 /* ElapsedTimeFormatter.swift in Sources */,
 				5B0E7D052729779E003C2B01 /* WorkoutListCell.swift in Sources */,
+				5B0ABCF929B0370300AB5879 /* Keys.swift in Sources */,
 				5BBEE7D926BC80EB00DADE68 /* StatHighlightBuilder.swift in Sources */,
 				5B88922D271F6E5B001F81DB /* Text+SectionTitle.swift in Sources */,
 				5B01AEBA26A6600B0031A744 /* Note.swift in Sources */,
@@ -1285,7 +1305,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				INFOPLIST_FILE = Hercules/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1311,7 +1331,7 @@
 				ENABLE_PREVIEWS = YES;
 				ENABLE_TESTING_SEARCH_PATHS = NO;
 				INFOPLIST_FILE = Hercules/Info.plist;
-				IPHONEOS_DEPLOYMENT_TARGET = 15.0;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1398,6 +1418,22 @@
 /* End XCConfigurationList section */
 
 /* Begin XCRemoteSwiftPackageReference section */
+		5B0ABCEF29B030EC00AB5879 /* XCRemoteSwiftPackageReference "swiftui-navigation" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/pointfreeco/swiftui-navigation";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
+		5B0ABCF429B036E500AB5879 /* XCRemoteSwiftPackageReference "Habitat" */ = {
+			isa = XCRemoteSwiftPackageReference;
+			repositoryURL = "https://github.com/gbrlCM/Habitat";
+			requirement = {
+				branch = main;
+				kind = branch;
+			};
+		};
 		5BB2871826C1EC4100D071BF /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */ = {
 			isa = XCRemoteSwiftPackageReference;
 			repositoryURL = "https://github.com/pointfreeco/swift-snapshot-testing";
@@ -1409,6 +1445,16 @@
 /* End XCRemoteSwiftPackageReference section */
 
 /* Begin XCSwiftPackageProductDependency section */
+		5B0ABCF029B030EC00AB5879 /* SwiftUINavigation */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B0ABCEF29B030EC00AB5879 /* XCRemoteSwiftPackageReference "swiftui-navigation" */;
+			productName = SwiftUINavigation;
+		};
+		5B0ABCF529B036E500AB5879 /* Habitat */ = {
+			isa = XCSwiftPackageProductDependency;
+			package = 5B0ABCF429B036E500AB5879 /* XCRemoteSwiftPackageReference "Habitat" */;
+			productName = Habitat;
+		};
 		5BB2871926C1EC4100D071BF /* SnapshotTesting */ = {
 			isa = XCSwiftPackageProductDependency;
 			package = 5BB2871826C1EC4100D071BF /* XCRemoteSwiftPackageReference "swift-snapshot-testing" */;

@@ -34,6 +34,8 @@ class WorkoutCreationViewModel: ObservableObject {
     @Published
     var isStillCreating: Bool = true
     
+    var dismissCreation: () -> Void = { fatalError("uniplemented") }
+    
     private var isStillCreatingPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest($nameField, $createdExercises)
             .map(validateUserDidFinishForm)

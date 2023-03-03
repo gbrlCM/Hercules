@@ -11,34 +11,31 @@ import SwiftUI
 struct PreviousWorkoutsCell: View {
     
     var viewModel: PreviousWorkoutCellViewModel
+    var action: (SummaryModel) -> Void
     
     var body: some View {
-        NavigationLink(destination: EmptyView()) {
-            EmptyView()
+        Button {
+            action(SummaryModel(workoutName: viewModel.session.workoutName,
+                                totalTime: viewModel.session.totalTime,
+                                restTime: viewModel.session.restTime,
+                                exerciseTime: viewModel.session.exerciseTime,
+                                exerciseCount: viewModel.session.exerciseCount,
+                                seriesCount: viewModel.session.seriesCount))
+        } label: {
+            VStack {
+                text(viewModel.dateOfWorkout, font: .title3.bold())
+                    .foregroundColor(.primary)
+                    .padding(.top, 6)
+                    .padding(.bottom, 1)
+                text(viewModel.workoutInfo, font: .subheadline)
+                    .foregroundColor(.secondary)
+                    .padding(.bottom, 6)
+            }
+            .padding(.horizontal, 16)
+            .background(Color.cardBackgroundBasic)
+            .cornerRadius(8)
+            .withCardShadow()
         }
-        NavigationLink(
-            destination: WorkoutSummaryView(workoutName: viewModel.session.workoutName,
-                                            totalTime: viewModel.session.totalTime,
-                                            restTime: viewModel.session.restTime,
-                                            exerciseTime: viewModel.session.exerciseTime,
-                                            exerciseCount: viewModel.session.exerciseCount,
-                                            seriesCount: viewModel.session.seriesCount,
-                                            saveButtonAction: nil),
-            label: {
-                VStack {
-                    text(viewModel.dateOfWorkout, font: .title3.bold())
-                        .foregroundColor(.primary)
-                        .padding(.top, 6)
-                        .padding(.bottom, 1)
-                    text(viewModel.workoutInfo, font: .subheadline)
-                        .foregroundColor(.secondary)
-                        .padding(.bottom, 6)
-                }
-                .padding(.horizontal, 16)
-                .background(Color.cardBackgroundBasic)
-                .cornerRadius(8)
-                .withCardShadow()
-            })
     }
     
     @ViewBuilder
@@ -53,7 +50,7 @@ struct PreviousWorkoutsCell: View {
 
 struct LastWorkoutsCell_Previews: PreviewProvider {
     static var previews: some View {
-        PreviousWorkoutsCell(viewModel: .init())
+        PreviousWorkoutsCell(viewModel: .init()) {_ in }
             .preferredColorScheme(.light)
     }
 }

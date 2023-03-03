@@ -7,8 +7,9 @@
 
 import Foundation
 
-struct WorkoutSession: Hashable {
+struct WorkoutSession: Hashable, Identifiable {
     
+    var id: URL?
     let healthStoreID: String?
     let workoutName: String
     let date: Date
@@ -28,7 +29,7 @@ struct WorkoutSession: Hashable {
         else {
             preconditionFailure("Database misconfigured or error during registration")
         }
-        
+        self.id = entity.objectID.uriRepresentation()
         self.date = date
         self.totalTime = entity.totalTime
         self.restTime = entity.totalRestTime

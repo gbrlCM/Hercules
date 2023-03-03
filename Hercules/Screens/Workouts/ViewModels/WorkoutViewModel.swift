@@ -7,11 +7,11 @@
 
 import Foundation
 import SwiftUI
+import Habitat
 
 class WorkoutViewModel: ObservableObject {
     
-    @Binding
-    var workout: Workout
+    let workout: Workout
     
     @Published
     var isEditing: Bool = false
@@ -20,6 +20,7 @@ class WorkoutViewModel: ObservableObject {
     @Published
     var isShowingDeleteAlert: Bool = false
     
+    @Dependency(\.workoutsStorage)
     private var storage: WorkoutsStorage
     
     var days:[String] = {
@@ -38,13 +39,12 @@ class WorkoutViewModel: ObservableObject {
         return formatter.string(from: date)
     }
     
-    init(workout: Binding<Workout>, storage: WorkoutsStorage = WorkoutsStorageImpl()) {
-        self._workout = workout
-        self.storage = storage
+    init(workout: Workout) {
+        self.workout = workout
     }
     
     init() {
-        self._workout = .constant(Workout())
+        self.workout = Workout()
         self.storage = WorkoutsStorageImpl()
     }
     

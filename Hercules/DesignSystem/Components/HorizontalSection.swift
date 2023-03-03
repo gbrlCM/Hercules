@@ -7,15 +7,22 @@
 
 import SwiftUI
 
-struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
+struct HorizontalSection<Content: View, EmptyContent: View, T: Identifiable>: View {
     
-    @ObservedObject
-    var viewModel: HorizontalSectionViewModel<T>
-    @ViewBuilder let content: ((Int) -> Content)
+    var sectionTitle: StringKey
+    @Binding
+    var cards: [T]
+    @ViewBuilder let content: ((T) -> Content)
     @ViewBuilder let emptyContent: (() -> EmptyContent)
     
-    init(viewModel: HorizontalSectionViewModel<T>, @ViewBuilder emptyContent: @escaping (() -> EmptyContent), @ViewBuilder content: @escaping ((Int) -> Content)) {
-        self.viewModel = viewModel
+    init(
+        sectionTitle: StringKey,
+        cards: Binding<[T]>,
+        @ViewBuilder emptyContent: @escaping (() -> EmptyContent),
+        @ViewBuilder content: @escaping ((T) -> Content))
+    {
+        self.sectionTitle = sectionTitle
+        self._cards = cards
         self.content = content
         self.emptyContent = emptyContent
     }
@@ -23,13 +30,13 @@ struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
     var body: some View {
         VStack {
             HStack {
-                Text(LocalizedStringKey(viewModel.sectionTitle))
+                Text(LocalizedStringKey(sectionTitle))
                     .withSectionHeaderStyle()
                     .padding(.leading, 16)
                 Spacer()
             }
             
-            if viewModel.cards.count > 0 {
+            if cards.count > 0 {
                 grid
             } else {
                 emptyContent()
@@ -42,8 +49,8 @@ struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
     var grid: some View {
         ScrollView(.horizontal, showsIndicators: false, content: {
             HStack(alignment: .top, spacing: 16) {
-                ForEach(viewModel.cards.indices, id: \.self) {index in
-                    content(index)
+                ForEach($cards) { $card in
+                    content(card)
                         .padding(.vertical, 8)
                 }
             }
@@ -51,19 +58,4 @@ struct HorizontalSection<Content: View, EmptyContent: View, T>: View {
         .padding(.leading, 16)
     }
 
-}
-
-struct HorizontalSection_Previews: PreviewProvider {
-    static var previews: some View {
-        let viewModel = HorizontalSectionViewModel(sectionTitle: .thisWeek, cards: .constant([
-            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()),
-            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()),
-            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout()),
-            ThisWeekCardViewModel(name: "Leg - 8 exercises", dateString: "Today", workout: Workout())
-        ]))
-        
-        HorizontalSection(viewModel: viewModel, emptyContent: {}) { index in
-            ThisWeekCard(viewModel: viewModel.cards[index])
-        }.environment(\.locale, .init(identifier: "pt_BR"))
-    }
 }

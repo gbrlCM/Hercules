@@ -10,25 +10,26 @@ import SwiftUI
 
 struct PreviousWorkoutsSection: View {
     
-    var viewModel: PreviousWorkoutSectionViewModel
+    @EnvironmentObject var model: FeedViewModel
     
     var body: some View {
         HStack {
-            Text(LocalizedStringKey(viewModel.sectionTitle))
+            Text(LocalizedStringKey(.previousWorkouts))
                 .withSectionHeaderStyle()
             Spacer()
         }.padding(.horizontal, 16)
         .padding(.bottom, 8)
         
-        if viewModel.cardsViewModels.isEmpty {
+        if model.sessions.isEmpty {
             Text("There is no workout finished yet!")
                 .font(.system(size: 14))
             
         } else {
             LazyVStack {
-                ForEach(viewModel.cardsViewModels.indices, id: \.self) { index in
-                    PreviousWorkoutsCell(viewModel: viewModel.cardsViewModels[index])
-                        .padding(.bottom, 4)
+                ForEach(model.sessionCards) { card in
+                    PreviousWorkoutsCell(viewModel: card) { summary in
+                        model.previousWorkoutButtonTapped(summary)
+                    }.padding(.bottom, 4)
                 }
             }
             .padding(.horizontal, 16)
@@ -38,6 +39,7 @@ struct PreviousWorkoutsSection: View {
 
 struct PreviousWorkoutsSection_Previews: PreviewProvider {
     static var previews: some View {
-        PreviousWorkoutsSection(viewModel: .init())
+        PreviousWorkoutsSection()
+            .environmentObject(FeedViewModel())
     }
 }

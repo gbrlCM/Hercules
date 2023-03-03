@@ -10,9 +10,6 @@ import UIKit
 
 struct WorkoutCreationView: View {
     
-    @Binding
-    var presentationBinding: Bool
-    
     @ObservedObject
     var viewModel: WorkoutCreationViewModel
     
@@ -100,7 +97,7 @@ struct WorkoutCreationView: View {
     @ViewBuilder
     var cancelButton: some View {
         Button {
-            presentationBinding = false
+            viewModel.dismissCreation()
         } label: {
             Text("Cancel")
         }
@@ -111,7 +108,7 @@ struct WorkoutCreationView: View {
     var saveButton: some View {
         Button {
             viewModel.saveWorkout()
-            presentationBinding = false
+            viewModel.dismissCreation()
         } label: {
             Text("Save")
                 .fontWeight(viewModel.isStillCreating ? .regular : .bold)
@@ -124,9 +121,9 @@ struct WorkoutCreationView: View {
 struct WorkoutsCreation_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutCreationView(presentationBinding: .constant(true), viewModel: .init())
+            WorkoutCreationView(viewModel: .init())
                 .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutCreationView(presentationBinding: .constant(true), viewModel: .init())
+            WorkoutCreationView( viewModel: .init())
                 .preferredColorScheme(.dark)
         }
     }

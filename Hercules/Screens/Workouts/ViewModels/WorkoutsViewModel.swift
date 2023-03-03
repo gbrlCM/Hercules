@@ -8,10 +8,12 @@
 import Foundation
 import SwiftUI
 import Combine
+import Habitat
 
 class WorkoutsViewModel: ObservableObject {
     
-    let storage: WorkoutsStorage
+    @Dependency(\.workoutsStorage)
+    private var storage: WorkoutsStorage
     private var cancellables: Set<AnyCancellable>
     
     @Published
@@ -23,8 +25,7 @@ class WorkoutsViewModel: ObservableObject {
     @Published
     var isOnForeground = true
     
-    init(dataStorage: WorkoutsStorage) {
-        storage = dataStorage
+    init() {
         cancellables = Set<AnyCancellable>()
         initiateBindings()
         storage.emitAllWorkoutSubjects()

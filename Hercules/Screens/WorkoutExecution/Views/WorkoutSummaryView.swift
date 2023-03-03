@@ -8,14 +8,18 @@
 import SwiftUI
 import Foundation
 
+struct SummaryModel {
+    let workoutName: String
+    let totalTime: TimeInterval
+    let restTime: TimeInterval
+    let exerciseTime: TimeInterval
+    let exerciseCount: Int
+    let seriesCount: Int
+}
+
 struct WorkoutSummaryView: View {
     
-    var workoutName: String
-    var totalTime: TimeInterval
-    var restTime: TimeInterval
-    var exerciseTime: TimeInterval
-    var exerciseCount: Int
-    var seriesCount: Int
+    let model: SummaryModel
     var saveButtonAction: (() -> Void)?
     
     private let formatter: DateComponentsFormatter = {
@@ -27,7 +31,7 @@ struct WorkoutSummaryView: View {
     var body: some View {
         MainView(background: Color.backgroundColor) {
             VStack {
-                Text(workoutName)
+                Text(model.workoutName)
                     .font(.largeTitle.bold())
                     .padding()
                 Spacer()
@@ -36,7 +40,7 @@ struct WorkoutSummaryView: View {
                         .font(.title3)
                         .bold()
                         .padding(.bottom, 2)
-                    Text(formatter.string(from: totalTime) ?? "")
+                    Text(formatter.string(from: model.totalTime) ?? "")
                         .font(.title.bold())
                         .foregroundColor(.red)
                 }
@@ -51,7 +55,7 @@ struct WorkoutSummaryView: View {
                                 .font(.title3)
                                 .bold()
                                 .padding(.bottom, 2)
-                            Text(formatter.string(from: restTime) ?? "")
+                            Text(formatter.string(from: model.restTime) ?? "")
                                 .font(.title2.bold())
                                 .foregroundColor(.pink)
                         }
@@ -67,7 +71,7 @@ struct WorkoutSummaryView: View {
                                 .font(.title3)
                                 .bold()
                                 .padding(.bottom, 2)
-                            Text(formatter.string(from: exerciseTime) ?? "")
+                            Text(formatter.string(from: model.exerciseTime) ?? "")
                                 .font(.title2.bold())
                                 .foregroundColor(.pink)
                         }
@@ -85,7 +89,7 @@ struct WorkoutSummaryView: View {
                                 .font(.title3)
                                 .bold()
                                 .padding(.bottom, 2)
-                            Text("\(exerciseCount)")
+                            Text("\(model.exerciseCount)")
                                 .font(.title.bold())
                                 .foregroundColor(.orange)
                         }
@@ -101,7 +105,7 @@ struct WorkoutSummaryView: View {
                                 .font(.title3)
                                 .bold()
                                 .padding(.bottom, 2)
-                            Text("\(seriesCount)")
+                            Text("\(model.seriesCount)")
                                 .font(.title.bold())
                                 .foregroundColor(.orange)
                         }
@@ -134,12 +138,12 @@ struct WorkoutSummaryView: View {
 
 struct WorkoutSummaryView_Previews: PreviewProvider {
     static var previews: some View {
-        WorkoutSummaryView(workoutName: "Workout name",
-                           totalTime: 12034,
-                           restTime: 10000,
-                           exerciseTime: 2034,
-                           exerciseCount: 8,
-                           seriesCount: 36,
+        WorkoutSummaryView(model: SummaryModel(workoutName: "Workout name",
+                                               totalTime: 12034,
+                                               restTime: 10000,
+                                               exerciseTime: 2034,
+                                               exerciseCount: 8,
+                                               seriesCount: 36),
                            saveButtonAction: {})
     }
 }

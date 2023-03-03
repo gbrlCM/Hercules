@@ -9,10 +9,10 @@ import SwiftUI
 
 @main
 struct HerculesApp: App {
-    
+    @StateObject var appModel = AppModel()
     var body: some Scene {
         WindowGroup {
-            ContentView()
+            ContentView(model: appModel)
         }
     }
 }

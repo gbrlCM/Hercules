@@ -8,7 +8,9 @@
 import Foundation
 import SwiftUI
 
-enum Day: Int, CaseIterable {
+enum Day: Int, CaseIterable, Identifiable {
+    var id: Int { rawValue }
+    
     case sunday = 1
     case monday = 2
     case tuesday = 3

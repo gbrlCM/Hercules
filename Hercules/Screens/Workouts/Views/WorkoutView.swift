@@ -28,7 +28,7 @@ struct WorkoutView: View {
         .navigationTitle(Text(LocalizedStringKey(viewModel.workout.name)))
         .accentColor(.redGradientStart)
         .sheet(isPresented: $viewModel.isEditing) {
-            WorkoutCreationView(presentationBinding: $viewModel.isEditing, viewModel: WorkoutCreationViewModel(workout: viewModel.workout))
+            WorkoutCreationView(viewModel: WorkoutCreationViewModel(workout: viewModel.workout))
         }
         .alert("Are you sure?",
                isPresented: $viewModel.isShowingDeleteAlert,

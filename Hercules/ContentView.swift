@@ -6,27 +6,56 @@
 //
 
 import SwiftUI
+import Habitat
+import SwiftUINavigation
+
+final class AppModel: ObservableObject {
+    enum Destination {
+        case feed
+        case workouts
+    }
+    
+    @Published var destination: Destination
+    
+    let feedModel: FeedViewModel
+    let workoutsModel: WorkoutsViewModel
+    
+    init(
+        destination: Destination = .feed,
+        feedModel: FeedViewModel = FeedViewModel(),
+        workoutModel: WorkoutsViewModel = WorkoutsViewModel()
+    ) {
+        self.destination = destination
+        self.feedModel = feedModel
+        self.workoutsModel = workoutModel
+    }
+}
 
 struct ContentView: View {
     
-    let workoutStorage: WorkoutsStorage = WorkoutsStorageImpl()
+    @ObservedObject
+    var model: AppModel
+    
+    @Dependency(\.workoutsStorage)
+    var workoutStorage: WorkoutsStorage
     let healthStorage: HealthStorage = HealthStorageImpl()
     
     var body: some View {
-        TabView {
-            FeedView(viewModel: .init(dataStorage: workoutStorage, healthStorage: healthStorage))
+        TabView(selection: $model.destination) {
+            FeedView(viewModel: model.feedModel)
                 .tabItem { Label(
                     title: { Text("Feed") },
                     icon: { Image(systemName: "square.grid.2x2.fill") }
                 ) }
-            WorkoutsView(viewModel: .init(dataStorage: workoutStorage))
+                .tag(AppModel.Destination.feed)
+            WorkoutsView(viewModel: model.workoutsModel)
                 .tabItem { Label(
                     title: { Text("Workouts") },
                     icon: { Image(systemName: "flame.fill") }
                 ) }
+                .tag(AppModel.Destination.workouts)
         }.onAppear {
             UserNotificationManager.shared.requestAuthorization()
-            UITableView.appearance().backgroundColor = UIColor.clear
         }
         .accentColor(.red)
         .onAppear(perform: UIApplication.shared.addTapGestureRecognizer)
@@ -35,7 +64,14 @@ struct ContentView: View {
 
 struct ContentView_Previews: PreviewProvider {
     static var previews: some View {
-        ContentView()
-            .environment(\.locale, .init(identifier: "pt_BR"))
+        HabitatPreview {
+            ContentView(model: AppModel(destination: .feed))
+                .environment(\.locale, .init(identifier: "pt_BR"))
+        } setupEnvirontment: {
+            Habitat[\.workoutsStorage] = WorkoutsStorageMock()
+            Habitat[\.healthStorage] = HealthStorageMock()
+            Habitat[\.dateHelper] = DatesHelperMock()
+                
+        }
     }
 }

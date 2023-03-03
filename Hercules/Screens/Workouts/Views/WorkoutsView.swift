@@ -6,6 +6,7 @@
 //
 
 import SwiftUI
+import Habitat
 
 struct WorkoutsView: View {
     @State
@@ -26,7 +27,7 @@ struct WorkoutsView: View {
             }
             .navigationTitle("Workouts")
             .sheet(isPresented: $isCreatingUser, content: {
-                WorkoutCreationView(presentationBinding: $isCreatingUser, viewModel: WorkoutCreationViewModel())
+                WorkoutCreationView(viewModel: WorkoutCreationViewModel())
             })
             .navigationBarItems(trailing: addButton)
         }
@@ -68,7 +69,7 @@ struct WorkoutsView: View {
         List {
             ForEach(viewModel.workouts.indices, id: \.self) {index  in
                 NavigationLink(
-                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: $viewModel.workouts[index], storage: viewModel.storage)),
+                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: viewModel.workouts[index])),
                     label: {
                         WorkoutListCell(exerciseName: viewModel.workouts[index].name,
                                         exerciseCount: viewModel.workouts[index].exercises.count,
@@ -92,11 +93,13 @@ struct WorkoutsView: View {
 struct WorkoutsView_Previews: PreviewProvider {
     static var previews: some View {
         Group {
-            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageMock()))
-                .preferredColorScheme(.dark)
-                .environment(\.locale, .init(identifier: "pt_BR"))
-            WorkoutsView(viewModel: .init(dataStorage: WorkoutsStorageMock()))
-                .preferredColorScheme(.dark)
+            HabitatPreview {
+                WorkoutsView(viewModel: WorkoutsViewModel())
+                    .preferredColorScheme(.dark)
+                    .environment(\.locale, .init(identifier: "pt_BR"))
+            } setupEnvirontment: {
+                Habitat[\.workoutsStorage] = WorkoutsStorageMock()
+            }
         }
     }
 }
