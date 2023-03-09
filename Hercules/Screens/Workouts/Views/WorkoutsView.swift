@@ -7,17 +7,15 @@
 
 import SwiftUI
 import Habitat
+import SwiftUINavigation
 
 struct WorkoutsView: View {
-    @State
-    var isCreatingUser: Bool = false
     
     @ObservedObject
     var viewModel: WorkoutsViewModel
     
-    
     var body: some View {
-        NavigationView {
+        NavigationStack {
             MainView(background: Color.backgroundColor) {
                 if viewModel.workouts.isEmpty {
                     noWorkouts
@@ -26,19 +24,30 @@ struct WorkoutsView: View {
                 }
             }
             .navigationTitle("Workouts")
-            .sheet(isPresented: $isCreatingUser, content: {
-                WorkoutCreationView(viewModel: WorkoutCreationViewModel())
-            })
+            .sheet(
+                unwrapping: $viewModel.destination,
+                case: /WorkoutsViewModel.Destination.createWorkout
+            ) { $model in
+                WorkoutCreationView(viewModel: model)
+            }
+            .navigationDestination(
+                unwrapping: $viewModel.destination,
+                case: /WorkoutsViewModel.Destination.workoutDetail
+            ) { $model in
+                WorkoutView(viewModel: model)
+            }
             .navigationBarItems(trailing: addButton)
         }
     }
     
     @ViewBuilder
     var addButton: some View {
-        Button(action: { isCreatingUser = true }, label: {
+        Button {
+            viewModel.createWorkoutButtonTapped()
+        } label: {
             Image(systemName: "plus")
                 .foregroundColor(.redGradientStart)
-        })
+        }
     }
     
     @ViewBuilder
@@ -49,14 +58,14 @@ struct WorkoutsView: View {
                 .padding(.horizontal, 16)
                 .padding(.vertical, 8)
             Button {
-                isCreatingUser = true
+                viewModel.createWorkoutButtonTapped()
             } label: {
                 Label(
                     title: { Text(LocalizedStringKey(.addWorkout)) },
                     icon: { Image(systemName: "plus") }
                 )
-                    .foregroundColor(.redGradientStart)
-                    .font(.title3.bold())
+                .foregroundColor(.redGradientStart)
+                .font(.title3.bold())
             }
             .padding(.vertical, 8)
             .padding(.horizontal, 16)
@@ -67,14 +76,14 @@ struct WorkoutsView: View {
     @ViewBuilder
     var workoutsList: some View {
         List {
-            ForEach(viewModel.workouts.indices, id: \.self) {index  in
-                NavigationLink(
-                    destination: WorkoutView(viewModel: WorkoutViewModel(workout: viewModel.workouts[index])),
-                    label: {
-                        WorkoutListCell(exerciseName: viewModel.workouts[index].name,
-                                        exerciseCount: viewModel.workouts[index].exercises.count,
-                                        formattedDates: viewModel.dateString(for: viewModel.workouts[index]))
-                    })
+            ForEach(viewModel.workouts) {workout  in
+                Button {
+                    viewModel.workoutButtonTapped(workout)
+                } label: {
+                    WorkoutListCell(exerciseName: workout.name,
+                                    exerciseCount: workout.exercises.count,
+                                    formattedDates: viewModel.dateString(for: workout))
+                }
             }
             .onDelete(perform: presentDeleteAlert)
             .listRowBackground(Color.cardBackgroundBasic)

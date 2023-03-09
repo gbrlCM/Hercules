@@ -212,7 +212,8 @@ class WorkoutExecutionViewModel: ObservableObject {
                                          exerciseTime: totalExerciseTime,
                                          workoutName: workoutName,
                                          exerciseCount: exerciseCount,
-                                         seriesCount: seriesCount)
+                                         seriesCount: seriesCount,
+                                         id: nil)
             self?.storage.saveSession(session, workoutID: workoutId)
         }
     }

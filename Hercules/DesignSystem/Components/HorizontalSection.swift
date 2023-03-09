@@ -54,8 +54,8 @@ struct HorizontalSection<Content: View, EmptyContent: View, T: Identifiable>: Vi
                         .padding(.vertical, 8)
                 }
             }
+            .padding(.horizontal, 16)
         })
-        .padding(.leading, 16)
     }
 
 }

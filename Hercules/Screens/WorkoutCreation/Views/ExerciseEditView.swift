@@ -22,7 +22,7 @@ struct ExercisesEditView: View {
     }
     
     var body: some View {
-            ExerciseList(viewModel: ExercisesListViewModel(storage: ExerciseStorageImpl())) { exercise in
+            ExerciseList(viewModel: ExercisesListModel()) { exercise in
                 ExerciseCell(exercise: exercise)
                     .onTapGesture {
                         self.exercise = exercise

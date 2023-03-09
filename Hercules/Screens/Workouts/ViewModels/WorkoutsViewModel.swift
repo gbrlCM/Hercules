@@ -11,6 +11,10 @@ import Combine
 import Habitat
 
 class WorkoutsViewModel: ObservableObject {
+    enum Destination {
+        case createWorkout(WorkoutCreationViewModel)
+        case workoutDetail(WorkoutViewModel)
+    }
     
     @Dependency(\.workoutsStorage)
     private var storage: WorkoutsStorage
@@ -25,10 +29,19 @@ class WorkoutsViewModel: ObservableObject {
     @Published
     var isOnForeground = true
     
-    init() {
-        cancellables = Set<AnyCancellable>()
-        initiateBindings()
-        storage.emitAllWorkoutSubjects()
+    @Published
+    var destination: Destination? {
+        didSet {
+            bindDestination()
+        }
+    }
+    
+    init(destination: Destination? = nil) {
+        self.destination = destination
+        self.cancellables = Set<AnyCancellable>()
+        self.initiateBindings()
+        self.storage.emitAllWorkoutSubjects()
+        bindDestination()
     }
     
     private func initiateBindings() {
@@ -44,6 +57,25 @@ class WorkoutsViewModel: ObservableObject {
                 fetchedWorkouts
             }
             .assign(to: &$workouts)
+    }
+    
+    private func bindDestination() {
+        guard let destination else { return }
+        
+        switch destination {
+        case let .createWorkout(model):
+            model.dismissCreation = { [weak self] in self?.destination = nil }
+        case .workoutDetail(_):
+            break
+        }
+    }
+    
+    func createWorkoutButtonTapped() {
+        destination = .createWorkout(WorkoutCreationViewModel())
+    }
+    
+    func workoutButtonTapped(_ workout: Workout) {
+        destination = .workoutDetail(WorkoutViewModel(workout: workout))
     }
     
     func dateString(for workout: Workout) -> String {

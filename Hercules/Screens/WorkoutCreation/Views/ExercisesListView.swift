@@ -6,32 +6,38 @@
 //
 
 import SwiftUI
+import Habitat
+import SwiftUINavigation
 
 struct ExercisesListView: View {
     
-    @Binding
-    var isCreatingExercise: Bool
-    @State
-    var isCreatingNewExercise: Bool = false
-    
-    private let storage: ExerciseStorage = ExerciseStorageImpl()
+    @ObservedObject
+    var model: ExercisesListModel
     
     var body: some View {
-        NavigationView {
-            ExerciseList(viewModel: ExercisesListViewModel(storage: storage)) { exercise in
-                NavigationLink(
-                    destination: ExerciseCreationView(viewModel: .init(exercise: exercise), isCreatingExercise: $isCreatingExercise),
-                    label: {
-                        ExerciseCell(exercise: exercise)
-                    })
-            }
-            .sheet(isPresented: $isCreatingNewExercise, content: {
-                CustomExerciseCreationView(isPresenting: $isCreatingExercise) { exercise in
-                    storage.save(exercise: exercise)
+        NavigationStack {
+            ExerciseList(viewModel: model) { exercise in
+                Button {
+                    model.exerciseButtonTapped(exercise)
+                } label: {
+                    ExerciseCell(exercise: exercise)
                 }
-            })
+                .tint(.primary)
+            }
+            .sheet(
+                unwrapping: $model.destination,
+                case: /ExercisesListModel.Destination.createCustomExercise
+            ) { $model in
+                CustomExerciseCreationView(model: model)
+            }
+            .navigationDestination(
+                unwrapping: $model.destination,
+                case: /ExercisesListModel.Destination.configureExercise
+            ) { $model in
+                ExerciseCreationView(viewModel: model)
+            }
             .navigationBarItems(trailing: Button(action: {
-                isCreatingNewExercise = true
+                model.addExerciseButtonTapped()
             }, label: {
                 Image(systemName: "plus")
                 .font(.title3)
@@ -44,6 +50,6 @@ struct ExercisesListView: View {
 
 struct ExercisesListView_Previews: PreviewProvider {
     static var previews: some View {
-        ExercisesListView(isCreatingExercise: .constant(true))
+        ExercisesListView(model: ExercisesListModel())
     }
 }

@@ -51,13 +51,12 @@ struct FeedView: View {
     
     @ViewBuilder
     var feed: some View {
-        ScrollView(.vertical, showsIndicators: true) {
+        ScrollView {
             ThisWeekSection()
             StatHighlightSection(viewModel: .init(sectionTitle: .statsHighlights, cardsViewModels: $viewModel.workoutStatCardViewModels, activityRingData: $viewModel.activityRing))
             PreviousWorkoutsSection()
+                .padding(.horizontal)
         }
-        .listStyle(PlainListStyle())
-        .frame(minWidth: 0, idealWidth: .infinity, maxWidth: .infinity, minHeight: 0, idealHeight: .infinity, maxHeight: .infinity, alignment: .top)
     }
 }
 

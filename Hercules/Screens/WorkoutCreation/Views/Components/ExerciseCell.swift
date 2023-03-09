@@ -12,28 +12,33 @@ struct ExerciseCell: View {
     let exercise: Exercise
     
     var body: some View {
-        VStack {
-            HStack {
-                Text(LocalizedStringKey(exercise.name))
-                    .font(.title3)
-                Spacer()
-            }.padding(.horizontal, 16)
-            LazyVGrid(columns: [GridItem(.adaptive(minimum: 80))], alignment: .leading, spacing: 4) {
-                ForEach(exercise.tags, id: \.name) { tag in
-                    VStack {
+        HStack {
+            VStack(alignment: .leading) {
+                HStack {
+                    Text(LocalizedStringKey(exercise.name))
+                        .font(.title3)
+                    Spacer()
+                }.padding(.horizontal, 16)
+                LazyVGrid(columns: [GridItem(.adaptive(minimum: 70))], alignment: .leading, spacing: 4) {
+                    ForEach(exercise.tags, id: \.name) { tag in
                         VStack {
                             Text(LocalizedStringKey(tag.name))
                                 .font(.subheadline.bold())
                                 .foregroundColor(tag.color)
                         }
-                        .frame(minWidth: 80)
+                        .frame(minWidth: 70)
                         .padding(.vertical, 6)
                         .padding(.horizontal, 6)
                         .background(Capsule().stroke(tag.color))
                         .padding(.bottom, 2)
                     }
                 }
-            }.padding(.horizontal, 16)
+                .frame(alignment: .leading)
+                .padding(.horizontal, 16)
+            }
+            Spacer()
+            Image(systemName: "chevron.right")
+                .foregroundColor(.secondary)
         }
     }
 }

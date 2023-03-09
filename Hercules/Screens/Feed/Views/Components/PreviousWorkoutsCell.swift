@@ -51,6 +51,7 @@ struct PreviousWorkoutsCell: View {
 struct LastWorkoutsCell_Previews: PreviewProvider {
     static var previews: some View {
         PreviousWorkoutsCell(viewModel: .init()) {_ in }
+            .previewLayout(.sizeThatFits)
             .preferredColorScheme(.light)
     }
 }

@@ -10,12 +10,12 @@ import XCTest
 
 class ExerciseListViewModelTest: XCTestCase {
     
-    var sut: ExercisesListViewModel!
+    var sut: ExercisesListModel!
     var storageDummy: ExerciseStorageDummy!
     
     override func setUp() {
         storageDummy = ExerciseStorageDummy()
-        sut = ExercisesListViewModel(storage: storageDummy)
+        sut = ExercisesListModel(storage: storageDummy)
     }
     
     override func tearDown() {

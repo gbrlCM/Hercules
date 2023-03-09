@@ -41,10 +41,10 @@ final class WorkoutsStorageMock: NSObject, WorkoutsStorage {
         ]
         
         let sessions = [
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 125), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 1", exerciseCount: 4, seriesCount: 12),
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 250), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 2", exerciseCount: 4, seriesCount: 12),
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 375), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 3", exerciseCount: 4, seriesCount: 12),
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 500), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 4", exerciseCount: 4, seriesCount: 12),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 125), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 1", exerciseCount: 4, seriesCount: 12, id: URL(filePath: "\(UUID().uuidString)")),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 250), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 2", exerciseCount: 4, seriesCount: 12, id: URL(filePath: "\(UUID().uuidString)")),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 375), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 3", exerciseCount: 4, seriesCount: 12, id: URL(filePath: "\(UUID().uuidString)")),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 500), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 4", exerciseCount: 4, seriesCount: 12, id: URL(filePath: "\(UUID().uuidString)")),
         ]
         
         let workout = Workout(name: "Test Workout",

@@ -19,6 +19,10 @@ private struct DateHelperKey: HabitatKey {
     static var currentValue: DatesHelper = DatesHelperImpl()
 }
 
+private struct ExerciseStorageKey: HabitatKey {
+    static var currentValue: ExerciseStorage = ExerciseStorageImpl()
+}
+
 extension Habitat {
     var workoutsStorage: WorkoutsStorage {
         get { Self[WorkoutStorageKey.self] }
@@ -33,5 +37,10 @@ extension Habitat {
     var dateHelper: DatesHelper {
         get { Self[DateHelperKey.self] }
         set { Self[DateHelperKey.self] = newValue }
+    }
+    
+    var exerciseStorage: ExerciseStorage {
+        get { Self[ExerciseStorageKey.self] }
+        set { Self[ExerciseStorageKey.self] = newValue }
     }
 }

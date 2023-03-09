@@ -7,10 +7,15 @@
 
 import Foundation
 import Combine
+import Habitat
 
 class WorkoutCreationViewModel: ObservableObject {
+    enum Destination {
+        case exerciseList(ExercisesListModel)
+    }
     
-    private let dataStorage: WorkoutsStorage
+    @Dependency(\.workoutsStorage)
+    private var dataStorage: WorkoutsStorage
     private var cancellables = Set<AnyCancellable>()
     private let savedObjectID: URL?
     
@@ -25,60 +30,55 @@ class WorkoutCreationViewModel: ObservableObject {
     @Published
     var endDate: Date
     
-    @Published
-    var creatingNewItem: Bool = false
-    
-    var exerciseCreationController = WorkoutExerciseCreationController()
     let areasOfFocus = ExerciseFocusArea.allCases
     
     @Published
-    var isStillCreating: Bool = true
+    var destination: Destination? = nil {
+        didSet {
+            bindDestination()
+        }
+    }
     
     var dismissCreation: () -> Void = { fatalError("uniplemented") }
     
-    private var isStillCreatingPublisher: AnyPublisher<Bool, Never> {
-        Publishers.CombineLatest($nameField, $createdExercises)
-            .map(validateUserDidFinishForm)
-            .eraseToAnyPublisher()
+    var isStillCreating: Bool {
+        Self.validateUserDidFinishForm(nameField, createdExercises)
     }
     
-    init(workout: Workout, storage: WorkoutsStorage = WorkoutsStorageImpl()) {
+    init(workout: Workout, destination: Destination? = nil) {
         self.nameField = workout.name
         self.areaOfFocus = workout.focusArea.rawValue
         self.createdExercises = workout.exercises
         self.endDate = workout.finalDate
         self.savedObjectID = workout.objectID
         self.daysSelected = Day.allCases.map { day in workout.daysOfTheWeek.contains(day.rawValue) ? true : false }
-        self.dataStorage = storage
-        initiateBindings()
+        bindDestination()
     }
     
-    init(storage: WorkoutsStorage = WorkoutsStorageImpl()) {
+    init(destination: Destination? = nil) {
         self.nameField = ""
         self.areaOfFocus = 1
-        self.createdExercises = []
+        self.createdExercises = [WorkoutExercise()]
         self.endDate = Date()
         self.savedObjectID = nil
         self.daysSelected = Day.allCases.map {_ in false }
-        self.dataStorage = storage
-        initiateBindings()
+        bindDestination()
     }
     
-    private func validateUserDidFinishForm(_ s1: String, _ s2: [WorkoutExercise]) -> Bool {
-        return s1.isEmpty || s2.isEmpty
-    }
-    
-    private func initiateBindings() {
-        exerciseCreationController
-            .createdExercise
-            .sink { [weak self] exercise in
+    private func bindDestination() {
+        guard let destination else { return }
+        
+        switch destination {
+        case .exerciseList(let exercisesListModel):
+            exercisesListModel.save = {[weak self] exercise in
+                self?.destination = nil
                 self?.createdExercises.append(exercise)
             }
-            .store(in: &cancellables)
-        
-        isStillCreatingPublisher
-            .assign(to: \.isStillCreating, on: self)
-            .store(in: &cancellables)
+        }
+    }
+    
+    func addExerciseButtonTapped() {
+        destination = .exerciseList(ExercisesListModel())
     }
     
     func saveWorkout() {
@@ -107,5 +107,20 @@ class WorkoutCreationViewModel: ObservableObject {
         } else {
             dataStorage.saveWorkout(workout)
         }
+        dismissCreation()
+    }
+    
+    func deleteExercise(at index: IndexSet) {
+        createdExercises.remove(atOffsets: index)
+    }
+    
+    func moveExercise(fromOffsets startOffset: IndexSet, to endOffset: Int) {
+        createdExercises.move(fromOffsets: startOffset, toOffset: endOffset)
+    }
+}
+
+extension WorkoutCreationViewModel {
+    private static func validateUserDidFinishForm(_ s1: String, _ s2: [WorkoutExercise]) -> Bool {
+        return s1.isEmpty || s2.isEmpty
     }
 }

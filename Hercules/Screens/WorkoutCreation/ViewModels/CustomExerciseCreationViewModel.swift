@@ -17,19 +17,38 @@ class CustomExerciseCreationViewModel: ObservableObject {
     
     var allTags: [ExerciseTag]
     
+    var save: (Exercise) -> Void = { _ in fatalError("uninplemented") }
+    var dismiss: () -> Void = { fatalError("uninplemented") }
+    
     init() {
         allTags = PropertyListDecoder.decode("TagsData", to: [ExerciseTag].self) ?? []
         exerciseTags = []
         exerciseName = ""
     }
     
-    func toggleTag(of tag: ExerciseTag) {
-        let index = exerciseTags.firstIndex(of: tag)
-        if index == nil {
-            exerciseTags.append(tag)
+    func toggleTag(at index: Int) {
+        guard index < allTags.count else { return }
+        let tag = allTags[index]
+        
+        let selectedIndex = exerciseTags.firstIndex(of: tag)
+        
+        if let selectedIndex {
+            exerciseTags.remove(at: selectedIndex)
         } else {
-            exerciseTags.remove(at: index!)
+            exerciseTags.append(tag)
         }
+    }
+    
+    func isTagSelected(_ tag: ExerciseTag) -> Bool {
+        exerciseTags.contains(tag)
+    }
+    
+    func cancelButtonTapped() {
+        dismiss()
+    }
+    
+    func saveButtonTapped() {
+        save(exercise)
     }
     
     var exercise: Exercise {

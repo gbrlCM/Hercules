@@ -15,21 +15,23 @@ struct ExerciseCreationView: View {
     @ObservedObject
     var viewModel: ExerciseCreationViewModel
     
-    @Binding
-    var isCreatingExercise: Bool
-    @State
-    var isEditingExercise: Bool = false
-    
     var body: some View {
         MainView(background: Color.backgroundColor) {
             Form {
                 Section(header: Text("Exercise")) {
-                    NavigationLink(
-                        destination: ExercisesEditView(isEditingExercise: $isEditingExercise, exercise: $viewModel.exercise),
-                        isActive: $isEditingExercise,
-                        label: {
-                            Text("Select Exercise")
-                        })
+                    Button {
+                        viewModel.selectExerciseButtonTapped()
+                    } label: {
+                        HStack {
+                            Text(
+                                LocalizedStringKey(viewModel.exercise.name)
+                            )
+                                .foregroundColor(.primary)
+                            Spacer()
+                            Image(systemName: "chevron.right")
+                                .foregroundColor(.secondary)
+                        }
+                    }
                 }
                 Section(header: Text("Quantity")) {
                     Stepper("Series \(viewModel.series)", value: $viewModel.series, in: 1...100)
@@ -46,7 +48,10 @@ struct ExerciseCreationView: View {
                 
                 Section(header: Text("Intensity")) {
                     Picker("Measurement", selection: $viewModel.measurementIndex) {
-                        ForEach(0..<viewModel.measurementStyles.count) { index in
+                        ForEach(
+                            viewModel.measurementStyles.indices,
+                            id: \.self
+                        ) { index in
                             Text(LocalizedStringKey(viewModel.measurementStyles[index].name))
                         }
                     }
@@ -68,7 +73,7 @@ struct ExerciseCreationView: View {
             }
         }
         .accentColor(.redGradientStart)
-        .navigationBarBackButtonHidden(true)
+        .animation(.default, value: viewModel.measurementIndex)
         .navigationBarItems(trailing: saveButton)
         .navigationBarTitleDisplayMode(.inline)
         .navigationTitle(LocalizedStringKey(viewModel.exercise.name))
@@ -77,9 +82,7 @@ struct ExerciseCreationView: View {
     @ViewBuilder
     var saveButton: some View {
         Button {
-            let exercise = viewModel.createdExercise
-            creationController.emit(exercise: exercise)
-            isCreatingExercise = false
+            viewModel.saveExerciseButtonTapped()
         } label: {
             Text("Save")
                 .fontWeight(viewModel.isButtonDisabled ? .regular : .bold)
@@ -91,6 +94,8 @@ struct ExerciseCreationView: View {
 
 struct ExerciseCreation_Previews: PreviewProvider {
     static var previews: some View {
-        ExerciseCreationView(viewModel: .init(exercise: .init()), isCreatingExercise: .constant(false))
+        NavigationStack {
+            ExerciseCreationView(viewModel: .init(exercise: .init()))
+        }
     }
 }

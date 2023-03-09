@@ -24,18 +24,19 @@ struct TagButton: View {
         .padding(.horizontal, 12)
         .frame(minWidth: 120, alignment: .center)
         .background(tagBackground(for: tag))
+        .animation(.default, value: isSelected)
     }
     
     @ViewBuilder
     func tagBackground(for tag: ExerciseTag) -> some View {
         if(isSelected) {
             Capsule().fill(tag.color.opacity(0.25))
-                .withCardShadow()
+                .shadow(color: .black.opacity(0.25), radius: 3, x: 2, y: 2)
             
         }
         else {
             Capsule().fill(Color.cardBackgroundBasic)
-                .withCardShadow()
+                .shadow(color: .black.opacity(0.25), radius: 3, x: 2, y: 2)
         }
     }
 }

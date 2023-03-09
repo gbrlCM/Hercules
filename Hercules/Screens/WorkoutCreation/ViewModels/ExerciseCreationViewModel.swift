@@ -28,40 +28,14 @@ class ExerciseCreationViewModel: ObservableObject {
     var exercise: Exercise
     
     var measurementStyles = IntensityType.allCases
+    var dismiss: () -> Void = { fatalError("uninplemented") }
+    var save: (WorkoutExercise) -> Void = { _ in fatalError("uninplemented") }
     
     private var cancellables = Set<AnyCancellable>()
     
     private var isButtonDisabledPublisher: AnyPublisher<Bool, Never> {
         Publishers.CombineLatest4($repsString, $restTimeString, $intesityString, $measurementIndex)
-            .map { (repsString, restTimeString, intesityString, measurementIndex) -> Bool in
-                
-                guard
-                    let measurementMetric = IntensityType(rawValue: measurementIndex)
-                else { return true}
-                
-                let isDisabled: Bool
-                
-                if measurementMetric == .seconds || measurementMetric == .areaOfRm {
-                    isDisabled = !restTimeString.isEmpty &&
-                        NumberFormatter().number(from: restTimeString) as? Double != nil &&
-                        !intesityString.isEmpty &&
-                        NumberFormatter().number(from: intesityString) as? Double != nil
-                } else if measurementMetric == .bodyWeight {
-                    isDisabled = !repsString.isEmpty &&
-                        NumberFormatter().number(from: repsString) as? Int != nil &&
-                        !restTimeString.isEmpty &&
-                        NumberFormatter().number(from: restTimeString) as? Double != nil
-                } else {
-                    isDisabled = !repsString.isEmpty &&
-                        NumberFormatter().number(from: repsString) as? Int != nil &&
-                        !restTimeString.isEmpty &&
-                        NumberFormatter().number(from: restTimeString) as? Double != nil &&
-                        !intesityString.isEmpty &&
-                        NumberFormatter().number(from: intesityString) as? Double != nil
-                }
-                
-                return !isDisabled
-            }
+            .map(ExerciseCreationViewModel.isButtonDisabled)
             .eraseToAnyPublisher()
     }
     
@@ -118,5 +92,45 @@ class ExerciseCreationViewModel: ObservableObject {
         return number
     }
     
+    func selectExerciseButtonTapped() {
+        dismiss()
+    }
     
+    func saveExerciseButtonTapped() {
+        let exercise = self.createdExercise
+        save(exercise)
+    }
+}
+
+extension ExerciseCreationViewModel {
+    
+    private static func isButtonDisabled(repsString: String, restTimeString: String, intesityString: String, measurementIndex: Int) -> Bool {
+        guard
+            let measurementMetric = IntensityType(rawValue: measurementIndex)
+        else { return true }
+        
+        let isDisabled: Bool
+        let formatter = NumberFormatter()
+        
+        if measurementMetric == .seconds || measurementMetric == .areaOfRm {
+            isDisabled = !restTimeString.isEmpty &&
+                formatter.number(from: restTimeString) as? Double != nil &&
+                !intesityString.isEmpty &&
+                formatter.number(from: intesityString) as? Double != nil
+        } else if measurementMetric == .bodyWeight {
+            isDisabled = !repsString.isEmpty &&
+                formatter.number(from: repsString) as? Int != nil &&
+                !restTimeString.isEmpty &&
+                formatter.number(from: restTimeString) as? Double != nil
+        } else {
+            isDisabled = !repsString.isEmpty &&
+                formatter.number(from: repsString) as? Int != nil &&
+                !restTimeString.isEmpty &&
+                formatter.number(from: restTimeString) as? Double != nil &&
+                !intesityString.isEmpty &&
+                formatter.number(from: intesityString) as? Double != nil
+        }
+        
+        return !isDisabled
+    }
 }

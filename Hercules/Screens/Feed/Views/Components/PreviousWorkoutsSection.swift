@@ -7,6 +7,7 @@
 
 import Foundation
 import SwiftUI
+import Habitat
 
 struct PreviousWorkoutsSection: View {
     
@@ -25,21 +26,30 @@ struct PreviousWorkoutsSection: View {
                 .font(.system(size: 14))
             
         } else {
-            LazyVStack {
                 ForEach(model.sessionCards) { card in
                     PreviousWorkoutsCell(viewModel: card) { summary in
                         model.previousWorkoutButtonTapped(summary)
                     }.padding(.bottom, 4)
                 }
-            }
-            .padding(.horizontal, 16)
+            
         }
     }
 }
 
 struct PreviousWorkoutsSection_Previews: PreviewProvider {
     static var previews: some View {
-        PreviousWorkoutsSection()
-            .environmentObject(FeedViewModel())
+        HabitatPreview {
+            ScrollView {
+                LazyVStack {
+                    PreviousWorkoutsSection()
+                        .environmentObject(FeedViewModel())
+                }
+            }
+        } setupEnvirontment: {
+            Habitat[\.workoutsStorage] = WorkoutsStorageMock()
+            Habitat[\.healthStorage] = HealthStorageMock()
+            Habitat[\.dateHelper] = DatesHelperMock()
+                
+        }
     }
 }

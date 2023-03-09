@@ -40,7 +40,7 @@ struct WorkoutSession: Hashable, Identifiable {
         self.seriesCount = exercises.compactMap { Int($0.series) }.reduce(0, +)
     }
     
-    init(healthStoreID: String?, date: Date, totalTime: TimeInterval, restTime: TimeInterval, exerciseTime: TimeInterval, workoutName: String, exerciseCount: Int, seriesCount: Int) {
+    init(healthStoreID: String?, date: Date, totalTime: TimeInterval, restTime: TimeInterval, exerciseTime: TimeInterval, workoutName: String, exerciseCount: Int, seriesCount: Int, id: URL?) {
         self.healthStoreID = healthStoreID
         self.date = date
         self.totalTime = totalTime
@@ -49,6 +49,7 @@ struct WorkoutSession: Hashable, Identifiable {
         self.workoutName = workoutName
         self.exerciseCount = exerciseCount
         self.seriesCount = seriesCount
+        self.id = id
     }
     
     init() {

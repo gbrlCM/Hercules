@@ -10,32 +10,28 @@ import SwiftUI
 struct CustomExerciseCreationView: View {
     
     @ObservedObject
-    private var viewModel = CustomExerciseCreationViewModel()
-    @Binding
-    var isPresenting: Bool
-    
-    var save: (Exercise) -> Void
+    var model: CustomExerciseCreationViewModel
     
     var body: some View {
-        NavigationView {
+        NavigationStack {
             MainView(background: Color.backgroundColor) {
                 Form {
                     HStack {
                         Text("Name: ")
-                        TextField("squat", text: $viewModel.exerciseName)
+                        TextField("squat", text: $model.exerciseName)
                     }
                     
                     Section(header: Text("Tags")) {
                         VStack {
                             LazyVGrid(columns: [GridItem(.adaptive(minimum: 100))], alignment: .center, spacing: 8) {
-                                ForEach(0..<viewModel.allTags.count) { index in
-                                    TagButton(tag: viewModel.allTags[index],
-                                              isSelected: viewModel
-                                                .exerciseTags
-                                                .contains(viewModel.allTags[index]))
-                                        {}.onTapGesture {
-                                            viewModel.toggleTag(of: viewModel.allTags[index])
-                                        }
+                                ForEach(model.allTags.indices, id: \.self) { index in
+                                    TagButton(
+                                        tag: model.allTags[index],
+                                        isSelected: model.isTagSelected(model.allTags[index])
+                                    ){}
+                                    .onTapGesture {
+                                        model.toggleTag(at: index)
+                                    }
                                 }
                             }
                             .padding()
@@ -46,14 +42,13 @@ struct CustomExerciseCreationView: View {
             }
             .navigationBarItems(
                 leading: Button(action: {
-                    isPresenting = false
+                    model.cancelButtonTapped()
                 }, label: {
                 Text("Cancel")
                     .font(.body)
             }),
                 trailing: Button(action: {
-                    save(viewModel.exercise)
-                    isPresenting = false
+                    model.saveButtonTapped()
                 }, label: {
                     Text("Save")
                         .font(.body.bold())
@@ -65,7 +60,7 @@ struct CustomExerciseCreationView: View {
 
 struct CustomExerciseNameCreationView_Previews: PreviewProvider {
     static var previews: some View {
-        CustomExerciseCreationView(isPresenting: .constant(true), save: {_ in})
+        CustomExerciseCreationView(model: CustomExerciseCreationViewModel())
             .environment(\.locale, .init(identifier: "pt_BR"))
     }
 }

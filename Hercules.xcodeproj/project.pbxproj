@@ -9,7 +9,7 @@
 /* Begin PBXBuildFile section */
 		5B01AE8426A466760031A744 /* WorkoutCreationViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AE8326A466760031A744 /* WorkoutCreationViewModel.swift */; };
 		5B01AE8726A468230031A744 /* WorkoutsStorageImpl.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AE8626A468230031A744 /* WorkoutsStorageImpl.swift */; };
-		5B01AE8926A473720031A744 /* ExercisesListViewModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AE8826A473720031A744 /* ExercisesListViewModel.swift */; };
+		5B01AE8926A473720031A744 /* ExercisesListModel.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AE8826A473720031A744 /* ExercisesListModel.swift */; };
 		5B01AE8B26A475010031A744 /* TagsRequest.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AE8A26A475010031A744 /* TagsRequest.swift */; };
 		5B01AE8D26A475880031A744 /* ExercisesRequests.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AE8C26A475880031A744 /* ExercisesRequests.swift */; };
 		5B01AE9226A4C13B0031A744 /* ExerciseCreationView.swift in Sources */ = {isa = PBXBuildFile; fileRef = 5B01AE9126A4C13B0031A744 /* ExerciseCreationView.swift */; };
@@ -155,7 +155,7 @@
 /* Begin PBXFileReference section */
 		5B01AE8326A466760031A744 /* WorkoutCreationViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutCreationViewModel.swift; sourceTree = "<group>"; };
 		5B01AE8626A468230031A744 /* WorkoutsStorageImpl.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = WorkoutsStorageImpl.swift; sourceTree = "<group>"; };
-		5B01AE8826A473720031A744 /* ExercisesListViewModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListViewModel.swift; sourceTree = "<group>"; };
+		5B01AE8826A473720031A744 /* ExercisesListModel.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesListModel.swift; sourceTree = "<group>"; };
 		5B01AE8A26A475010031A744 /* TagsRequest.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = TagsRequest.swift; sourceTree = "<group>"; };
 		5B01AE8C26A475880031A744 /* ExercisesRequests.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExercisesRequests.swift; sourceTree = "<group>"; };
 		5B01AE9126A4C13B0031A744 /* ExerciseCreationView.swift */ = {isa = PBXFileReference; lastKnownFileType = sourcecode.swift; path = ExerciseCreationView.swift; sourceTree = "<group>"; };
@@ -313,13 +313,6 @@
 /* End PBXFrameworksBuildPhase section */
 
 /* Begin PBXGroup section */
-		5B01AE8126A3B30C0031A744 /* Factory */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Factory;
-			sourceTree = "<group>";
-		};
 		5B01AE8526A467E30031A744 /* Storages */ = {
 			isa = PBXGroup;
 			children = (
@@ -805,7 +798,6 @@
 			isa = PBXGroup;
 			children = (
 				5B01AEC126A70ECD0031A744 /* Services */,
-				5B01AE8126A3B30C0031A744 /* Factory */,
 				5BE0778D26A3572000591DA1 /* ViewModels */,
 				5BB6601926A24F6F004DF873 /* Views */,
 			);
@@ -895,7 +887,7 @@
 				5BE0778E26A3573400591DA1 /* DaysSectionViewModel.swift */,
 				5BE0779826A3880700591DA1 /* ExerciseCreationCellViewModel.swift */,
 				5B01AE8326A466760031A744 /* WorkoutCreationViewModel.swift */,
-				5B01AE8826A473720031A744 /* ExercisesListViewModel.swift */,
+				5B01AE8826A473720031A744 /* ExercisesListModel.swift */,
 				5B01AECD26A720C40031A744 /* ExerciseCreationViewModel.swift */,
 				5B98595A26B87944004A500A /* CustomExerciseCreationViewModel.swift */,
 			);
@@ -1033,7 +1025,7 @@
 				5BFA734C26C43575002C7959 /* NotificationManager.swift in Sources */,
 				5B2A13CE26C44CE700FAD4AE /* WorkoutsStorage.swift in Sources */,
 				5B01AEBC26A660580031A744 /* WorkoutExercise.swift in Sources */,
-				5B01AE8926A473720031A744 /* ExercisesListViewModel.swift in Sources */,
+				5B01AE8926A473720031A744 /* ExercisesListModel.swift in Sources */,
 				5B292A7126A1E7F10026ED5C /* Card.swift in Sources */,
 				5BB65F8726A1FAF8004DF873 /* DataStorage.swift in Sources */,
 				5BE0779726A3875900591DA1 /* IntensityType.swift in Sources */,

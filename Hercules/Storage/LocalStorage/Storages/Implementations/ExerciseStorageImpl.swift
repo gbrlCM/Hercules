@@ -38,6 +38,7 @@ class ExerciseStorageImpl: NSObject, ExerciseStorage {
 
         do {
             try fetchedResultController.performFetch()
+            fetchedResultController.delegate = self
             guard let objects = fetchedResultController.fetchedObjects else { return }
             userExercisesSubject.send(objects.map { Exercise(entity: $0) })
         } catch {

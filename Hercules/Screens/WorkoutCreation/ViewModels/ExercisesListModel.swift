@@ -9,17 +9,17 @@ import Foundation
 import Combine
 import CoreData
 import SwiftUI
+import Habitat
+import SwiftUINavigation
 
-class ExercisesListViewModel:ObservableObject {
+class ExercisesListModel: ObservableObject {
+    enum Destination {
+        case configureExercise(ExerciseCreationViewModel)
+        case createCustomExercise(CustomExerciseCreationViewModel)
+    }
     
     @Published
     var tags: [ExerciseTag] = []
-    
-    @Published
-    var defaultExercises: [Exercise] = []
-    
-    @Published
-    var userExercises: [Exercise] = []
     
     @Published
     private var fetchedDefaultExercises: [Exercise] = []
@@ -33,15 +33,34 @@ class ExercisesListViewModel:ObservableObject {
     @Published
     var selectedTags: [ExerciseTag] = []
     
-    private var cancellables = Set<AnyCancellable>()
+    @Published
+    var destination: Destination? = nil {
+        didSet {
+            bindDestination()
+        }
+    }
     
+    var defaultExercises: [Exercise] {
+        exercisesWithTags(for: fetchedDefaultExercises, selectedTags: selectedTags)
+    }
+    
+    var userExercises: [Exercise] {
+        exercisesWithTags(for: fetchedUserExercises, selectedTags: selectedTags)
+    }
+    
+    var save: (WorkoutExercise) -> Void = { _ in fatalError("uninplemented") }
+    
+    @Dependency(\.exerciseStorage)
     private var storage: ExerciseStorage
     
-    init(storage: ExerciseStorage) {
+    private var cancellables = Set<AnyCancellable>()
+    
+    init(destination: Destination? = nil) {
         self.storage = storage
         initiateBindings()
         storage.emitAllExercises()
         storage.emitDefaultTags()
+        bindDestination()
     }
     
     private func initiateBindings() {
@@ -49,7 +68,7 @@ class ExercisesListViewModel:ObservableObject {
             .defaultExercisesSubject
             .map { exercises -> [Exercise] in
                 var sortedExercises = exercises
-                sortedExercises.sort { $0.name < $1.name}
+                sortedExercises.sort { $0.name < $1.name }
                 return sortedExercises
             }
             .assign(to: \.fetchedDefaultExercises, on: self)
@@ -59,26 +78,39 @@ class ExercisesListViewModel:ObservableObject {
             .userExercisesSubject
             .map { exercises -> [Exercise] in
                 var sortedExercises = exercises
-                sortedExercises.sort { $0.name < $1.name}
+                sortedExercises.sort { $0.name < $1.name }
                 return sortedExercises
             }
             .assign(to: \.fetchedUserExercises, on: self)
             .store(in: &cancellables)
         
-        $fetchedDefaultExercises
-            .sink {[weak self] exercises in
-                self?.defaultExercises = self?.updateExercisesWithTags(for: exercises) ?? []
-            }
-            .store(in: &cancellables)
-        
-        $fetchedUserExercises
-            .sink { [weak self] exercises in
-                self?.userExercises = self?.updateExercisesWithTags(for: exercises) ?? []
-            }.store(in: &cancellables)
-        
         storage
             .defaultTagsSubjects
             .assign(to: &$tags)
+    }
+    
+    private func bindDestination() {
+        guard let destination else { return }
+        
+        switch destination {
+        case let .configureExercise(model):
+            model.dismiss = { [weak self] in self?.destination = nil }
+            model.save = { [weak self] exercise in self?.save(exercise) }
+        case let .createCustomExercise(model):
+            model.dismiss = { [weak self] in self?.destination = nil }
+            model.save = { [weak self] exercise in
+                self?.storage.save(exercise: exercise)
+                self?.destination = nil
+            }
+        }
+    }
+    
+    func addExerciseButtonTapped() {
+        destination = .createCustomExercise(CustomExerciseCreationViewModel())
+    }
+    
+    func exerciseButtonTapped(_ exercise: Exercise) {
+        destination = .configureExercise(ExerciseCreationViewModel(exercise: exercise))
     }
     
     func toggleTag(of tag: ExerciseTag) {
@@ -88,11 +120,9 @@ class ExercisesListViewModel:ObservableObject {
         } else {
             selectedTags.remove(at: index!)
         }
-        userExercises = updateExercisesWithTags(for: fetchedUserExercises)
-        defaultExercises = updateExercisesWithTags(for: fetchedDefaultExercises)
     }
     
-    private func updateExercisesWithTags(for exerciseList: [Exercise]) -> [Exercise] {
+    private func exercisesWithTags(for exerciseList: [Exercise], selectedTags: [ExerciseTag]) -> [Exercise] {
         if selectedTags == [] {
             return exerciseList
         }
