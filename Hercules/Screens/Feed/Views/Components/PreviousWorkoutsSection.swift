@@ -18,7 +18,7 @@ struct PreviousWorkoutsSection: View {
             Text(LocalizedStringKey(.previousWorkouts))
                 .withSectionHeaderStyle()
             Spacer()
-        }.padding(.horizontal, 16)
+        }
         .padding(.bottom, 8)
         
         if model.sessions.isEmpty {

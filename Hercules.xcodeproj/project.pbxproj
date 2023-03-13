@@ -657,7 +657,6 @@
 			isa = PBXGroup;
 			children = (
 				5B5893272726035D00C36D3C /* Tests */,
-				5BC4B59526CD496D00115288 /* Extensions */,
 				5BB2871326C1E1C000D071BF /* Dummies */,
 				5B674F0326C1588C00AE69D4 /* Info.plist */,
 			);
@@ -824,13 +823,6 @@
 				5BC4B58F26CD28E800115288 /* WorkoutViewState.swift */,
 			);
 			path = Models;
-			sourceTree = "<group>";
-		};
-		5BC4B59526CD496D00115288 /* Extensions */ = {
-			isa = PBXGroup;
-			children = (
-			);
-			path = Extensions;
 			sourceTree = "<group>";
 		};
 		5BC8D75F26AB31AC00662A6C /* Frameworks */ = {
@@ -1344,6 +1336,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WK7599VNDW;
 				INFOPLIST_FILE = HerculesTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",
@@ -1364,6 +1357,7 @@
 				CODE_SIGN_STYLE = Automatic;
 				DEVELOPMENT_TEAM = WK7599VNDW;
 				INFOPLIST_FILE = HerculesTests/Info.plist;
+				IPHONEOS_DEPLOYMENT_TARGET = 16.2;
 				LD_RUNPATH_SEARCH_PATHS = (
 					"$(inherited)",
 					"@executable_path/Frameworks",

@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Habitat
 @testable import Hercules
 
 class WorkoutsViewModelTests: XCTestCase {
@@ -14,7 +15,8 @@ class WorkoutsViewModelTests: XCTestCase {
 
     override func setUp() {
         workoutStorageDummy = WorkoutStorageDummy.standard
-        sut = .init(dataStorage: workoutStorageDummy)
+        Habitat[\.workoutsStorage] = workoutStorageDummy
+        sut = .init()
     }
     
     override func tearDown() {

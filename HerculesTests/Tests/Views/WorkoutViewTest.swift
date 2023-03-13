@@ -7,6 +7,7 @@
 
 import XCTest
 import SnapshotTesting
+import Habitat
 @testable import Hercules
 import SwiftUI
 
@@ -17,7 +18,8 @@ class WorkoutViewTest: XCTestCase {
     var host: UIViewController!
     
     override func setUp() {
-        viewModel = WorkoutViewModel(workout: .constant(WorkoutDummy.dummyWithID), storage: WorkoutsStorageMock())
+        Habitat[\.workoutsStorage] = WorkoutsStorageMock()
+        viewModel = WorkoutViewModel(workout: WorkoutDummy.dummyWithID)
         sut = WorkoutView(viewModel: viewModel)
         host = UIHostingController(rootView: sut)
         isRecording = false

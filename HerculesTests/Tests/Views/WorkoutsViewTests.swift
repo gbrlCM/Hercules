@@ -8,6 +8,7 @@
 import XCTest
 import SnapshotTesting
 import SwiftUI
+import Habitat
 @testable import Hercules
 
 class WorkoutsViewTests: XCTestCase {
@@ -15,7 +16,8 @@ class WorkoutsViewTests: XCTestCase {
     var viewModel: WorkoutsViewModel!
 
     override func setUp() {
-        viewModel = .init(dataStorage: WorkoutStorageDummy.standard)
+        Habitat[\.workoutsStorage] = WorkoutStorageDummy.standard
+        viewModel = .init()
         sut = .init(viewModel: viewModel)
         isRecording = false
     }
@@ -46,7 +48,8 @@ class WorkoutsViewTests: XCTestCase {
     }
     
     private func assertSutSnapshot(withStorage storage: WorkoutsStorage) {
-        viewModel = .init(dataStorage: storage)
+        Habitat[\.workoutsStorage] = storage
+        viewModel = .init()
         sut.viewModel = viewModel
         let host = UIHostingController(rootView: sut)
         assertSnapshot(matching: host, as: .image)

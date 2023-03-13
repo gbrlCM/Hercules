@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Habitat
 @testable import Hercules
 
 class WorkoutViewModelTest: XCTestCase {
@@ -15,7 +16,8 @@ class WorkoutViewModelTest: XCTestCase {
     
     override func setUp() {
         storage = .init()
-        sut = .init(workout: .constant(WorkoutDummy.dummyWithID), storage: storage)
+        Habitat[\.workoutsStorage] = storage
+        sut = .init(workout: WorkoutDummy.dummyWithID)
         
     }
     

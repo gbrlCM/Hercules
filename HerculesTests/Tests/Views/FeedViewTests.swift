@@ -8,6 +8,7 @@
 import XCTest
 import SnapshotTesting
 import SwiftUI
+import Habitat
 @testable import Hercules
 
 class FeedViewTests: XCTestCase {
@@ -22,7 +23,8 @@ class FeedViewTests: XCTestCase {
         dateHelper = DatesHelperMock(offset: 350)
         workoutStorageMock = WorkoutStorageDummy.standard
         healthStorageMock = HealthStorageMock()
-        viewModel = FeedViewModel(dataStorage: workoutStorageMock, healthStorage: healthStorageMock, dateHelper: dateHelper)
+        
+        viewModel = setupModelDependencies(workouts: workoutStorageMock, health: healthStorageMock, date: dateHelper)
         sut = FeedView(viewModel: viewModel)
         isRecording = false
     }
@@ -34,6 +36,13 @@ class FeedViewTests: XCTestCase {
         viewModel = nil
         sut = nil
     }
+    
+    func setupModelDependencies(workouts: WorkoutsStorage, health: HealthStorage, date: DatesHelper) -> FeedViewModel {
+        Habitat[\.workoutsStorage] = workouts
+        Habitat[\.healthStorage] = health
+        Habitat[\.dateHelper] = date
+        return FeedViewModel()
+    }
 
     func testViewWithAllDataFulfiled() {
         let host = UIHostingController(rootView: sut)
@@ -41,25 +50,25 @@ class FeedViewTests: XCTestCase {
     }
     
     func testViewWithEmptyData() {
-        sut.viewModel = FeedViewModel(dataStorage: WorkoutStorageDummy.empty, healthStorage: healthStorageMock, dateHelper: dateHelper)
+        sut.viewModel = setupModelDependencies(workouts: WorkoutStorageDummy.empty, health: healthStorageMock, date: dateHelper)
         let host = UIHostingController(rootView: sut)
         assertSnapshot(matching: host, as: .image)
     }
     
     func testViewWithoutSessions() {
-        sut.viewModel = FeedViewModel(dataStorage: WorkoutStorageDummy.noSessions, healthStorage: healthStorageMock, dateHelper: dateHelper)
+        sut.viewModel = setupModelDependencies(workouts: WorkoutStorageDummy.noSessions, health: healthStorageMock, date: dateHelper)
         let host = UIHostingController(rootView: sut)
         assertSnapshot(matching: host, as: .image)
     }
     
     func testViewWithOutdatedWorkoutsAndNoSessions() {
-        sut.viewModel = FeedViewModel(dataStorage: WorkoutStorageDummy.outdatedNoSessions, healthStorage: healthStorageMock, dateHelper: dateHelper)
+        sut.viewModel = setupModelDependencies(workouts: WorkoutStorageDummy.outdatedNoSessions, health: healthStorageMock, date: dateHelper)
         let host = UIHostingController(rootView: sut)
         assertSnapshot(matching: host, as: .image)
     }
     
     func testViewWithOutdatedWorkoutsAndWithSessions() {
-        sut.viewModel = FeedViewModel(dataStorage: WorkoutStorageDummy.outdated, healthStorage: healthStorageMock, dateHelper: dateHelper)
+        sut.viewModel = setupModelDependencies(workouts: WorkoutStorageDummy.outdated, health: healthStorageMock, date: dateHelper)
         let host = UIHostingController(rootView: sut)
         assertSnapshot(matching: host, as: .image)
     }

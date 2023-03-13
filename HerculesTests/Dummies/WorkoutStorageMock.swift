@@ -43,7 +43,9 @@ enum WorkoutStorageDummy {
                               daysOfTheWeek: [1,3,4,5,6],
                               exercises: exerciseDummy,
                               finalDate: Date(timeIntervalSince1970: 35000),
-                              sessions: [])
+                              sessions: [],
+                              objectID: URL(filePath: "testw1")
+        )
         
         let workouts = [workout, workout, workout, workout]
         
@@ -79,7 +81,9 @@ enum WorkoutStorageDummy {
                               daysOfTheWeek: [1,3,4,5,6],
                               exercises: exerciseDummy,
                               finalDate: Date(timeIntervalSince1970: 120),
-                              sessions: [])
+                              sessions: [],
+                              objectID: URL(filePath: "testw1")
+        )
         
         let workouts = [workout, workout, workout, workout]
         
@@ -112,10 +116,10 @@ enum WorkoutStorageDummy {
         ]
         
         let sessions = [
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 125), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 1", exerciseCount: 4, seriesCount: 12),
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 250), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 2", exerciseCount: 4, seriesCount: 12),
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 375), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 3", exerciseCount: 4, seriesCount: 12),
-            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 500), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 4", exerciseCount: 4, seriesCount: 12),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 125), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 1", exerciseCount: 4, seriesCount: 12, id: URL(string: UUID().uuidString, relativeTo: nil)),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 250), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 2", exerciseCount: 4, seriesCount: 12, id: URL(string: UUID().uuidString, relativeTo: nil)),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 375), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 3", exerciseCount: 4, seriesCount: 12, id: URL(string: UUID().uuidString, relativeTo: nil)),
+            WorkoutSession(healthStoreID: nil, date: Date(timeIntervalSince1970: 500), totalTime: 3600, restTime: 1000, exerciseTime: 2600, workoutName: "Sessions Test 4", exerciseCount: 4, seriesCount: 12, id: URL(string: UUID().uuidString, relativeTo: nil)),
         ]
         
         let workout = Workout(name: "Test Workout",
@@ -123,7 +127,9 @@ enum WorkoutStorageDummy {
                               daysOfTheWeek: [1,3,4,5,6],
                               exercises: exerciseDummy,
                               finalDate: Date(timeIntervalSince1970: 120),
-                              sessions: sessions)
+                              sessions: sessions,
+                              objectID: URL(filePath: "testw1")
+        )
         
         let workouts = [workout, workout, workout, workout]
         

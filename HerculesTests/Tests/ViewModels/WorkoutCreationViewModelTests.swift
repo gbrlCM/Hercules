@@ -6,6 +6,7 @@
 //
 
 import XCTest
+import Habitat
 @testable import Hercules
 
 class WorkoutCreationViewModelTests: XCTestCase {
@@ -15,7 +16,8 @@ class WorkoutCreationViewModelTests: XCTestCase {
 
     override func setUp() {
         mockStorage = WorkoutsStorageMock()
-        sut = WorkoutCreationViewModel(storage: mockStorage)
+        Habitat[\.workoutsStorage] = mockStorage
+        sut = WorkoutCreationViewModel()
     }
 
     override func tearDown() {
@@ -49,21 +51,32 @@ class WorkoutCreationViewModelTests: XCTestCase {
                 dummy.daysOfTheWeek.contains(index+1)
             }
         
+        var didDismiss = false
+        
+        sut.dismissCreation = { didDismiss = true }
+        
         sut.saveWorkout()
         
         XCTAssertEqual(dummy, mockStorage.lastSavedWorkout!)
+        XCTAssertTrue(didDismiss)
         
     }
     
     func testUserDidUpdateWorkout() {
-        var dummy = WorkoutDummy.dummyWithID
-        sut = .init(workout: dummy, storage: mockStorage)
+        let dummy = WorkoutDummy.dummyWithID
+        Habitat[\.workoutsStorage] = mockStorage
+        sut = .init(workout: dummy)
         
         sut.nameField = "New Name"
+        
+        var didDismiss = false
+        
+        sut.dismissCreation = { didDismiss = true }
         
         sut.saveWorkout()
         
         XCTAssertEqual(mockStorage.lastUpdatedWorkout?.name ?? "empty", "New Name")
+        XCTAssertTrue(didDismiss)
         
     }
 
